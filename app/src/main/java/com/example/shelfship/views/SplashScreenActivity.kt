@@ -1,21 +1,27 @@
 package com.example.shelfship.views
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.shelfship.R
+import com.example.shelfship.utils.FirebaseUtils.isLoggedIn
+
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        Handler().postDelayed(object : Runnable {
+            override fun run() {
+                if (isLoggedIn) {
+                    startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
+                } else {
+                    startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
+                }
+                finish()
+            }
+        }, 1000)
     }
 }
