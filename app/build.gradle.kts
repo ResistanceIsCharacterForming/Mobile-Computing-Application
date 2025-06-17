@@ -16,6 +16,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders += mapOf("appAuthRedirectScheme" to "com.example.shelfship")
     }
 
     buildTypes {
@@ -57,6 +59,6 @@ dependencies {
     implementation("com.google.android.libraries.identity.googleid:googleid:<latest_version>")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:<latest-version>")
     implementation("com.google.firebase:firebase-firestore:<latest-version>")
-
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 }
 
