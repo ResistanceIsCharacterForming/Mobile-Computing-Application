@@ -37,7 +37,17 @@ class MainActivity : AppCompatActivity() {
 
             //Log.d("myTag", text.toString())
 
+            lifecycleScope.launch {
+                FirebaseUtils.saveMessageToFirebase(
+                    uid = "oO1fv6QmzVSVDf3yZpGQ",
+                    userMessage = text.toString()
+                )
+            }
+
+            FirebaseUtils.listener()
+
             editText.getText().clear()
+
         }
 
 
