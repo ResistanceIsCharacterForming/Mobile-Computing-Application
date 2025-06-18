@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+
 }
 
 android {
@@ -16,6 +17,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders += mapOf("appAuthRedirectScheme" to "com.example.shelfship")
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.10.1"
     }
 
     buildTypes {
@@ -37,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation(kotlin("gradle-plugin","1.5.10"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -48,6 +60,10 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.firebase.firestore)
+    implementation(libs.androidx.runtime.android)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.runtime.saveable.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,6 +73,7 @@ dependencies {
     implementation("com.google.android.libraries.identity.googleid:googleid:<latest_version>")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:<latest-version>")
     implementation("com.google.firebase:firebase-firestore:<latest-version>")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 
+    implementation(libs.androidx.activity.compose)
 }
-
