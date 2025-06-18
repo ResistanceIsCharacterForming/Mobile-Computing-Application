@@ -1,0 +1,148 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFDE7">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageButton
+            android:id="@+id/btnHamburger"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_sort_by_size"
+            android:contentDescription="Menu" />
+
+        <TextView
+            android:text="My Profile"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="8dp" />
+
+        <!-- Profile Image Slots -->
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:rowCount="2"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false"
+            android:layout_marginBottom="16dp">
+
+            <ImageView android:id="@+id/imageSlot1" style="@style/ImageSlot"/>
+            <ImageView android:id="@+id/imageSlot2" style="@style/ImageSlot"/>
+            <ImageView android:id="@+id/imageSlot3" style="@style/ImageSlot"/>
+            <ImageView android:id="@+id/imageSlot4" style="@style/ImageSlot"/>
+            <ImageView android:id="@+id/imageSlot5" style="@style/ImageSlot"/>
+            <ImageView android:id="@+id/imageSlot6" style="@style/ImageSlot"/>
+        </GridLayout>
+
+        <!-- About Me -->
+        <TextView
+            android:text="About Me"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/aboutMeInput"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Write a brief personal description..."
+            android:background="#FFF"
+            android:padding="8dp"
+            android:gravity="top"
+            android:layout_marginBottom="16dp"
+            android:enabled="false"/>
+
+        <!-- Editable profile fields -->
+
+        <TextView
+            android:text="Favourite Book"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/favoriteBookInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Your favorite book"
+            android:background="#FFF"
+            android:padding="8dp"
+            android:enabled="false"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:text="Location"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/locationInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Your location"
+            android:background="#FFF"
+            android:padding="8dp"
+            android:enabled="false"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:text="Age"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/ageInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Your age"
+            android:inputType="number"
+            android:background="#FFF"
+            android:padding="8dp"
+            android:enabled="false"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:text="Interests"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/interestsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Your interests (comma separated)"
+            android:background="#FFF"
+            android:padding="8dp"
+            android:enabled="false"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Edit / Save Button -->
+        <Button
+            android:id="@+id/btnEditProfile"
+            android:text="Edit Profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#8C1717"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="24dp" />
+
+    </LinearLayout>
+</ScrollView>

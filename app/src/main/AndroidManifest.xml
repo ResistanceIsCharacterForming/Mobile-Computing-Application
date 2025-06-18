@@ -25,6 +25,7 @@
         <activity android:name=".FriendScreen" />
         <activity android:name=".MenuScreen" />
         <activity android:name=".QuickSearchResultActivity" />
+        <activity android:name=".ProfilePageActivity" />
     </application>
 
 </manifest>

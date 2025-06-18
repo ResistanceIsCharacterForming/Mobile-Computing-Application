@@ -24,7 +24,7 @@
             android:src="@drawable/ic_notification"
             android:contentDescription="Notifications" />
 
-        <!-- Hamburger Butonu - En sağda -->
+        <!-- Hamburger Button right corner -->
         <ImageButton
             android:id="@+id/btnHamburger"
             android:layout_width="40dp"
@@ -56,7 +56,6 @@
         android:padding="16dp"
         android:gravity="center"/>
 
-    <!-- Butonları saran container, kalan alanı kaplayacak ve ortalayacak -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

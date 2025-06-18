@@ -77,7 +77,7 @@ class FriendScreen : AppCompatActivity() {
     private fun showPopupMenu(view: View) {
         val popup = PopupMenu(this, view)
         popup.menuInflater.inflate(R.menu.menu_popup, popup.menu)
-
+        popup.menu.findItem(R.id.menu_friends)?.isVisible = false
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> {
@@ -86,6 +86,10 @@ class FriendScreen : AppCompatActivity() {
                 }
                 R.id.menu_messages -> {
 
+                    true
+                }
+                R.id.menu_profile -> {
+                    startActivity(Intent(this, ProfilePageActivity::class.java))
                     true
                 }
                 R.id.menu_friends -> {

@@ -26,8 +26,13 @@ class HomeScreen : AppCompatActivity() {
         btnHamburger.setOnClickListener { view ->
             val popup = PopupMenu(this, view) // Popup
             popup.menuInflater.inflate(R.menu.menu_popup, popup.menu)
+            popup.menu.findItem(R.id.menu_home)?.isVisible = false
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
+                    R.id.menu_profile -> {
+                        startActivity(Intent(this, ProfilePageActivity::class.java))
+                        true
+                    }
                     R.id.menu_friends -> {
                         startActivity(Intent(this, FriendScreen::class.java))
                         true
