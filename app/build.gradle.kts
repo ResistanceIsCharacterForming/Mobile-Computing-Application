@@ -21,14 +21,6 @@ android {
         manifestPlaceholders += mapOf("appAuthRedirectScheme" to "com.example.shelfship")
     }
 
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.10.1"
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -74,6 +66,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:<latest-version>")
     implementation("com.google.firebase:firebase-firestore:<latest-version>")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
-
-    implementation(libs.androidx.activity.compose)
 }
+
