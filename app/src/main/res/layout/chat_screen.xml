@@ -14,7 +14,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/scrollView2"
         app:layout_constraintHorizontal_bias="0.24"
-        app:layout_constraintStart_toEndOf="@+id/scrollView2" />
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
+        />
 
     <EditText
         android:id="@+id/inputField"
@@ -26,7 +27,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/scrollView2"
         app:layout_constraintHorizontal_bias="0.577"
-        app:layout_constraintStart_toEndOf="@+id/scrollView2" />
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
+        />
 
     <ScrollView
         android:id="@+id/scrollView2"
