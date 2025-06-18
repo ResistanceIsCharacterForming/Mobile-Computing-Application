@@ -7,4 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".views.BookshelfActivity">
 
+    <Button
+        android:id="@+id/autharize_books_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/placeholder_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="success"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/autharize_books_button"
+        app:layout_constraintStart_toStartOf="@+id/autharize_books_button"
+        app:layout_constraintTop_toBottomOf="@+id/autharize_books_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

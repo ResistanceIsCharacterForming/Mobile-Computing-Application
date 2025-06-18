@@ -1,10 +1,10 @@
 package com.example.shelfship.utils
 
-import com.example.shelfship.models.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import com.example.shelfship.models.UserData
 
 object FirebaseUtils {
 
@@ -16,6 +16,22 @@ object FirebaseUtils {
             firestore.collection("users")
                 .document(userData.uid)
                 .set(userData)
+                .await()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    suspend fun saveGoogleBooksAccessToken(token: String): Boolean {
+        val uid = currentUserId()
+        if (uid == null) return false
+
+        return try {
+            firestore.collection("users")
+                .document(uid)
+                .update("googleBooksAccessToken", token)
                 .await()
             true
         } catch (e: Exception) {
