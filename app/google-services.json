@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "525928624973-rhj32esiiu13qbhd0semedr32tr6jc7r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shelfship",
+            "certificate_hash": "e24f1fb51fd7d7225ae41b595dca271b3c492b65"
+          }
+        },
+        {
           "client_id": "525928624973-qjfc8jpi3cspej7nakpod69k7a997mlh.apps.googleusercontent.com",
           "client_type": 3
         }
