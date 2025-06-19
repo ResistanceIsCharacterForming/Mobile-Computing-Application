@@ -2,13 +2,13 @@ package com.example.shelfship.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.shelfship.R
 import com.example.shelfship.viewmodels.LoginViewModel
 import com.google.android.gms.common.SignInButton
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     lateinit var signInButton: SignInButton
@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
         signInButton = findViewById(R.id.sign_in_button)
         val loginViewModel = LoginViewModel()
 
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
             loginViewModel.signInState.collect { state ->
                 if (state.isSignInSuccessful) {
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)

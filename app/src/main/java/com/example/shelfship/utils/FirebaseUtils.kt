@@ -2,24 +2,14 @@ package com.example.shelfship.utils
 
 import android.util.Log
 import com.example.shelfship.models.UserData
-import com.google.android.gms.analytics.ecommerce.Product
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-ttrimport kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.coroutines.flow.Flow
 
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.map
-
-import com.example.shelfship.models.Message
 
 object FirebaseUtils {
 
