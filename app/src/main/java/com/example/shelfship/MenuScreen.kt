@@ -1,4 +1,4 @@
-package com.example.a
+package com.example.shelfship
 
 import android.content.Intent
 import android.os.Bundle

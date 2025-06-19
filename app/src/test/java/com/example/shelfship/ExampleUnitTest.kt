@@ -1,4 +1,4 @@
-package com.example.a
+package com.example.shelfship
 
 import org.junit.Test
 

@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "a"
+rootProject.name = "shelfship"
 include(":app")
  

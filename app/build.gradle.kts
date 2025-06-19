@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.a"
+    namespace = "com.example.shelfship"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.a"
+        applicationId = "com.example.shelfship"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
