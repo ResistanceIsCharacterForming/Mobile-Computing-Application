@@ -10,6 +10,7 @@ import android.app.PendingIntent
 import android.content.IntentSender
 import android.util.Log
 import androidx.core.app.ActivityCompat.startIntentSenderForResult
+import com.example.shelfship.R
 import com.example.shelfship.models.GoogleBooksAuthResult
 
 class GoogleBooksAuthorizationClient {
@@ -25,6 +26,7 @@ class GoogleBooksAuthorizationClient {
         val booksScope = Scope("https://www.googleapis.com/auth/books")
 
         val authorizationRequest = AuthorizationRequest.Builder()
+            .requestOfflineAccess(context.getString(R.string.default_web_client_id))
             .setRequestedScopes(listOf(booksScope))
             .build()
 
@@ -103,7 +105,8 @@ class GoogleBooksAuthorizationClient {
         if (accessToken != null) {
             val authResult = GoogleBooksAuthResult(
                 success = true,
-                accessToken = accessToken
+                accessToken = accessToken,
+                authorizationCode = result.serverAuthCode
             )
             callback.onAuthorizationResult(authResult)
         } else {

@@ -1,23 +1,21 @@
 package com.example.shelfship.views
 
-import BookshelfViewModel
+import com.example.shelfship.viewmodels.BookshelfViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.shelfship.R
-import com.example.shelfship.views.LoginActivity
+import com.example.shelfship.BuildConfig
+
 
 class BookshelfActivity : AppCompatActivity() {
     lateinit var bookshelfViewModel: BookshelfViewModel
-
+    val api = BuildConfig.BOOKS_API_KEY
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bookshelf)
@@ -36,11 +34,9 @@ class BookshelfActivity : AppCompatActivity() {
                         Toast.makeText(this@BookshelfActivity, error, Toast.LENGTH_LONG).show()
                     }
                 }
-
             }
         }
         autharizeBtn.setOnClickListener { bookshelfViewModel.requestGoogleBooksAuthorization(this) }
-
 
     }
 

@@ -1,3 +1,5 @@
+package com.example.shelfship.viewmodels
+
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
@@ -6,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.shelfship.models.GoogleBooksAuthResult
 import com.example.shelfship.models.GoogleBooksAuthState
 import com.example.shelfship.services.GoogleBooksAuthorizationClient
-import com.example.shelfship.utils.FirebaseUtils.saveGoogleBooksAccessToken
+import com.example.shelfship.utils.FirebaseUtils.saveGoogleBooksTokens
 import com.google.android.gms.auth.api.identity.AuthorizationResult
 import com.google.android.gms.auth.api.identity.Identity
 import kotlinx.coroutines.*
@@ -15,14 +17,14 @@ import kotlinx.coroutines.flow.StateFlow
 
 class BookshelfViewModel : ViewModel() {
     private val authClient = GoogleBooksAuthorizationClient()
-    private val _autharizationState = MutableStateFlow(GoogleBooksAuthState(success = false))
-    val authorizationState: StateFlow<GoogleBooksAuthState> = _autharizationState
+    private val _authorizationState = MutableStateFlow(GoogleBooksAuthState(success = false))
+    val authorizationState: StateFlow<GoogleBooksAuthState> = _authorizationState
 
     fun handleUserConsentResult(activity: Activity, requestCode: Int, data: Intent?) {
         if (requestCode == authClient.REQUEST_AUTHORIZE) {
             val authorizationResult: AuthorizationResult =
                 Identity.getAuthorizationClient(activity).getAuthorizationResultFromIntent(data)
-            val result: GoogleBooksAuthResult = GoogleBooksAuthResult (
+            val result = GoogleBooksAuthResult (
                 success = true,
                 needsUserInteraction = false,
                 errorMessage = null,
@@ -32,7 +34,7 @@ class BookshelfViewModel : ViewModel() {
         }
         else {
             Log.e("BookshelfViewModel", "Unknown request code: $requestCode")
-            val result: GoogleBooksAuthResult = GoogleBooksAuthResult (
+            val result = GoogleBooksAuthResult (
                 success = false,
                 needsUserInteraction = false,
                 errorMessage = "Unknown request code",
@@ -52,9 +54,9 @@ class BookshelfViewModel : ViewModel() {
     private fun handleAuthorizationResult(result: GoogleBooksAuthResult) {
         viewModelScope.launch {
             when {
-                result.success && result.accessToken != null -> {
-                    saveGoogleBooksAccessToken(result.accessToken)
-                    _autharizationState.value = GoogleBooksAuthState(success = true, errorMessage = null)
+                result.success && result.accessToken != null && result.authorizationCode != null -> {
+                    saveGoogleBooksTokens(result.accessToken, result.authorizationCode)
+                    _authorizationState.value = GoogleBooksAuthState(success = true, errorMessage = null)
                 }
                 result.needsUserInteraction -> {
                     /*
@@ -66,7 +68,7 @@ class BookshelfViewModel : ViewModel() {
                 }
                 else -> {
                     Log.e("BookshelfViewModel", "Authorization failed: ${result.errorMessage}")
-                    _autharizationState.value = GoogleBooksAuthState(success = false, errorMessage = result.errorMessage)
+                    _authorizationState.value = GoogleBooksAuthState(success = false, errorMessage = result.errorMessage)
                 }
             }
         }

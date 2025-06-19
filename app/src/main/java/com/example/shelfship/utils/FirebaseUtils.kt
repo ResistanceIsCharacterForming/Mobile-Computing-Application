@@ -24,14 +24,14 @@ object FirebaseUtils {
         }
     }
 
-    suspend fun saveGoogleBooksAccessToken(token: String): Boolean {
+    suspend fun saveGoogleBooksTokens(token: String, authCode: String): Boolean {
         val uid = currentUserId()
         if (uid == null) return false
 
         return try {
             firestore.collection("users")
                 .document(uid)
-                .update("googleBooksAccessToken", token)
+                .update("googleBooksAccessToken", token, "googleBooksAuthCode", authCode)
                 .await()
             true
         } catch (e: Exception) {
