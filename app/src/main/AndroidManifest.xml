@@ -13,7 +13,7 @@
         android:theme="@style/Theme.A"
         tools:targetApi="31">
         <activity
-            android:name=".HomeScreen"
+            android:name=".views.HomeScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChatScreen" />
-        <activity android:name=".FriendScreen" />
-        <activity android:name=".MenuScreen" />
-        <activity android:name=".QuickSearchResultActivity" />
-        <activity android:name=".ProfilePageActivity" />
+        <activity android:name=".views.ChatScreen" />
+        <activity android:name=".views.FriendScreen" />
+        <activity android:name=".views.MenuScreen" />
+        <activity android:name=".views.QuickSearchResultActivity" />
+        <activity android:name=".views.ProfilePageActivity" />
     </application>
 
 </manifest>

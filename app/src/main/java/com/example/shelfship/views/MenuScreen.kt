@@ -1,9 +1,10 @@
-package com.example.shelfship
+package com.example.shelfship.views
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.shelfship.R
 
 class MenuScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

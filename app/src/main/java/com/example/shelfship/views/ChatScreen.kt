@@ -1,8 +1,9 @@
-package com.example.shelfship
+package com.example.shelfship.views
 
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.shelfship.R
 
 class ChatScreen : AppCompatActivity() {
 
