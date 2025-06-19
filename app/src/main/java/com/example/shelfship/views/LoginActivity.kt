@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.signInState.collect { state ->
                     if (state.isSignInSuccessful) {
-                        val intent = Intent(this@LoginActivity, BookshelfActivity::class.java)
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         startActivity(intent)
                         finish()

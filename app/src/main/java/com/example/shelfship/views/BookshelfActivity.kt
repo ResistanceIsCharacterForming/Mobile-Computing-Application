@@ -8,9 +8,12 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.shelfship.R
 import com.example.shelfship.BuildConfig
+import kotlinx.coroutines.launch
 
 
 class BookshelfActivity : AppCompatActivity() {
@@ -24,14 +27,15 @@ class BookshelfActivity : AppCompatActivity() {
         val successTextView: TextView = findViewById(R.id.placeholder_success)
 
         bookshelfViewModel = BookshelfViewModel()
-        lifecycleScope.launchWhenStarted {
-            bookshelfViewModel.authorizationState.collect { state ->
-                if (state.success) {
-                    successTextView.visibility = View.VISIBLE
-                }
-                else {
-                    state.errorMessage?.let { error ->
-                        Toast.makeText(this@BookshelfActivity, error, Toast.LENGTH_LONG).show()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookshelfViewModel.authorizationState.collect { state ->
+                    if (state.success) {
+                        successTextView.visibility = View.VISIBLE
+                    } else {
+                        state.errorMessage?.let { error ->
+                            Toast.makeText(this@BookshelfActivity, error, Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
