@@ -74,5 +74,17 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:<latest-version>")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
     implementation("com.google.android.material:material")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.google.code.gson:gson:2.9.1")
+
+    implementation ("androidx.activity:activity-compose:1.9.0")
+    implementation ("androidx.compose.ui:ui:1.6.6")
+    implementation ("androidx.compose.material:material:1.6.6")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 }
 

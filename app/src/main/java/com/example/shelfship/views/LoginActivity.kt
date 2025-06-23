@@ -2,7 +2,6 @@ package com.example.shelfship.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -12,6 +11,7 @@ import com.example.shelfship.R
 import com.example.shelfship.viewmodels.LoginViewModel
 import com.google.android.gms.common.SignInButton
 import kotlinx.coroutines.launch
+import androidx.lifecycle.ViewModelProvider
 
 class LoginActivity : AppCompatActivity() {
     lateinit var signInButton: SignInButton
@@ -20,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         signInButton = findViewById(R.id.sign_in_button)
-        val loginViewModel = LoginViewModel()
+        val loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
        lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

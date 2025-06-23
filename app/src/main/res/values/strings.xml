@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Shelf Ship</string>
+    <string name="search_hint">Find new books</string>
+    <string name="book_cover">book cover</string>
+    <string name="fallback_author_names">Author names</string>
+    <array name="genres">
+        <item>Fantasy</item>
+        <item>SciFie</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Thriller</item>
+        <item>Horror</item>
+        <item>Non-fiction</item>
+    </array>
 </resources>
