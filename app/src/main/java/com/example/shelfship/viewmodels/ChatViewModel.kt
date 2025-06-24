@@ -1,4 +1,5 @@
 package com.example.shelfship.viewmodels
+<<<<<<< Updated upstream
 /*
 import android.content.Context
 import android.util.Log
@@ -63,3 +64,26 @@ class ChatViewModel : ViewModel() {
     }
 
 }*/
+=======
+
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+
+import com.example.shelfship.utils.FirebaseUtils
+
+class ChatViewModel: ViewModel() {
+
+    fun chatSession(uid: String, context: Context) {
+        viewModelScope.launch {
+
+            // saveMessageToFirebase
+
+            // sessionsDocumentListener
+
+        }
+    }
+
+}
+>>>>>>> Stashed changes

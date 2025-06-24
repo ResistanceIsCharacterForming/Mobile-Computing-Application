@@ -10,10 +10,11 @@ import java.util.UUID
 
 import com.google.firebase.firestore.FieldValue
 
+import com.example.shelfship.services.ChatClient
 
 object FirebaseUtils {
 
-    private val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
+    val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     suspend fun saveUserToFirestore(userData: UserData): Boolean {
@@ -42,19 +43,18 @@ object FirebaseUtils {
         }
     }
 
+    /*
     fun currentSessionDetails(uid: String): DocumentReference {
         return firestore.collection("sessions").document(uid)
-    }
+    }*/
 
     suspend fun saveMessageToFirebase(uid: String, userMessage: String, systemOwner: Boolean = false): Boolean {
-
-        var owner = ""
-        if (systemOwner.equals(true)) {
-            owner = "System"
+        if (ChatClient.saveMessageToFirebase(firestore, uid, userMessage, systemOwner)) {
+            return true
         } else {
-            val user = currentUserDetails()?.get()?.await()
-            owner = user?.getString("username").toString()
+            return false
         }
+<<<<<<< Updated upstream
 
         val messageData = mapOf(
                     "attachment" to "",
@@ -72,31 +72,12 @@ object FirebaseUtils {
                 .await()
 
         return true
+=======
+>>>>>>> Stashed changes
     }
 
-    fun listener() {
-        // https://firebase.google.com/docs/firestore/query-data/listen#kotlin
-
-        val docRef = firestore.collection("sessions").document("oO1fv6QmzVSVDf3yZpGQ")
-
-        docRef.addSnapshotListener { snapshot, e ->
-            if (e != null) {
-                Log.w("MESSAGE", "Listen failed.", e)
-                return@addSnapshotListener
-            }
-
-            if (snapshot != null && snapshot.exists()) {
-                val messages = snapshot.get("messages") as? List<Map<String, Any>>
-
-                val message = messages?.last()
-                val owner = message?.get("sender")
-                val text = message?.get("message")
-
-                Log.d("MESSAGE", "${owner}: ${text}")
-            } else {
-                Log.d("MESSAGE", "Current data: null")
-            }
-        }
+    fun sessionsDocumentListener() {
+        ChatClient.sessionsDocumentListener(firestore)
     }
 
 

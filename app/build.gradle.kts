@@ -62,7 +62,15 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:<latest-version>")
     implementation("com.google.firebase:firebase-firestore:<latest-version>")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
+<<<<<<< Updated upstream
     implementation("androidx.fragment:fragment-ktx:1.8.8")
 
+=======
+    implementation("com.google.android.material:material")
+
+    implementation(platform("androidx.compose:compose-bom:2025.05.00"))
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-core")
+>>>>>>> Stashed changes
 }
 

@@ -27,7 +27,28 @@
         <activity
             android:name=".views.MainActivity"
             android:exported="false" />
+<<<<<<< Updated upstream
 
+=======
+        <activity
+            android:name=".views.HomeScreen"
+            android:exported="false" />
+        <activity
+            android:name=".views.FriendScreen"
+            android:exported="false" />
+        <activity
+            android:name=".views.ProfilePageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.compose.ChatScreen"
+            android:exported="false" />
+        <activity
+            android:name=".views.MenuScreen"
+            android:exported="false" />
+        <activity
+            android:name=".views.QuickSearchResultActivity"
+            android:exported="false" />
+>>>>>>> Stashed changes
     </application>
 
 </manifest>
