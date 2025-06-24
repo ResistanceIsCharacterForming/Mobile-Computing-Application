@@ -16,9 +16,10 @@ interface GBSearchInterface {
     suspend fun searchBooks(@Query("q") query: String,
                             @Query("subject") subject: String,
                             @Query("startIndex") startIndex: Int = 0,
-                            @Query("maxResults") maxResults: Int = 10,
+                            @Query("maxResults") maxResults: Int = 40,
                             @Query("printType") printType: String = "books",
                             @Query("langRestrict") lang: String = "en",
+                            @Query("orderBy") orderBy: String = "relevance",
                             @Query("key") key: String = API_KEY): Response<GBSearchResult>
 
     @GET("books/v1/volumes/{id}")

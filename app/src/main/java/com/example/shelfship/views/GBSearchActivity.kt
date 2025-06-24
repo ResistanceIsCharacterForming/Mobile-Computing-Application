@@ -35,8 +35,10 @@ class GBSearchActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProvider(this).get(GBSearchViewModel::class.java)
         lifecycleScope.launch{
+            Log.d("SearchActivity", "Collecting search results")
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.searchResults.collect { books ->
+                    Log.d("SearchActivity", "Received books: ${books.items}")
                     adapter.updateSearchResults(books.items)
                 }
             }
@@ -57,8 +59,8 @@ class GBSearchActivity : AppCompatActivity() {
             if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
                 val query = searchView.text.toString()
                 val subject = genreDropdown.editText?.text.toString()
-                Log.d("SearchBooks", "Query: $query, Subject: $subject")
                 viewModel.searchBooks(query, subject)
+                Log.d("SearchActivity", "Searched for: $query and $subject")
                 return@setOnEditorActionListener true
             }
             false

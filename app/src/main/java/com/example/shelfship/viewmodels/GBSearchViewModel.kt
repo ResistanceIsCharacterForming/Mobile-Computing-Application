@@ -25,7 +25,7 @@ class GBSearchViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     val body = response.body()
                     _searchResults.value = body?: GBSearchResult(0, arrayListOf<GBSearchBook>())
-                    Log.d("SearchBooks", "Found ${body?.items?.size ?: 0} books")
+                    Log.d("SearchBooks", "${_searchResults.value}")
                 } else {
                     _error.value = "Error ${response.code()}: ${response.message()}"
                     Log.e("SearchBooks", "API Error: ${response.message()}")
