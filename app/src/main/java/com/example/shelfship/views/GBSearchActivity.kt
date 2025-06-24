@@ -1,5 +1,6 @@
 package com.example.shelfship.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.AutoCompleteTextView
@@ -35,6 +36,14 @@ class GBSearchActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.search_results)
 
         var adapter = RowRecyclerViewAdapter(arrayListOf<GBSearchBook>())
+        adapter.setOnItemClickListener(listener = object : RowRecyclerViewAdapter.onItemClickListener {
+            override fun onItemClick(item: GBSearchBook) {
+                Log.d("SearchActivity", "Viewing the details of: ${item.id}")
+                val intent = Intent(this@GBSearchActivity, BookDetailsActivity::class.java)
+                intent.putExtra("bookId", item.id)
+                startActivity(intent)
+            }
+        })
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)

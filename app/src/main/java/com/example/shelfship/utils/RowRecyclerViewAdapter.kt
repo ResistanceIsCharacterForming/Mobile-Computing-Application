@@ -11,7 +11,7 @@ import com.example.shelfship.R
 import com.example.shelfship.models.GBSearchBook
 import com.google.android.material.textview.MaterialTextView
 
-class RowRecyclerViewAdapter(private var books: ArrayList<GBSearchBook>):
+class RowRecyclerViewAdapter(private var books: ArrayList<GBSearchBook>, private var listener: onItemClickListener? = null):
     RecyclerView.Adapter<RowRecyclerViewAdapter.ViewHolder>(){
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val bookCover: ImageView = itemView.findViewById<ImageView>(R.id.book_cover)
@@ -43,6 +43,7 @@ class RowRecyclerViewAdapter(private var books: ArrayList<GBSearchBook>):
         holder.bookTitle.text = book.volumeInfo.title
         holder.authors.text = book.volumeInfo.authors?.joinToString(", ") ?: "Unknown authors"
         holder.starRating.rating = book.volumeInfo.averageRating?.toFloat() ?: 0f
+        holder.itemView.setOnClickListener { listener?.onItemClick(book) }
     }
 
     override fun getItemCount(): Int {
@@ -60,5 +61,13 @@ class RowRecyclerViewAdapter(private var books: ArrayList<GBSearchBook>):
         val oldSize = books.size
         books.clear()
         notifyItemRangeRemoved(0, oldSize)
+    }
+
+    interface onItemClickListener {
+        fun onItemClick(item: GBSearchBook)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        this.listener = listener
     }
 }
