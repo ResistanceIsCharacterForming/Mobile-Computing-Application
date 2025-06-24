@@ -15,7 +15,7 @@ class FriendScreen : AppCompatActivity() {
     private lateinit var btnMyFriends: Button
     private lateinit var btnSuggestions: Button
     private lateinit var btnSearch: Button
-    private lateinit var btnHamburger: ImageButton
+
 
     private val myFriends = listOf("Alice", "Bob", "Charlie")
     private val suggestions = listOf("David", "Ella")
@@ -25,9 +25,9 @@ class FriendScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend)
 
-        btnHamburger = findViewById(R.id.btnHamburger)
-        btnHamburger.setOnClickListener {
-            showPopupMenu(it)
+        val composeView = findViewById<androidx.compose.ui.platform.ComposeView>(R.id.compose_scaffold)
+        composeView.setContent {
+            LargeDropdownMenuScaffold(context = this, screenTitle = "")
         }
 
         listView = findViewById(R.id.listView)
@@ -75,33 +75,7 @@ class FriendScreen : AppCompatActivity() {
         }
     }
 
-    private fun showPopupMenu(view: View) {
-        val popup = PopupMenu(this, view)
-        popup.menuInflater.inflate(R.menu.menu_popup, popup.menu)
-        popup.menu.findItem(R.id.menu_friends)?.isVisible = false
-        popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.menu_home -> {
-                    startActivity(Intent(this, HomeScreen::class.java))
-                    true
-                }
-                R.id.menu_messages -> {
 
-                    true
-                }
-                R.id.menu_profile -> {
-                    startActivity(Intent(this, ProfilePageActivity::class.java))
-                    true
-                }
-                R.id.menu_friends -> {
-
-                    true
-                }
-                else -> false
-            }
-        }
-        popup.show()
-    }
 
     private fun showList(
         data: List<String>,
@@ -183,4 +157,3 @@ class FriendAdapter(
         return view
     }
 }
-

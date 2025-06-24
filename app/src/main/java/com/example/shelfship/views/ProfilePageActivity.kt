@@ -23,41 +23,20 @@ class ProfilePageActivity : AppCompatActivity() {
     private lateinit var interestsInput: EditText
     private lateinit var btnEditProfile: Button
 
-    private lateinit var btnHamburger: ImageButton
-
     private var isEditing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile) // layout XML adını buna göre ayarla
+        setContentView(R.layout.activity_profile)
+
+        val composeView = findViewById<androidx.compose.ui.platform.ComposeView>(R.id.compose_scaffold)
+        composeView.setContent {
+            LargeDropdownMenuScaffold(context = this, screenTitle = "")
+        }
 
         sharedPrefs = getSharedPreferences("userProfile", MODE_PRIVATE)
 
-        // Initialize views
-        btnHamburger = findViewById(R.id.btnHamburger)
-        btnHamburger.setOnClickListener { view ->
-            val popup = android.widget.PopupMenu(this, view)
-            popup.menuInflater.inflate(R.menu.menu_popup, popup.menu)
-            popup.menu.findItem(R.id.menu_profile)?.isVisible = false
-            popup.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.menu_home -> {
-                        startActivity(Intent(this, HomeScreen::class.java))
-                        true
-                    }
-                    R.id.menu_friends -> {
-                        startActivity(Intent(this, FriendScreen::class.java))
-                        true
-                    }
-                    R.id.menu_profile -> {
-                        // Already on profile, no action
-                        true
-                    }
-                    else -> false
-                }
-            }
-            popup.show()
-        }
+
 
         imageSlots = arrayOfNulls(6)
         imageSlots[0] = findViewById(R.id.imageSlot1)

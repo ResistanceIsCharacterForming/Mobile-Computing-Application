@@ -1,5 +1,6 @@
 package com.example.shelfship.views
 
+import com.example.shelfship.views.DrawerScaffold
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,7 +11,6 @@ import com.example.shelfship.R
 class HomeScreen : AppCompatActivity() {
 
     private lateinit var notificationList: LinearLayout
-    private lateinit var btnHamburger: ImageButton
     private lateinit var matchedUsersContainer: LinearLayout
     private lateinit var chatNowButton: Button
     private lateinit var filterButton: Button
@@ -23,38 +23,11 @@ class HomeScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        btnHamburger = findViewById(R.id.btnHamburger)
-        btnHamburger.setOnClickListener { view ->
-            val popup = PopupMenu(this, view) // Popup
-            popup.menuInflater.inflate(R.menu.menu_popup, popup.menu)
-            popup.menu.findItem(R.id.menu_home)?.isVisible = false
-            popup.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.menu_profile -> {
-                        startActivity(Intent(this, ProfilePageActivity::class.java))
-                        true
-                    }
-                    R.id.menu_friends -> {
-                        startActivity(Intent(this, FriendScreen::class.java))
-                        true
-                    }
-                    R.id.menu_messages -> {
+        val composeView = findViewById<androidx.compose.ui.platform.ComposeView>(R.id.compose_scaffold)
+        composeView.setContent {
+            LargeDropdownMenuScaffold(context = this, screenTitle = "")
+        }
 
-                        true
-                    }
-                    else -> false
-                }
-            }
-            popup.show()
-        }
-        val btnNotifications = findViewById<ImageButton>(R.id.btnNotifications)
-        btnNotifications.setOnClickListener {
-            val popupView = layoutInflater.inflate(R.layout.popup_notifications, null)
-            val popupWindow = PopupWindow(popupView, 600, LinearLayout.LayoutParams.WRAP_CONTENT)
-            popupWindow.elevation = 10f
-            popupWindow.isFocusable = true
-            popupWindow.showAsDropDown(btnNotifications, 0, 20)
-        }
 
         notificationList = findViewById(R.id.notificationList)
         matchedUsersContainer = findViewById(R.id.matchedUsersContainer)
@@ -94,5 +67,4 @@ class HomeScreen : AppCompatActivity() {
     }
 
 
-    }
-
+}
