@@ -57,19 +57,19 @@ object FirebaseUtils {
 <<<<<<< Updated upstream
 
         val messageData = mapOf(
-                    "attachment" to "",
-                    "edited" to "",
-                    "uid" to UUID.randomUUID().toString(),
-                    "message" to userMessage,
-                    "reactions" to emptyList<String>(),
-                    "readby" to emptyList<String>(),
-                    "sender" to owner,
-                    "timestamp" to ""
-                )
+            "attachment" to "",
+            "edited" to "",
+            "uid" to UUID.randomUUID().toString(),
+            "message" to userMessage,
+            "reactions" to emptyList<String>(),
+            "readby" to emptyList<String>(),
+            "sender" to owner,
+            "timestamp" to ""
+        )
 
         firestore.collection("sessions").document(uid)
-                .update("messages", FieldValue.arrayUnion(messageData))
-                .await()
+            .update("messages", FieldValue.arrayUnion(messageData))
+            .await()
 
         return true
 =======
@@ -78,6 +78,22 @@ object FirebaseUtils {
 
     fun sessionsDocumentListener() {
         ChatClient.sessionsDocumentListener(firestore)
+    }
+
+    suspend fun saveGoogleBooksTokens(token: String, authCode: String): Boolean {
+        val uid = currentUserId()
+        if (uid == null) return false
+
+        return try {
+            firestore.collection("users")
+                .document(uid)
+                .update("googleBooksAccessToken", token, "googleBooksAuthCode", authCode)
+                .await()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
 
 

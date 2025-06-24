@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shelfship.R
-import com.example.shelfship.views.compose.ChatScreen
 
 class FriendScreen : AppCompatActivity() {
 

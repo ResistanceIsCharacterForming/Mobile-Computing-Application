@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ShelfShip"
         tools:targetApi="31">
         <activity
+            android:name=".views.BookshelfActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
@@ -20,16 +23,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="${appAuthRedirectScheme}" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".views.LoginActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".views.MainActivity"
             android:exported="false" />
-<<<<<<< Updated upstream
 
-=======
         <activity
             android:name=".views.HomeScreen"
             android:exported="false" />
@@ -40,7 +49,10 @@
             android:name=".views.ProfilePageActivity"
             android:exported="false" />
         <activity
+
             android:name=".views.compose.ChatScreen"
+
+            android:name=".views.ChatScreen"
             android:exported="false" />
         <activity
             android:name=".views.MenuScreen"
@@ -48,7 +60,7 @@
         <activity
             android:name=".views.QuickSearchResultActivity"
             android:exported="false" />
->>>>>>> Stashed changes
+
     </application>
 
 </manifest>

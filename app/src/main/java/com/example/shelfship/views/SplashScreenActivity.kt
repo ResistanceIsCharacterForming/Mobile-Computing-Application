@@ -16,7 +16,7 @@ class SplashScreenActivity : AppCompatActivity() {
         Handler().postDelayed(object : Runnable {
             override fun run() {
                 if (isLoggedIn) {
-                    startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
+                    startActivity(Intent(this@SplashScreenActivity, HomeScreen::class.java))
                 } else {
                     startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
                 }

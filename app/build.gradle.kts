@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,10 +9,7 @@ plugins {
 android {
     namespace = "com.example.shelfship"
     compileSdk = 35
-
-    buildFeatures {
-        viewBinding = true
-    }
+    android.buildFeatures.buildConfig = true
 
     defaultConfig {
         applicationId = "com.example.shelfship"
@@ -20,6 +19,18 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders += mapOf("appAuthRedirectScheme" to "com.example.shelfship")
+
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        localProperties.load(localPropertiesFile.inputStream())
+        buildConfigField(
+            "String",
+            "BOOKS_API_KEY",
+            "\"${localProperties.getProperty("BOOKS_API_KEY", "YOUR_DEFAULT_API_KEY_IF_NOT_FOUND")}\""
+        )
+
     }
 
     buildTypes {
@@ -59,18 +70,19 @@ dependencies {
     implementation("androidx.credentials:credentials-play-services-auth:<latest_version>")
     implementation("androidx.credentials:credentials:<latest_version>")
     implementation("com.google.android.libraries.identity.googleid:googleid:<latest_version>")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:<latest-version>")
+    implementation(libs.androidx.lifecycle.ktx)
     implementation("com.google.firebase:firebase-firestore:<latest-version>")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
-<<<<<<< Updated upstream
+
     implementation("androidx.fragment:fragment-ktx:1.8.8")
 
-=======
     implementation("com.google.android.material:material")
 
     implementation(platform("androidx.compose:compose-bom:2025.05.00"))
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-core")
->>>>>>> Stashed changes
+
+    implementation("com.google.android.material:material")
+
 }
 
