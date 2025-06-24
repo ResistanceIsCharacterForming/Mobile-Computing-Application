@@ -1,7 +1,6 @@
 package com.example.shelfship.utils
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -31,16 +30,18 @@ class RowRecyclerViewAdapter(private var books: ArrayList<GBSearchBook>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = books[position]
-        Log.d("RecyclerViewAdapter", "Binding book: $book")
         if (book.volumeInfo.imageLinks != null) {
             Glide.with(holder.bookCover.context)
                 .load(book.volumeInfo.imageLinks.thumbnail?:"")
-                .placeholder(R.drawable.message_icon)
-                .error(R.drawable.ic_notification)
+                .placeholder(R.drawable.placeholder_book)
+                .error(R.drawable.error_book)
                 .into(holder.bookCover)
         }
+        else {
+            holder.bookCover.setImageResource(R.drawable.placeholder_book)
+        }
         holder.bookTitle.text = book.volumeInfo.title
-        holder.authors.text = book.volumeInfo.authors?.joinToString(", ")
+        holder.authors.text = book.volumeInfo.authors?.joinToString(", ") ?: "Unknown authors"
         holder.starRating.rating = book.volumeInfo.averageRating?.toFloat() ?: 0f
     }
 
@@ -50,8 +51,14 @@ class RowRecyclerViewAdapter(private var books: ArrayList<GBSearchBook>):
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateSearchResults(newBooks: ArrayList<GBSearchBook>) {
-        Log.d("RecyclerViewAdapter", "Updating search results: $newBooks")
-        books = newBooks
+        books.clear()
+        books.addAll(newBooks)
         notifyDataSetChanged()
+    }
+
+    fun clearItems() {
+        val oldSize = books.size
+        books.clear()
+        notifyItemRangeRemoved(0, oldSize)
     }
 }
