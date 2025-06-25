@@ -19,14 +19,12 @@ import com.example.shelfship.R
 import com.example.shelfship.viewmodels.BookDetailsViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.launch
 
 class BookDetailsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: BookDetailsViewModel
 
-    private lateinit var blurredImageCover: ImageView
     private lateinit var clearImageCover: ImageView
     private lateinit var bookTitleView: MaterialTextView
     private lateinit var averageRatingView: RatingBar
@@ -51,7 +49,6 @@ class BookDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_details)
 
-        blurredImageCover = findViewById(R.id.blurred_book_cover_frame)
         clearImageCover = findViewById(R.id.book_cover_frame)
         bookTitleView = findViewById(R.id.book_title_frame)
         averageRatingView = findViewById(R.id.average_rating_frame)
@@ -109,17 +106,9 @@ class BookDetailsActivity : AppCompatActivity() {
                                     .placeholder(R.drawable.placeholder_book)
                                     .error(R.drawable.error_book)
                                     .into(clearImageCover)
-
-                                Glide.with(blurredImageCover.context)
-                                    .load(currentBookDetails.volumeInfo.imageLinks.thumbnail?:"")
-                                    .placeholder(R.drawable.placeholder_book)
-                                    .error(R.drawable.error_book)
-                                    .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
-                                    .into(blurredImageCover)
                             }
                             else {
                                 clearImageCover.setImageResource(R.drawable.placeholder_book)
-                                blurredImageCover.setImageResource(R.drawable.error_book)
                             }
                             bookTitleView.text = currentBookDetails.volumeInfo.title
                             averageRatingView.rating = currentBookDetails.volumeInfo.averageRating?.toFloat()?: 0f

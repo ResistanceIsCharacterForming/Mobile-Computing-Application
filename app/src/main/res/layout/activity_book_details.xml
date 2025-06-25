@@ -42,22 +42,15 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:id="@+id/blurred_book_cover_frame"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:src="@color/grey"/>
+                android:layout_height="200dp"
+                android:padding="50dp"
+                android:background="@color/cream">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/book_cover_frame"
+                    android:contentDescription="@string/book_cover_content_description"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -73,8 +66,7 @@
                 android:gravity="center_horizontal"
                 android:layout_marginVertical="12dp"
                 android:textSize="30sp"
-                android:textStyle="bold"
-                android:text="@string/app_name"/>
+                android:textStyle="bold"/>
 
             <RatingBar
                 android:layout_width="wrap_content"
@@ -119,7 +111,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
-                    android:text="Author Name"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:maxLines="1"
                     android:ellipsize="end"
@@ -153,7 +144,6 @@
                     android:maxLines="8"
                     android:ellipsize="end"
                     android:scrollbars="vertical"
-                    android:text="Some description here Some description hereSome description hereSome description hereSome description here"
                     app:layout_constraintStart_toEndOf="@id/description_ind"
                     app:layout_constraintTop_toTopOf="@id/description_ind"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -179,7 +169,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
-                    android:text="Fiction, Drama"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:maxLines="1"
                     android:ellipsize="end"
@@ -208,7 +197,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
-                    android:text="2023-01-01"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:maxLines="1"
                     android:ellipsize="end"
@@ -237,7 +225,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
-                    android:text="Penguin"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:maxLines="1"
                     android:ellipsize="end"
@@ -266,7 +253,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
-                    android:text="350"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:maxLines="1"
                     android:ellipsize="end"
@@ -295,7 +281,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
-                    android:text="English"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:maxLines="1"
                     android:ellipsize="end"
