@@ -6,9 +6,10 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.shelfship.R
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import android.view.LayoutInflater
+import android.view.ViewGroup
 
 class ProfilePageActivity : AppCompatActivity() {
 
@@ -18,8 +19,6 @@ class ProfilePageActivity : AppCompatActivity() {
     private lateinit var ageInput: EditText
     private lateinit var interestsInput: EditText
     private lateinit var btnEditProfile: Button
-    private lateinit var btnHamburger: ImageButton
-
     private var isEditing = false
 
     private val firestore = FirebaseFirestore.getInstance()
@@ -31,34 +30,19 @@ class ProfilePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        val composeView = findViewById<androidx.compose.ui.platform.ComposeView>(R.id.compose_scaffold)
+        composeView.setContent {
+            LargeDropdownMenuScaffold(context = this, screenTitle = "")
+        }
         profileImageView = findViewById(R.id.imageSlot1)
         aboutMeInput = findViewById(R.id.aboutMeInput)
         locationInput = findViewById(R.id.locationInput)
         ageInput = findViewById(R.id.ageInput)
         interestsInput = findViewById(R.id.interestsInput)
         btnEditProfile = findViewById(R.id.btnEditProfile)
-        btnHamburger = findViewById(R.id.btnHamburger)
 
-        btnHamburger.setOnClickListener { view ->
-            val popup = PopupMenu(this, view)
-            popup.menuInflater.inflate(R.menu.menu_popup, popup.menu)
-            popup.menu.findItem(R.id.menu_profile)?.isVisible = false
-            popup.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.menu_home -> {
-                        startActivity(Intent(this, HomeScreen::class.java))
-                        true
-                    }
-                    R.id.menu_friends -> {
-                        startActivity(Intent(this, FriendScreen::class.java))
-                        true
-                    }
-                    R.id.menu_profile -> true
-                    else -> false
-                }
-            }
-            popup.show()
-        }
+
+
 
         setEditMode(false)
 
