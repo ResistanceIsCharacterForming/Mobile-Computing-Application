@@ -3,6 +3,17 @@
     <string name="search_hint">Find new books</string>
     <string name="book_cover">book cover</string>
     <string name="fallback_author_names">Author names</string>
+    <string name="details">Details</string>
+    <string name="assigned_genre">Assigned Genre:</string>
+    <string name="genre">Genre</string>
+    <string name="add_to_lib">See in Shelves</string>
+    <string name="authors_ind">Authors</string>
+    <string name="description_ind">Description</string>
+    <string name="categories_ind">Categories</string>
+    <string name="published_date_ind">Published Date</string>
+    <string name="publisher_ind">Publisher</string>
+    <string name="page_count_ind">Page Count</string>
+    <string name="language_ind">Language</string>
     <array name="genres">
         <item>Fantasy</item>
         <item>SciFie</item>

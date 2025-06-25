@@ -40,7 +40,8 @@ class GBSearchActivity : AppCompatActivity() {
             override fun onItemClick(item: GBSearchBook) {
                 Log.d("SearchActivity", "Viewing the details of: ${item.id}")
                 val intent = Intent(this@GBSearchActivity, BookDetailsActivity::class.java)
-                intent.putExtra("bookId", item.id)
+                intent.putExtra("book_id", item.id)
+                intent.putExtra("assigned_genre", genreDropdownMenu.text.toString())
                 startActivity(intent)
             }
         })
