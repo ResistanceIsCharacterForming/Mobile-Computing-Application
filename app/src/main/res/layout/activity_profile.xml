@@ -38,8 +38,6 @@
                 android:contentDescription="Menu" />
         </RelativeLayout>
 
-
-
         <TextView
             android:text="My Profile"
             android:textSize="24sp"
@@ -49,23 +47,15 @@
             android:layout_marginBottom="12dp"
             android:layout_marginTop="8dp" />
 
-        <!-- Profile Image Slots -->
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:rowCount="2"
-            android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false"
-            android:layout_marginBottom="16dp">
-
-            <ImageView android:id="@+id/imageSlot1" style="@style/ImageSlot"/>
-            <ImageView android:id="@+id/imageSlot2" style="@style/ImageSlot"/>
-            <ImageView android:id="@+id/imageSlot3" style="@style/ImageSlot"/>
-            <ImageView android:id="@+id/imageSlot4" style="@style/ImageSlot"/>
-            <ImageView android:id="@+id/imageSlot5" style="@style/ImageSlot"/>
-            <ImageView android:id="@+id/imageSlot6" style="@style/ImageSlot"/>
-        </GridLayout>
+        <!-- Tek Profil Resmi -->
+        <ImageView
+            android:id="@+id/imageSlot1"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Profile Picture"
+             />
 
         <!-- About Me -->
         <TextView
@@ -85,7 +75,7 @@
             android:padding="8dp"
             android:gravity="top"
             android:layout_marginBottom="16dp"
-            android:enabled="false"/>
+            android:enabled="false" />
 
         <!-- Editable profile fields -->
 
@@ -103,7 +93,7 @@
             android:background="#FFF"
             android:padding="8dp"
             android:enabled="false"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
         <TextView
             android:text="Location"
@@ -119,7 +109,7 @@
             android:background="#FFF"
             android:padding="8dp"
             android:enabled="false"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
         <TextView
             android:text="Age"
@@ -136,7 +126,7 @@
             android:background="#FFF"
             android:padding="8dp"
             android:enabled="false"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
         <TextView
             android:text="Interests"
@@ -152,7 +142,7 @@
             android:background="#FFF"
             android:padding="8dp"
             android:enabled="false"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp" />
 
         <!-- Edit / Save Button -->
         <Button

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    kotlin("kapt")
 }
 
 android {
@@ -67,6 +68,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
     implementation("androidx.credentials:credentials-play-services-auth:<latest_version>")
     implementation("androidx.credentials:credentials:<latest_version>")
     implementation("com.google.android.libraries.identity.googleid:googleid:<latest_version>")
@@ -74,5 +77,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:<latest-version>")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
     implementation("com.google.android.material:material")
+
+
 }
 
