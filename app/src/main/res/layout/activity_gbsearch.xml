@@ -56,7 +56,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="none"
-                        android:hint="Genre"
+                        android:hint="@string/genre"
                         android:saveEnabled="false"
                         app:simpleItems="@array/genres" />
                 </com.google.android.material.textfield.TextInputLayout>

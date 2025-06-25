@@ -19,21 +19,30 @@ import com.example.shelfship.utils.RowRecyclerViewAdapter
 import com.example.shelfship.viewmodels.GBSearchViewModel
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class GBSearchActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: GBSearchViewModel
+
+    private lateinit var searchBar: SearchBar
+    private lateinit var genreDropdown: com.google.android.material.textfield.TextInputLayout
+    private lateinit var genreDropdownMenu: AutoCompleteTextView
+    private lateinit var searchView: SearchView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gbsearch)
 
-        val searchBar = findViewById<SearchBar>(R.id.search_bar)
-        val genreDropdown =
+        searchBar = findViewById<SearchBar>(R.id.search_bar)
+        genreDropdown =
             findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.genre_dropdown)
-        val genreDropdownMenu = genreDropdown.findViewById<AutoCompleteTextView>(R.id.genre_menu)
-        val searchView = findViewById<SearchView>(R.id.search_view)
-        val progressBar = findViewById<ProgressBar>(R.id.searching_progress_bar)
-        val recyclerView = findViewById<RecyclerView>(R.id.search_results)
+        genreDropdownMenu = genreDropdown.findViewById<AutoCompleteTextView>(R.id.genre_menu)
+        searchView = findViewById<SearchView>(R.id.search_view)
+        progressBar = findViewById<ProgressBar>(R.id.searching_progress_bar)
+        recyclerView = findViewById<RecyclerView>(R.id.search_results)
 
         var adapter = RowRecyclerViewAdapter(arrayListOf<GBSearchBook>())
         adapter.setOnItemClickListener(listener = object : RowRecyclerViewAdapter.onItemClickListener {
@@ -50,7 +59,7 @@ class GBSearchActivity : AppCompatActivity() {
         recyclerView.setItemViewCacheSize(20)
         recyclerView.adapter = adapter
 
-        val viewModel = ViewModelProvider(this).get(GBSearchViewModel::class.java)
+        viewModel = ViewModelProvider(this)[GBSearchViewModel::class.java]
 
         searchView.editText.setOnEditorActionListener { v, actionId, event ->
             if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
@@ -101,7 +110,6 @@ class GBSearchActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.searchState.collect { searchState ->
                     if (searchState.loading) {
-                        //TODO (Fix) CURRENTLY NOT WORKING
                         progressBar.visibility = ProgressBar.VISIBLE
                     } else {
                         progressBar.visibility = ProgressBar.GONE

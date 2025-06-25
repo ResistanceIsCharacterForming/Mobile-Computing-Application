@@ -6,327 +6,359 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.BookDetailsActivity">
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:id="@+id/loading_layout">
+            <ProgressBar
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/blurred_book_cover_frame"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@color/grey"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar"
+                android:layout_marginTop="200dp"/>
 
-            <ImageView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/book_cover_frame"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/ic_launcher_background"/>
+                android:id="@+id/loading_text"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="30sp"/>
+        </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.textview.MaterialTextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/book_title_frame"
-            android:gravity="center_horizontal"
-            android:layout_marginVertical="12dp"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:text="@string/app_name"/>
+            android:orientation="vertical"
+            android:id="@+id/content_layout"
+            android:visibility="gone">
 
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/average_rating_frame"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="12dp"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/details"
-            android:textSize="24sp"
-            android:textStyle="italic"
-            android:layout_gravity="center_horizontal"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/blurred_book_cover_frame"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@color/grey"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="12dp"
-            android:paddingBottom="12dp"
-            android:background="@color/cream">
-
-            <!-- Authors -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/authors_ind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/authors_ind"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/authors_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="16sp"
-                android:text="Author Name"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toEndOf="@id/authors_ind"
-                app:layout_constraintTop_toTopOf="@id/authors_ind"
-                app:layout_constraintBottom_toBottomOf="@+id/authors_ind"/>
-
-            <!-- Description -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/description_ind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_margin="16dp"
-                android:text="@string/description_ind"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/authors_ind"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/description_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="16sp"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:lineSpacingExtra="4dp"
-                android:maxLines="8"
-                android:ellipsize="end"
-                android:scrollbars="vertical"
-                android:text="Some description here Some description hereSome description hereSome description hereSome description here"
-                app:layout_constraintStart_toEndOf="@id/description_ind"
-                app:layout_constraintTop_toTopOf="@id/description_ind"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <!-- Categories -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/categories_ind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/categories_ind"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description_value"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/categories_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="16sp"
-                android:text="Fiction, Drama"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toEndOf="@id/categories_ind"
-                app:layout_constraintTop_toTopOf="@id/categories_ind"
-                app:layout_constraintBottom_toBottomOf="@+id/categories_ind"/>
-
-            <!-- Published Date -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/published_date_ind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/published_date_ind"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/categories_ind"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/published_date_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="16sp"
-                android:text="2023-01-01"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toEndOf="@id/published_date_ind"
-                app:layout_constraintTop_toTopOf="@id/published_date_ind"
-                app:layout_constraintBottom_toBottomOf="@+id/published_date_ind"/>
-
-            <!-- Publisher -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/publisher_ind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/publisher_ind"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/published_date_ind"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/publisher_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="16sp"
-                android:text="Penguin"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toEndOf="@id/publisher_ind"
-                app:layout_constraintTop_toTopOf="@id/publisher_ind"
-                app:layout_constraintBottom_toBottomOf="@+id/publisher_ind"/>
-
-            <!-- Page Count -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/page_count_ind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/page_count_ind"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/publisher_ind"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/page_count_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="16sp"
-                android:text="350"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toEndOf="@id/page_count_ind"
-                app:layout_constraintTop_toTopOf="@id/page_count_ind"
-                app:layout_constraintBottom_toBottomOf="@+id/page_count_ind"/>
-
-            <!-- Language -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/language_ind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/language_ind"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/page_count_ind"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/language_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="16sp"
-                android:text="English"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintStart_toEndOf="@id/language_ind"
-                app:layout_constraintTop_toTopOf="@id/language_ind"
-                app:layout_constraintBottom_toBottomOf="@+id/language_ind"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginVertical="12dp">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/assigned_genre_ind"
-                android:textSize="20sp"
-                android:layout_marginHorizontal="12dp"
-                android:text="@string/assigned_genre"
-                android:layout_centerVertical="true"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/genre_dropdown"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/assigned_genre_ind"
-                android:layout_marginEnd="12dp"
-                app:boxCornerRadiusBottomEnd="30sp"
-                app:boxCornerRadiusBottomStart="30sp"
-                app:boxCornerRadiusTopStart="30sp"
-                app:boxCornerRadiusTopEnd="30sp"
-                app:boxStrokeWidth="0sp">
-
-                <!-- if "saveEnabled" not false it causes unwanted filtering of options on rotation -->
-                <AutoCompleteTextView
-                    android:id="@+id/assigned_genre_menu"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:hint="@string/genre"
-                    android:saveEnabled="false"
-                    app:simpleItems="@array/genres" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </RelativeLayout>
+                    android:id="@+id/book_cover_frame"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_launcher_background"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/off_red"
-            android:textColor="@color/white"
-            android:text="@string/add_to_lib"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="20dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/book_title_frame"
+                android:gravity="center_horizontal"
+                android:layout_marginVertical="12dp"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:text="@string/app_name"/>
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/average_rating_frame"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details"
+                android:textSize="24sp"
+                android:textStyle="italic"
+                android:layout_gravity="center_horizontal"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="12dp"
+                android:paddingBottom="12dp"
+                android:background="@color/cream">
+
+                <!-- Authors -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/authors_ind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="@string/authors_ind"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/authors_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="16sp"
+                    android:text="Author Name"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toEndOf="@id/authors_ind"
+                    app:layout_constraintTop_toTopOf="@id/authors_ind"
+                    app:layout_constraintBottom_toBottomOf="@+id/authors_ind"/>
+
+                <!-- Description -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/description_ind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_margin="16dp"
+                    android:text="@string/description_ind"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/authors_ind"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/description_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="16sp"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:lineSpacingExtra="4dp"
+                    android:maxLines="8"
+                    android:ellipsize="end"
+                    android:scrollbars="vertical"
+                    android:text="Some description here Some description hereSome description hereSome description hereSome description here"
+                    app:layout_constraintStart_toEndOf="@id/description_ind"
+                    app:layout_constraintTop_toTopOf="@id/description_ind"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <!-- Categories -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/categories_ind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="@string/categories_ind"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/description_value"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/categories_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="16sp"
+                    android:text="Fiction, Drama"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toEndOf="@id/categories_ind"
+                    app:layout_constraintTop_toTopOf="@id/categories_ind"
+                    app:layout_constraintBottom_toBottomOf="@+id/categories_ind"/>
+
+                <!-- Published Date -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/published_date_ind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="@string/published_date_ind"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/categories_ind"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/published_date_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="16sp"
+                    android:text="2023-01-01"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toEndOf="@id/published_date_ind"
+                    app:layout_constraintTop_toTopOf="@id/published_date_ind"
+                    app:layout_constraintBottom_toBottomOf="@+id/published_date_ind"/>
+
+                <!-- Publisher -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/publisher_ind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="@string/publisher_ind"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/published_date_ind"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/publisher_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="16sp"
+                    android:text="Penguin"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toEndOf="@id/publisher_ind"
+                    app:layout_constraintTop_toTopOf="@id/publisher_ind"
+                    app:layout_constraintBottom_toBottomOf="@+id/publisher_ind"/>
+
+                <!-- Page Count -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/page_count_ind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="@string/page_count_ind"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/publisher_ind"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/page_count_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="16sp"
+                    android:text="350"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toEndOf="@id/page_count_ind"
+                    app:layout_constraintTop_toTopOf="@id/page_count_ind"
+                    app:layout_constraintBottom_toBottomOf="@+id/page_count_ind"/>
+
+                <!-- Language -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/language_ind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="@string/language_ind"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/page_count_ind"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/language_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="16sp"
+                    android:text="English"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toEndOf="@id/language_ind"
+                    app:layout_constraintTop_toTopOf="@id/language_ind"
+                    app:layout_constraintBottom_toBottomOf="@+id/language_ind"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="12dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/assigned_genre_ind"
+                    android:textSize="20sp"
+                    android:layout_marginHorizontal="12dp"
+                    android:text="@string/assigned_genre"
+                    android:layout_centerVertical="true"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/genre_dropdown"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/assigned_genre_ind"
+                    android:layout_marginEnd="12dp"
+                    app:boxCornerRadiusBottomEnd="30sp"
+                    app:boxCornerRadiusBottomStart="30sp"
+                    app:boxCornerRadiusTopStart="30sp"
+                    app:boxCornerRadiusTopEnd="30sp"
+                    app:boxStrokeWidth="0sp">
+
+                    <!-- if "saveEnabled" not false it causes unwanted filtering of options on rotation -->
+                    <AutoCompleteTextView
+                        android:id="@+id/assigned_genre_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:hint="@string/genre"
+                        android:saveEnabled="false"
+                        app:simpleItems="@array/genres" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/see_in_library_button"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/off_red"
+                android:textColor="@color/white"
+                android:text="@string/add_to_lib"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
 
 
 </ScrollView>

@@ -25,7 +25,11 @@ class GBSearchViewModel: ViewModel() {
     fun searchBooks(query: String, subject: String) {
         viewModelScope.launch {
             try {
-                _searchState.value.loading = true
+                /*
+                if i simply changed the value of the loading parameter by using value.loading, the flow did not emit
+                a new output which meant that the loading state was not updated.
+                 */
+                _searchState.value = GBSearchState(GBSearchResult(0, arrayListOf<GBSearchBook>()), true, null)
                 val response = GBSeachClient.gbSearchService.searchBooks(query, subject)
                 if (response.isSuccessful) {
                     val body = response.body()
