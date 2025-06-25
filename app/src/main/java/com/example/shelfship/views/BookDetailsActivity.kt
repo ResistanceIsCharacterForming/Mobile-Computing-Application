@@ -124,7 +124,7 @@ class BookDetailsActivity : AppCompatActivity() {
                             contentLayout.visibility = LinearLayout.VISIBLE
                             Log.d("BookDetailsActivity", "Book details loaded successfully!")
                         }
-                        else {
+                        else if (it.error != null) {
                             loadingText.text = "Error loading book details!"
                             loadingBar.visibility = ProgressBar.GONE
                             Log.d("BookDetailsActivity", "Error loading book details! ${it.error}")

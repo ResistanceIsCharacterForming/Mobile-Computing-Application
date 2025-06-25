@@ -3,7 +3,7 @@ package com.example.shelfship.models
 data class GBVolumeInfo(
     val title: String,
     val authors: List<String>? = null,
-    val description: String? = null,
+    var description: String? = null,
     val categories: List<String>? = null,
     val averageRating: Double? = null,
     val publishedDate: String? = null,

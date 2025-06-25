@@ -8,7 +8,7 @@ import com.example.shelfship.models.BookDetailsState
 import com.example.shelfship.services.GBSeachClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import androidx.core.text.HtmlCompat
 
 class BookDetailsViewModel: ViewModel() {
     private var _bookDetailsState = MutableStateFlow<BookDetailsState>(BookDetailsState(null, false, null))
@@ -25,6 +25,10 @@ class BookDetailsViewModel: ViewModel() {
                 val response = GBSeachClient.gbSearchService.getBookDetails(bookId)
                 if (response.isSuccessful) {
                     _bookDetailsState.value.bookDetails = response.body()
+                    if (_bookDetailsState.value.bookDetails?.volumeInfo?.description != null)
+                        _bookDetailsState.value.bookDetails?.volumeInfo?.description =
+                            HtmlCompat.fromHtml(_bookDetailsState.value.bookDetails?.volumeInfo?.description!!,
+                                HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
                     _bookDetailsState.value.bookDetails?.assignedGenre = _assignedGenre.value
                     Log.d("BookDetailsViewModel", "Book details fetched successfully!")
                     _bookDetailsState.value = BookDetailsState(_bookDetailsState.value.bookDetails, false, null)

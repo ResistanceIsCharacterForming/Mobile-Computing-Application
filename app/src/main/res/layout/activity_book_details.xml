@@ -54,8 +54,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/ic_launcher_background"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,7 +106,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/authors_value"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
@@ -116,7 +115,8 @@
                     android:ellipsize="end"
                     app:layout_constraintStart_toEndOf="@id/authors_ind"
                     app:layout_constraintTop_toTopOf="@id/authors_ind"
-                    app:layout_constraintBottom_toBottomOf="@+id/authors_ind"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/authors_ind"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <!-- Description -->
                 <com.google.android.material.textview.MaterialTextView
@@ -141,7 +141,7 @@
                     android:textSize="16sp"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:lineSpacingExtra="4dp"
-                    android:maxLines="8"
+                    android:maxLines="14"
                     android:ellipsize="end"
                     android:scrollbars="vertical"
                     app:layout_constraintStart_toEndOf="@id/description_ind"
@@ -174,7 +174,8 @@
                     android:ellipsize="end"
                     app:layout_constraintStart_toEndOf="@id/categories_ind"
                     app:layout_constraintTop_toTopOf="@id/categories_ind"
-                    app:layout_constraintBottom_toBottomOf="@+id/categories_ind"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/categories_ind"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <!-- Published Date -->
                 <com.google.android.material.textview.MaterialTextView
@@ -193,7 +194,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/published_date_value"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
@@ -202,7 +203,8 @@
                     android:ellipsize="end"
                     app:layout_constraintStart_toEndOf="@id/published_date_ind"
                     app:layout_constraintTop_toTopOf="@id/published_date_ind"
-                    app:layout_constraintBottom_toBottomOf="@+id/published_date_ind"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/published_date_ind"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <!-- Publisher -->
                 <com.google.android.material.textview.MaterialTextView
@@ -221,7 +223,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/publisher_value"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
@@ -230,7 +232,8 @@
                     android:ellipsize="end"
                     app:layout_constraintStart_toEndOf="@id/publisher_ind"
                     app:layout_constraintTop_toTopOf="@id/publisher_ind"
-                    app:layout_constraintBottom_toBottomOf="@+id/publisher_ind"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/publisher_ind"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <!-- Page Count -->
                 <com.google.android.material.textview.MaterialTextView
@@ -249,7 +252,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/page_count_value"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
@@ -258,7 +261,8 @@
                     android:ellipsize="end"
                     app:layout_constraintStart_toEndOf="@id/page_count_ind"
                     app:layout_constraintTop_toTopOf="@id/page_count_ind"
-                    app:layout_constraintBottom_toBottomOf="@+id/page_count_ind"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/page_count_ind"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <!-- Language -->
                 <com.google.android.material.textview.MaterialTextView
@@ -277,7 +281,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/language_value"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
@@ -286,7 +290,8 @@
                     android:ellipsize="end"
                     app:layout_constraintStart_toEndOf="@id/language_ind"
                     app:layout_constraintTop_toTopOf="@id/language_ind"
-                    app:layout_constraintBottom_toBottomOf="@+id/language_ind"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/language_ind"
+                    app:layout_constraintEnd_toEndOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
