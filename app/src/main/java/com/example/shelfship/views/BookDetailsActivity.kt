@@ -85,11 +85,15 @@ class BookDetailsActivity : AppCompatActivity() {
             if (bookId != null) {
                 if (ownerBookShelves.contentEquals(booleanArrayOf(false, false, false, false))) {
                     // activity is being started from the search results. thus the book should be checked if it is in the library
+                    // the genre in the library may differ from the subject chosen in the search bar so the genre is also fixed
                     lifecycleScope.launch {
                         viewModel.fixShelvesAndGenreIfInLibrary(bookId)
                     }
                 }
-                viewModel.setOwnerBookShelves(ownerBookShelves)
+                else {
+                    // activity is launched from the library ui, the owner bookshelves and the correct genre are already known
+                    viewModel.setOwnerBookShelves(ownerBookShelves)
+                }
                 viewModel.getBookDetails(bookId)
             }
         }
