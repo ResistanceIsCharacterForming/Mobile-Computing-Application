@@ -9,6 +9,8 @@ import com.example.shelfship.services.GBSeachClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import androidx.core.text.HtmlCompat
+import com.example.shelfship.models.FirestoreBookDetails
+import com.example.shelfship.utils.FirebaseUtils
 
 class BookDetailsViewModel: ViewModel() {
     private var _bookDetailsState = MutableStateFlow<BookDetailsState>(BookDetailsState(null, false, null))
@@ -16,6 +18,9 @@ class BookDetailsViewModel: ViewModel() {
 
     private var _assignedGenre = MutableStateFlow<String>("")
     val assignedGenre: StateFlow<String> = _assignedGenre
+
+    private var _ownerBookShelves = MutableStateFlow<List<Boolean>>(listOf(false, false, false, false))
+    val ownerBookShelves: StateFlow<List<Boolean>> = _ownerBookShelves
 
     fun getBookDetails(bookId: String) {
         viewModelScope.launch {
@@ -44,11 +49,39 @@ class BookDetailsViewModel: ViewModel() {
         }
     }
 
+    suspend fun fixShelvesAndGenreIfInLibrary(bookId: String) {
+        val lightweightBookDetails = FirebaseUtils.getBookFromLibrary(bookId)
+        if (lightweightBookDetails != null) {
+            setOwnerBookShelves(lightweightBookDetails.ownerBookShelves.toBooleanArray())
+            setAssignedGenre(lightweightBookDetails.assignedGenre)
+        }
+    }
+
     fun setAssignedGenre(genre: String) {
         _assignedGenre.value = genre
         if (_bookDetailsState.value.bookDetails != null) {
             _bookDetailsState.value.bookDetails?.assignedGenre = genre
         }
+    }
+
+    fun setOwnerBookShelves(ownerBookShelves: BooleanArray) {
+        _ownerBookShelves.value = ownerBookShelves.toList()
+        if (_bookDetailsState.value.bookDetails != null) {
+            _bookDetailsState.value.bookDetails?.ownerBookShelves = ownerBookShelves.toList()
+        }
+    }
+
+    suspend fun updateLibrary(): Boolean {
+        if (_bookDetailsState.value.bookDetails != null) {
+            Log.d("BookDetailsViewModel", "Updating library...")
+            val bookDetailsSnapshot = _bookDetailsState.value.bookDetails!!
+            val lightWeightBookDetails = FirestoreBookDetails(bookDetailsSnapshot.id, bookDetailsSnapshot.volumeInfo.title, bookDetailsSnapshot.volumeInfo.imageLinks?.thumbnail?:"",
+                bookDetailsSnapshot.assignedGenre.toString(), bookDetailsSnapshot.ownerBookShelves)
+            val success: Boolean = FirebaseUtils.updateLibrary(lightWeightBookDetails)
+            return success
+        }
+        Log.e("BookDetailsViewModel", "Book details are null!")
+        return false
     }
 
 }

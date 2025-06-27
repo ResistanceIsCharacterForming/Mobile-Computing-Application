@@ -1,6 +1,7 @@
 package com.example.shelfship.utils
 
 import android.util.Log
+import com.example.shelfship.models.FirestoreBookDetails
 import com.example.shelfship.models.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -22,9 +23,11 @@ object FirebaseUtils {
                 .document(userData.uid)
                 .set(userData)
                 .await()
+            Log.d("FirebaseUtils", "User saved to Firestore successfully!")
             true
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.e("FirebaseUtils", "Error saving user to Firestore: ${e.message}")
             false
         }
     }
@@ -96,6 +99,47 @@ object FirebaseUtils {
             } else {
                 Log.d("MESSAGE", "Current data: null")
             }
+        }
+    }
+
+    suspend fun updateLibrary(lightBookDetails: FirestoreBookDetails): Boolean {
+        val uid = currentUserId()
+        if (uid == null) return false
+        return try {
+            val bookReference = firestore.collection("users").document(uid)
+                .collection("library").document(lightBookDetails.id)
+            if (lightBookDetails.ownerBookShelves == listOf<Boolean>(false, false, false, false)) {
+                bookReference.delete().await()
+            }
+            else {
+                bookReference.set(lightBookDetails).await()
+            }
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    suspend fun getBookFromLibrary(bookId: String): FirestoreBookDetails? {
+        val uid = currentUserId()
+        return try {
+            if (uid != null) {
+                val bookReference = firestore.collection("users").document(uid)
+                    .collection("library").document(bookId)
+                val documentSnapshot = bookReference.get().await()
+                if (documentSnapshot.exists()) {
+                    Log.d("BookDetailsViewModel", "Book details being turned to object!")
+                    documentSnapshot.toObject(FirestoreBookDetails::class.java)
+                } else {
+                    // the document doesn't exist
+                    null
+                }
+            }
+            else null
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 

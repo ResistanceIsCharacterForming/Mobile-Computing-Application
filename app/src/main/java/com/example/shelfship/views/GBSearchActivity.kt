@@ -51,6 +51,7 @@ class GBSearchActivity : AppCompatActivity() {
                 val intent = Intent(this@GBSearchActivity, BookDetailsActivity::class.java)
                 intent.putExtra("book_id", item.id)
                 intent.putExtra("assigned_genre", genreDropdownMenu.text.toString())
+                intent.putExtra("owner_book_shelves", booleanArrayOf(false, false, false, false))
                 startActivity(intent)
             }
         })

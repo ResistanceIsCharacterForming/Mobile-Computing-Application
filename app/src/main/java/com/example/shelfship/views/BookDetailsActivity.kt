@@ -8,13 +8,14 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RatingBar
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.shelfship.R
 import com.example.shelfship.viewmodels.BookDetailsViewModel
 import com.google.android.material.button.MaterialButton
@@ -44,6 +45,8 @@ class BookDetailsActivity : AppCompatActivity() {
     private lateinit var loadingText: MaterialTextView
     private lateinit var loadingBar: ProgressBar
 
+    private lateinit var ownerBookShelves: BooleanArray
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,22 +74,25 @@ class BookDetailsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[BookDetailsViewModel::class.java]
 
         val launcherIntent = intent
-        if (launcherIntent != null) {
+        if (savedInstanceState == null && launcherIntent != null) {
+            // the activity is started for the first time and view model data is being initialized
             val bookId = launcherIntent.getStringExtra("book_id")
             val assignedGenre = launcherIntent.getStringExtra("assigned_genre")
+            ownerBookShelves = launcherIntent.getBooleanArrayExtra("owner_book_shelves")?: booleanArrayOf(false, false, false, false)
             if (assignedGenre != null && viewModel.assignedGenre.value == "") {
                 viewModel.setAssignedGenre(assignedGenre)
             }
             if (bookId != null) {
+                if (ownerBookShelves.contentEquals(booleanArrayOf(false, false, false, false))) {
+                    // activity is being started from the search results. thus the book should be checked if it is in the library
+                    lifecycleScope.launch {
+                        viewModel.fixShelvesAndGenreIfInLibrary(bookId)
+                    }
+                }
+                viewModel.setOwnerBookShelves(ownerBookShelves)
                 viewModel.getBookDetails(bookId)
             }
         }
-
-        genreDropdownMenu.setOnItemClickListener { parent, view, position, id ->
-            val selectedGenre = parent.getItemAtPosition(position).toString()
-            viewModel.setAssignedGenre(selectedGenre)
-        }
-
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -140,6 +146,47 @@ class BookDetailsActivity : AppCompatActivity() {
                     if (it != "") genreDropdownMenu.setText(it.toString(), false)
                 }
             }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.ownerBookShelves.collect {
+                    ownerBookShelves = it.toBooleanArray()
+                }
+            }
+        }
+
+        genreDropdownMenu.setOnItemClickListener { parent, view, position, id ->
+            val selectedGenre = parent.getItemAtPosition(position).toString()
+            viewModel.setAssignedGenre(selectedGenre)
+        }
+
+        seeInLibraryButton.setOnClickListener {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(seeInLibraryButton.context)
+            val ownerBookShelvesSnapshot = ownerBookShelves.clone()
+            val fallBackOwnerBookShelves = ownerBookShelvesSnapshot.clone()
+            builder
+                .setTitle("Add to / Remove from Library")
+                .setPositiveButton("Update") { dialog, which ->
+                    viewModel.setOwnerBookShelves(ownerBookShelvesSnapshot)
+                    lifecycleScope.launch {
+                        if (viewModel.updateLibrary()) {
+                            Toast.makeText(this@BookDetailsActivity, "Library updated!", Toast.LENGTH_SHORT).show()
+                        }
+                        else {
+                            Toast.makeText(this@BookDetailsActivity, "Error updating library!", Toast.LENGTH_SHORT).show()
+                            viewModel.setOwnerBookShelves(fallBackOwnerBookShelves)
+                        }
+                    }
+                }
+                .setNegativeButton("Cancel") { dialog, which ->
+                    dialog.dismiss()
+                }
+                .setMultiChoiceItems(
+                    arrayOf("Favorites", "Simply Read", "Currently Reading", "Wishlist"), ownerBookShelvesSnapshot) { dialog, which, isChecked -> }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
     }
 }

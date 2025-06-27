@@ -4,6 +4,6 @@ data class BookDetails(
     val id: String,
     val volumeInfo: GBVolumeInfo,
     var assignedGenre: String? = null,
-    val ownerBookShelves: ArrayList<String> = arrayListOf<String>()
+    var ownerBookShelves: List<Boolean> = listOf<Boolean>(false, false, false, false)
 )
 
