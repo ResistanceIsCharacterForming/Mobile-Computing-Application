@@ -38,8 +38,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:maxLines="2"
-                android:ellipsize="end"
-                android:text="@string/app_name" />
+                android:ellipsize="end"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/authors"
@@ -49,8 +48,7 @@
                 android:textColor="?android:textColorSecondary"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:layout_marginTop="4dp"
-                android:text="@string/fallback_author_names" />
+                android:layout_marginTop="4dp"/>
 
             <RatingBar
                 android:id="@+id/average_rating"
@@ -59,7 +57,8 @@
                 android:isIndicator="true"
                 android:stepSize="0.5"
                 android:numStars="5"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:clickable="false"/>
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

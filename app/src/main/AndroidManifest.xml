@@ -19,9 +19,6 @@
             android:name=".views.BookDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".views.GBSearchActivity"
-            android:exported="false" />
-        <activity
             android:name=".views.BookshelfActivity"
             android:exported="false" />
         <activity

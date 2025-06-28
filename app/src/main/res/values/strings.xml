@@ -14,6 +14,11 @@
     <string name="page_count_ind">Page Count</string>
     <string name="language_ind">Language</string>
     <string name="book_cover_content_description">Book Cover</string>
+    <string name="library">Library</string>
+    <string name="library_favorites">Favorites</string>
+    <string name="library_simply_read">Simply Read</string>
+    <string name="library_currently_reading">Currently Reading</string>
+    <string name="library_wishlist">Wishlist</string>
     <array name="genres">
         <item>Fantasy</item>
         <item>SciFie</item>
