@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
@@ -7,19 +8,20 @@
     android:layout_height="match_parent"
     tools:context=".views.BookshelfActivity">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -44,7 +46,6 @@
                         style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_marginEnd="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/search_bar"
@@ -55,7 +56,6 @@
                         app:boxCornerRadiusTopEnd="30sp"
                         app:boxStrokeWidth="0sp">
 
-                        <!-- if "saveEnabled" not false it causes unwanted filtering of options on rotation -->
                         <AutoCompleteTextView
                             android:id="@+id/genre_menu"
                             android:layout_width="wrap_content"
@@ -67,143 +67,140 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </com.google.android.material.appbar.AppBarLayout>
 
-            <com.google.android.material.search.SearchView
-                android:id="@+id/search_view"
-                android:inputType="text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:hint="@string/search_hint"
-                app:layout_anchor="@id/search_bar">
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:text="@string/library" />
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerThickness="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp" />
 
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/searching_progress_bar"
-                    android:layout_gravity="center"
-                    android:visibility="gone"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="@string/library_favorites"
+                android:layout_marginBottom="10dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:id="@+id/favorites_library_recycler_view"
+                android:layout_margin="12dp"
+                android:layout_marginStart="25dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false" />
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerThickness="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp"/>
 
-                <!-- Search Results -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/search_results"
-                    android:layout_margin="12dp"
-                    android:layout_gravity="center_horizontal"
-                    android:clipToPadding="false"
-                    />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="@string/library_simply_read"
+                android:layout_marginBottom="10dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:id="@+id/simply_read_library_recycler_view"
+                android:layout_margin="12dp"
+                android:layout_marginStart="25dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"/>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerThickness="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp"/>
 
-            </com.google.android.material.search.SearchView>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="@string/library_currently_reading"
+                android:layout_marginBottom="10dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:id="@+id/currently_reading_library_recycler_view"
+                android:layout_margin="12dp"
+                android:layout_marginStart="25dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"/>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerThickness="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp"/>
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="@string/library_wishlist"
+                android:layout_marginBottom="10dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:id="@+id/wishlist_library_recycler_view"
+                android:layout_margin="12dp"
+                android:layout_marginStart="25dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"/>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerThickness="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp"/>
+        </LinearLayout>
 
-        <com.google.android.material.textview.MaterialTextView
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/search_view"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/search_hint"
+        app:layout_anchor="@id/search_bar">
+
+        <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/searching_progress_bar"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_results"
+            android:layout_margin="12dp"
             android:layout_gravity="center_horizontal"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:text="@string/library" />
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerThickness="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="25dp"/>
+            android:clipToPadding="false"/>
+    </com.google.android.material.search.SearchView>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:text="@string/library_favorites"
-            android:layout_marginBottom="10dp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/favorites_library_recycler_view"
-            android:layout_margin="12dp"
-            android:layout_marginStart="25dp"
-            android:clipToPadding="false"
-            />
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerThickness="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="25dp"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:text="@string/library_simply_read"
-            android:layout_marginBottom="10dp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/simply_read_library_recycler_view"
-            android:layout_margin="12dp"
-            android:layout_marginStart="25dp"
-            android:clipToPadding="false"
-            />
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerThickness="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="25dp"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:text="@string/library_currently_reading"
-            android:layout_marginBottom="10dp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/currently_reading_library_recycler_view"
-            android:layout_margin="12dp"
-            android:layout_marginStart="25dp"
-            android:clipToPadding="false"
-            />
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerThickness="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="25dp"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:text="@string/library_wishlist"
-            android:layout_marginBottom="10dp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/wishlist_library_recycler_view"
-            android:layout_margin="12dp"
-            android:layout_marginStart="25dp"
-            android:clipToPadding="false"
-            />
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerThickness="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="25dp"/>
-    </LinearLayout>
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -58,10 +58,10 @@ class BookshelfActivity : AppCompatActivity() {
         wishlistRecyclerView = findViewById<RecyclerView>(R.id.wishlist_library_recycler_view)
 
         var searchResultsAdapter = RowRecyclerViewAdapter(arrayListOf<GBSearchBook>())
-        var favoritesAdapter = ColumnRecyclerViewAdapter(arrayListOf<FirestoreBookDetails>())
-        var simplyReadAdapter = ColumnRecyclerViewAdapter(arrayListOf<FirestoreBookDetails>())
-        var currentlyReadingAdapter = ColumnRecyclerViewAdapter(arrayListOf<FirestoreBookDetails>())
-        var wishlistAdapter = ColumnRecyclerViewAdapter(arrayListOf<FirestoreBookDetails>())
+        var favoritesAdapter = ColumnRecyclerViewAdapter()
+        var simplyReadAdapter = ColumnRecyclerViewAdapter()
+        var currentlyReadingAdapter = ColumnRecyclerViewAdapter()
+        var wishlistAdapter = ColumnRecyclerViewAdapter()
 
         searchResultsAdapter.setOnItemClickListener(listener = object : RowRecyclerViewAdapter.onItemClickListener {
             override fun onItemClick(item: GBSearchBook) {
@@ -146,6 +146,13 @@ class BookshelfActivity : AppCompatActivity() {
             gbSearchViewModel.setSubject(selectedGenre)
         }
 
+        if (savedInstanceState == null) {
+            // initial population of the library
+            lifecycleScope.launch {
+                bookshelfViewModel.populateAllShelves()
+            }
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 gbSearchViewModel.query.collect { query ->
@@ -184,6 +191,35 @@ class BookshelfActivity : AppCompatActivity() {
                             searchResultsAdapter.updateSearchResults(searchState.searchResults.items)
                         }
                     }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookshelfViewModel.favorites.collect { favorites ->
+                    favoritesAdapter.updateSearchResults(favorites)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookshelfViewModel.simplyRead.collect { simplyRead ->
+                    simplyReadAdapter.updateSearchResults(simplyRead)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookshelfViewModel.currentlyReading.collect { currentlyReading ->
+                    currentlyReadingAdapter.updateSearchResults(currentlyReading)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookshelfViewModel.wishlist.collect { wishlist ->
+                    wishlistAdapter.updateSearchResults(wishlist)
                 }
             }
         }

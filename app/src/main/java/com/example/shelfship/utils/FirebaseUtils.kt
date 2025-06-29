@@ -10,6 +10,8 @@ import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
 import com.google.firebase.firestore.FieldValue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 object FirebaseUtils {
@@ -106,15 +108,17 @@ object FirebaseUtils {
         val uid = currentUserId()
         if (uid == null) return false
         return try {
-            val bookReference = firestore.collection("users").document(uid)
-                .collection("library").document(lightBookDetails.id)
-            if (lightBookDetails.ownerBookShelves == listOf<Boolean>(false, false, false, false)) {
-                bookReference.delete().await()
+            withContext (Dispatchers.IO) {
+                val bookReference = firestore.collection("users").document(uid)
+                    .collection("library").document(lightBookDetails.id)
+                if (lightBookDetails.ownerBookShelves == listOf<Boolean>(false, false, false, false)) {
+                    bookReference.delete().await()
+                }
+                else {
+                    bookReference.set(lightBookDetails).await()
+                }
+                true
             }
-            else {
-                bookReference.set(lightBookDetails).await()
-            }
-            true
         } catch (e: Exception) {
             e.printStackTrace()
             false
@@ -124,23 +128,56 @@ object FirebaseUtils {
     suspend fun getBookFromLibrary(bookId: String): FirestoreBookDetails? {
         val uid = currentUserId()
         return try {
-            if (uid != null) {
-                val bookReference = firestore.collection("users").document(uid)
-                    .collection("library").document(bookId)
-                val documentSnapshot = bookReference.get().await()
-                if (documentSnapshot.exists()) {
-                    Log.d("BookDetailsViewModel", "Book details being turned to object!")
-                    documentSnapshot.toObject(FirestoreBookDetails::class.java)
-                } else {
-                    // the document doesn't exist
-                    null
-                }
-            }
-            else null
+           withContext (Dispatchers.IO) {
+               if (uid != null) {
+                   val bookReference = firestore.collection("users").document(uid)
+                       .collection("library").document(bookId)
+                   val documentSnapshot = bookReference.get().await()
+                   if (documentSnapshot.exists()) {
+                       Log.d("BookDetailsViewModel", "Book details being turned to object!")
+                       documentSnapshot.toObject(FirestoreBookDetails::class.java)
+                   } else {
+                       // the document doesn't exist
+                       null
+                   }
+               }
+               else null
+           }
         } catch (e: Exception) {
             e.printStackTrace()
             null
         }
+    }
+
+    suspend fun getAllBooks(): List<FirestoreBookDetails> {
+        val uid = currentUserId()
+        return try {
+            withContext (Dispatchers.IO) {
+                if (uid != null) {
+                    val libraryReference = firestore.collection("users").document(uid)
+                        .collection("library")
+                    val querySnapshot = libraryReference.get().await()
+                    Log.d("BookDetailsViewModel", "Book details being turned to object!")
+                    querySnapshot.documents.mapNotNull { document ->
+                        document.toObject(FirestoreBookDetails::class.java)
+                    }
+                } else {
+                    Log.d("BookDetailsViewModel", "No user logged in!")
+                    emptyList()
+                }
+            }
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("BookDetailsViewModel", "Exception: ${e.localizedMessage}")
+            emptyList()
+        }
+    }
+
+    suspend fun listenLibraryUpdates(): List<FirestoreBookDetails> {
+        val uid = currentUserId()
+
+        return TODO("Provide the return value")
     }
 
     val isLoggedIn: Boolean
