@@ -1,8 +1,10 @@
 package com.example.shelfship.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shelfship.models.FirestoreBookDetails
+import com.example.shelfship.utils.FirebaseUtils
 import com.example.shelfship.utils.FirebaseUtils.getAllBooks
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -34,9 +36,21 @@ class BookshelfViewModel : ViewModel() {
     }
 
     fun listenBookshelfUpdates() {
-        viewModelScope.launch {
+        FirebaseUtils.listenBookshelfUpdates(
+            onChange = { changeMap ->
+                val add = changeMap["add"] ?: emptyList()
+                val modify = changeMap["modify"] ?: emptyList()
 
-        }
+                _allBooks.value = add + modify
+                _favorites.value = _allBooks.value.filter { it.ownerBookShelves[0] }
+                _simplyRead.value = _allBooks.value.filter { it.ownerBookShelves[1] }
+                _currentlyReading.value = _allBooks.value.filter { it.ownerBookShelves[2] }
+                _wishlist.value = _allBooks.value.filter { it.ownerBookShelves[3] }
+                },
+            onError = { exception ->
+                Log.e("FirebaseUtils", "Listen failedListen failed: $exception")
+            })
+
     }
 
 

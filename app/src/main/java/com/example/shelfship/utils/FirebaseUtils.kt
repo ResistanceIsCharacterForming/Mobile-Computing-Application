@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.shelfship.models.FirestoreBookDetails
 import com.example.shelfship.models.UserData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -174,11 +175,37 @@ object FirebaseUtils {
         }
     }
 
-    suspend fun listenLibraryUpdates(): List<FirestoreBookDetails> {
-        val uid = currentUserId()
+    fun listenBookshelfUpdates(
+        onChange: (Map<String, List<FirestoreBookDetails>>) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        val uid = currentUserId() ?: return
+        val libraryReference = firestore.collection("users").document(uid).collection("library")
 
-        return TODO("Provide the return value")
+        libraryReference.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w("FirebaseUtils", "Listen failed.", e)
+                onError(e)
+                return@addSnapshotListener
+            }
+
+            val changeMap = mutableMapOf(
+                "add" to mutableListOf<FirestoreBookDetails>(),
+                "modify" to mutableListOf(),
+                "remove" to mutableListOf()
+            )
+
+            snapshot?.documentChanges?.forEach { dc ->
+                when (dc.type) {
+                    DocumentChange.Type.ADDED -> changeMap["add"]?.add(dc.document.toObject(FirestoreBookDetails::class.java))
+                    DocumentChange.Type.MODIFIED -> changeMap["modify"]?.add(dc.document.toObject(FirestoreBookDetails::class.java))
+                    DocumentChange.Type.REMOVED -> changeMap["remove"]?.add(dc.document.toObject(FirestoreBookDetails::class.java))
+                }
+            }
+            onChange(changeMap)
+        }
     }
+
 
     val isLoggedIn: Boolean
         get() = currentUserId() != null

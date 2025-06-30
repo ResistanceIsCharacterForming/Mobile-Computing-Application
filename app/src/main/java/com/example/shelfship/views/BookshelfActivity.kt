@@ -223,6 +223,11 @@ class BookshelfActivity : AppCompatActivity() {
                 }
             }
         }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookshelfViewModel.listenBookshelfUpdates()
+            }
+        }
     }
 
     fun onLibraryItemClick(item: FirestoreBookDetails) {
