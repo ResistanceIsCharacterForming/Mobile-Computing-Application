@@ -1,21 +1,24 @@
 package com.example.shelfship.utils
 
 import android.util.Log
+import com.example.shelfship.models.SessionData
 import com.example.shelfship.models.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
+import kotlinx.coroutines.flow.StateFlow
 
 import com.google.firebase.firestore.FieldValue
 
 import com.example.shelfship.services.ChatClient
+import com.google.firebase.firestore.ListenerRegistration
 
 object FirebaseUtils {
 
     val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
-    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     suspend fun saveUserToFirestore(userData: UserData): Boolean {
         return try {
@@ -28,6 +31,10 @@ object FirebaseUtils {
             e.printStackTrace()
             false
         }
+    }
+
+    fun getInstance(): FirebaseFirestore {
+        return firestore
     }
 
     fun currentUserId(): String? {
@@ -48,36 +55,12 @@ object FirebaseUtils {
         return firestore.collection("sessions").document(uid)
     }*/
 
-    suspend fun saveMessageToFirebase(uid: String, userMessage: String, systemOwner: Boolean = false): Boolean {
-        if (ChatClient.saveMessageToFirebase(firestore, uid, userMessage, systemOwner)) {
+    suspend fun saveMessageToFirebase(uid: String, userMessage: String, timestamp: String, systemOwner: Boolean = false): Boolean {
+        if (ChatClient.saveMessageToFirebase(firestore, uid, userMessage, timestamp, systemOwner)) {
             return true
         } else {
             return false
         }
-<<<<<<< Updated upstream
-
-        val messageData = mapOf(
-            "attachment" to "",
-            "edited" to "",
-            "uid" to UUID.randomUUID().toString(),
-            "message" to userMessage,
-            "reactions" to emptyList<String>(),
-            "readby" to emptyList<String>(),
-            "sender" to owner,
-            "timestamp" to ""
-        )
-
-        firestore.collection("sessions").document(uid)
-            .update("messages", FieldValue.arrayUnion(messageData))
-            .await()
-
-        return true
-=======
->>>>>>> Stashed changes
-    }
-
-    fun sessionsDocumentListener() {
-        ChatClient.sessionsDocumentListener(firestore)
     }
 
     suspend fun saveGoogleBooksTokens(token: String, authCode: String): Boolean {
@@ -95,7 +78,6 @@ object FirebaseUtils {
             false
         }
     }
-
 
     val isLoggedIn: Boolean
         get() = currentUserId() != null

@@ -1,4 +1,4 @@
-package com.example.shelfship.viewmodels
+package com.example.shelfship.viewModels
 
 import android.app.Activity
 import android.content.Intent

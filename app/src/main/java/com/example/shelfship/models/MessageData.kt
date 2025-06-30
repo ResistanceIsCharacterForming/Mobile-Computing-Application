@@ -6,7 +6,7 @@ data class Message(
     val edited: String = "",
     val id: String = "",
     val reactions: List<Reaction> = emptyList(),
-    val message: String = "",
+    val content: String = "",
     val readby: List<String> = emptyList(),
     val sender: String = "",
     val timestamp: String = ""

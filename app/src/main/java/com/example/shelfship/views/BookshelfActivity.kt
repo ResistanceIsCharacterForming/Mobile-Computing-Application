@@ -1,6 +1,6 @@
 package com.example.shelfship.views
 
-import com.example.shelfship.viewmodels.BookshelfViewModel
+import com.example.shelfship.viewModels.BookshelfViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.view.View

@@ -11,6 +11,11 @@ android {
     compileSdk = 35
     android.buildFeatures.buildConfig = true
 
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.shelfship"
         minSdk = 26
@@ -63,6 +68,7 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.firebase.firestore)
+    implementation(libs.androidx.fragment)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -84,5 +90,8 @@ dependencies {
 
     implementation("com.google.android.material:material")
 
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 }
 

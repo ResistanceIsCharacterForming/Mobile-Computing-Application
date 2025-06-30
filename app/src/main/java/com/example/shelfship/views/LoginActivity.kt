@@ -2,14 +2,13 @@ package com.example.shelfship.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.shelfship.R
-import com.example.shelfship.viewmodels.LoginViewModel
+import com.example.shelfship.viewModels.LoginViewModel
 import com.google.android.gms.common.SignInButton
 import kotlinx.coroutines.launch
 

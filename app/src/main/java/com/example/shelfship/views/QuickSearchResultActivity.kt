@@ -5,7 +5,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import com.example.shelfship.R
-import com.example.shelfship.views.compose.ChatScreen
+//import com.example.shelfship.views.compose.ChatScreen
 
 class QuickSearchResultActivity : AppCompatActivity() {
 
@@ -18,10 +18,10 @@ class QuickSearchResultActivity : AppCompatActivity() {
 
         foundMatchButton = findViewById(R.id.btnFoundMatch)
         chatNowButton = findViewById(R.id.btnChatNow)
-
+/*
         chatNowButton.setOnClickListener {
             val intent = Intent(this, ChatScreen::class.java)
             startActivity(intent)
-        }
+        }*/
     }
 }

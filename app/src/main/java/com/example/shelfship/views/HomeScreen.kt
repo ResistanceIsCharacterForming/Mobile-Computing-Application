@@ -22,6 +22,10 @@ class HomeScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_chat)
+
+        /*
         setContentView(R.layout.activity_home)
 
         btnHamburger = findViewById(R.id.btnHamburger)
@@ -77,7 +81,7 @@ class HomeScreen : AppCompatActivity() {
         filterButton.setOnClickListener {
             filterPanel.visibility = if (filterPanel.isVisible) View.GONE else View.VISIBLE
         }
-
+        */
 
 
     }

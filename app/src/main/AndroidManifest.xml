@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShelfShip"
         tools:targetApi="31">
+
         <activity
             android:name=".views.BookshelfActivity"
             android:exported="false" />
@@ -32,6 +33,7 @@
                 <data android:scheme="${appAuthRedirectScheme}" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".views.LoginActivity"
             android:exported="false" />
@@ -47,12 +49,6 @@
             android:exported="false" />
         <activity
             android:name=".views.ProfilePageActivity"
-            android:exported="false" />
-        <activity
-
-            android:name=".views.compose.ChatScreen"
-
-            android:name=".views.ChatScreen"
             android:exported="false" />
         <activity
             android:name=".views.MenuScreen"

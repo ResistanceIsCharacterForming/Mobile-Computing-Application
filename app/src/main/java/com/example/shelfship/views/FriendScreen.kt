@@ -34,7 +34,7 @@ class FriendScreen : AppCompatActivity() {
         btnMyFriends = findViewById(R.id.btnMyFriends)
         btnSuggestions = findViewById(R.id.btnSuggestions)
         btnSearch = findViewById(R.id.btnSearch)
-
+/*
         btnMyFriends.setOnClickListener {
             showList(
                 data = myFriends,
@@ -44,7 +44,7 @@ class FriendScreen : AppCompatActivity() {
                 intent.putExtra("friendName", name)
                 startActivity(intent)
             }
-        }
+        }*/
 
         btnSuggestions.setOnClickListener {
             showList(
@@ -65,14 +65,14 @@ class FriendScreen : AppCompatActivity() {
 
 
         // Show My Friends at the begining
-        showList(
+        /*showList(
             data = myFriends,
             showMessageButton = true
         ) { name ->
             val intent = Intent(this, ChatScreen::class.java)
             intent.putExtra("friendName", name)
             startActivity(intent)
-        }
+        }*/
     }
 
     private fun showPopupMenu(view: View) {
@@ -156,7 +156,7 @@ class FriendAdapter(
         btnAccept.visibility = View.GONE
         btnReject.visibility = View.GONE
         btnAdd.visibility = View.GONE
-
+/*
         if (showMessageButton) {
             btnMessage.visibility = View.VISIBLE
             btnMessage.setOnClickListener {
@@ -166,7 +166,7 @@ class FriendAdapter(
                 context.startActivity(intent)
             }
 
-        }
+        }*/
 
         if (showSuggestedButtons) {
             btnAccept.visibility = View.VISIBLE

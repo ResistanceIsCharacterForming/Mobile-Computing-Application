@@ -1,27 +1,36 @@
 package com.example.shelfship.views
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.example.shelfship.R
-
-import com.example.shelfship.utils.FirebaseUtils
-import kotlinx.coroutines.launch
+import com.example.shelfship.views.showChatMessages.ChatFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
-        setContentView(R.layout.chat_screen)
 
+        //setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_chat)
+
+        setContentView(R.layout.activity_chat)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.chatListFragment , ChatFragment.newInstance())
+            .commit()
+
+        /*if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.ChatScreen, ChatFragment.newInstance())
+                .commit()
+        }*/
+
+
+        /*
         val showButton = findViewById<Button>(R.id.button2)
 
         val editText = findViewById<EditText>(R.id.inputField)
 
         Log.d("MainActivity", "Running saveMessageToFirebase...")
+
 
         lifecycleScope.launch {
             FirebaseUtils.saveMessageToFirebase(
@@ -44,11 +53,11 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
-            FirebaseUtils.listener()
+            //FirebaseUtils.listener()
 
             editText.getText().clear()
 
-        }
+        }*/
 
 
     }
