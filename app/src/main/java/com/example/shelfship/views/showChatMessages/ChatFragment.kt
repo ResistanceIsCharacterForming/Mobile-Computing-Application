@@ -72,7 +72,8 @@ class ChatFragment : Fragment(), ChatContentListener {
         val listView = binding.listView
         listView.layoutManager = LinearLayoutManager(context)
         adapter = ChatAdapter(this)
-        listView.adapter = adapter
+        binding.listView.layoutManager = LinearLayoutManager(requireContext())
+        binding.listView.adapter = adapter
 
         return binding.root
     }
@@ -100,7 +101,7 @@ class ChatFragment : Fragment(), ChatContentListener {
         lifecycleScope.launch {
 
             val timestampNow = DateTimeFormatter
-                .ofPattern("dd.MM.yyyy")
+                .ofPattern("dd.MM.yyyy HH:mm")
                 .withZone(ZoneOffset.UTC)
                 .format(Instant.now())
 

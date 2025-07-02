@@ -5,44 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/listView"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="8dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toTopOf="@+id/messageField"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    tools:itemCount="20"
-    tools:listitem="@layout/chat_list_item"
-/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/messageFieldWrapper"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:itemCount="20"
+        tools:listitem="@layout/chat_list_item"
+    />
 
-<EditText
-    android:id="@+id/messageField"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:hint="Message..."
-    android:padding="12dp"
-    android:textSize="20sp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toStartOf="@+id/submitButton"
-    android:inputType="text"
-/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/messageFieldWrapper"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Message..."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/submitButton"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp">
 
-<Button
-    android:id="@+id/submitButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Submit"
-    android:textSize="20sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/messageField"
-    app:layout_constraintBottom_toBottomOf="@+id/messageField"
-/>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/messageField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        style="@style/Widget.MaterialComponents.Button"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/messageFieldWrapper"
+        app:layout_constraintBottom_toBottomOf="@+id/messageFieldWrapper"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toEndOf="@id/messageFieldWrapper"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
