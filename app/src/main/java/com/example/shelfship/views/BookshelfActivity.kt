@@ -70,6 +70,7 @@ class BookshelfActivity : AppCompatActivity() {
                 intent.putExtra("book_id", item.id)
                 intent.putExtra("assigned_genre", genreDropdownMenu.text.toString())
                 intent.putExtra("owner_book_shelves", booleanArrayOf(false, false, false, false))
+                intent.putExtra("user_rating", 0)
                 startActivity(intent)
             }
         })
@@ -209,6 +210,7 @@ class BookshelfActivity : AppCompatActivity() {
                 }
             }
         }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 bookshelfViewModel.currentlyReading.collect { currentlyReading ->
@@ -216,6 +218,7 @@ class BookshelfActivity : AppCompatActivity() {
                 }
             }
         }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 bookshelfViewModel.wishlist.collect { wishlist ->
@@ -223,6 +226,7 @@ class BookshelfActivity : AppCompatActivity() {
                 }
             }
         }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 bookshelfViewModel.listenBookshelfUpdates()
@@ -236,6 +240,7 @@ class BookshelfActivity : AppCompatActivity() {
         intent.putExtra("book_id", item.id)
         intent.putExtra("assigned_genre", item.assignedGenre)
         intent.putExtra("owner_book_shelves", item.ownerBookShelves.toBooleanArray())
+        intent.putExtra("user_rating", item.userRating)
         startActivity(intent)
     }
 }

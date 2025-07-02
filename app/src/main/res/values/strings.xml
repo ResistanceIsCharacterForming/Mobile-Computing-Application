@@ -19,6 +19,7 @@
     <string name="library_simply_read">Simply Read</string>
     <string name="library_currently_reading">Currently Reading</string>
     <string name="library_wishlist">Wishlist</string>
+    <string name="user_rating">Rating</string>
     <array name="genres">
         <item>Fantasy</item>
         <item>SciFie</item>
@@ -28,4 +29,14 @@
         <item>Horror</item>
         <item>Non-fiction</item>
     </array>
+    <!-- if i leave it as normal array it causes a null pointer exception. weird... -->
+    <!-- https://stackoverflow.com/questions/34939506/android-java-lang-nullpointerexception-attempt-to-invoke-virtual-method-java -->
+    <string-array name="ratings">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>

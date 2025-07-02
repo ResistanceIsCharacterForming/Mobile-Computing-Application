@@ -38,6 +38,8 @@ class BookDetailsActivity : AppCompatActivity() {
     private lateinit var languageView: MaterialTextView
     private lateinit var genreDropdown: com.google.android.material.textfield.TextInputLayout
     private lateinit var genreDropdownMenu: AutoCompleteTextView
+    private lateinit var userRatingDropdown: com.google.android.material.textfield.TextInputLayout
+    private lateinit var userRatingDropdownMenu: AutoCompleteTextView
     private lateinit var seeInLibraryButton: MaterialButton
 
     private lateinit var loadingLayout: LinearLayout
@@ -64,6 +66,8 @@ class BookDetailsActivity : AppCompatActivity() {
         languageView = findViewById(R.id.language_value)
         genreDropdown = findViewById(R.id.genre_dropdown)
         genreDropdownMenu = genreDropdown.findViewById<AutoCompleteTextView>(R.id.assigned_genre_menu)
+        userRatingDropdown = findViewById(R.id.user_rating_dropdown)
+        userRatingDropdownMenu = userRatingDropdown.findViewById<AutoCompleteTextView>(R.id.user_rating_dropdown_menu)
         seeInLibraryButton = findViewById<MaterialButton>(R.id.see_in_library_button)
 
         loadingLayout = findViewById(R.id.loading_layout)
@@ -79,6 +83,7 @@ class BookDetailsActivity : AppCompatActivity() {
             val bookId = launcherIntent.getStringExtra("book_id")
             val assignedGenre = launcherIntent.getStringExtra("assigned_genre")
             ownerBookShelves = launcherIntent.getBooleanArrayExtra("owner_book_shelves")?: booleanArrayOf(false, false, false, false)
+            val userRating = launcherIntent.getIntExtra("user_rating", 0)
             if (assignedGenre != null && viewModel.assignedGenre.value == "") {
                 viewModel.setAssignedGenre(assignedGenre)
             }
@@ -86,13 +91,15 @@ class BookDetailsActivity : AppCompatActivity() {
                 if (ownerBookShelves.contentEquals(booleanArrayOf(false, false, false, false))) {
                     // activity is being started from the search results. thus the book should be checked if it is in the library
                     // the genre in the library may differ from the subject chosen in the search bar so the genre is also fixed
+                    // the user may have graded the book before as well so it is also fixed
                     lifecycleScope.launch {
-                        viewModel.fixShelvesAndGenreIfInLibrary(bookId)
+                        viewModel.fixDetailsIfInLibrary(bookId)
                     }
                 }
                 else {
-                    // activity is launched from the library ui, the owner bookshelves and the correct genre are already known
+                    // activity is launched from the library ui, the owner bookshelves, the correct genre and the rating are already known
                     viewModel.setOwnerBookShelves(ownerBookShelves)
+                    viewModel.setUserRating(userRating)
                 }
                 viewModel.getBookDetails(bookId)
             }
@@ -160,9 +167,22 @@ class BookDetailsActivity : AppCompatActivity() {
             }
         }
 
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userRating.collect {
+                    userRatingDropdownMenu.setText(it.toString(), false)
+                }
+            }
+        }
+
         genreDropdownMenu.setOnItemClickListener { parent, view, position, id ->
             val selectedGenre = parent.getItemAtPosition(position).toString()
             viewModel.setAssignedGenre(selectedGenre)
+        }
+
+        userRatingDropdownMenu.setOnItemClickListener { parent, view, position, id ->
+            val selectedRating = parent.getItemAtPosition(position).toString()
+            viewModel.setUserRating(selectedRating.toInt())
         }
 
         seeInLibraryButton.setOnClickListener {

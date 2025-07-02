@@ -295,28 +295,20 @@
                     app:layout_constraintEnd_toEndOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginVertical="12dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/assigned_genre_ind"
-                    android:textSize="20sp"
-                    android:layout_marginHorizontal="12dp"
-                    android:text="@string/assigned_genre"
-                    android:layout_centerVertical="true"/>
+                android:layout_margin="12dp"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/genre_dropdown"
                     style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/assigned_genre_ind"
-                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
                     app:boxCornerRadiusBottomEnd="30sp"
                     app:boxCornerRadiusBottomStart="30sp"
                     app:boxCornerRadiusTopStart="30sp"
@@ -326,14 +318,39 @@
                     <!-- if "saveEnabled" not false it causes unwanted filtering of options on rotation -->
                     <AutoCompleteTextView
                         android:id="@+id/assigned_genre_menu"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
                         android:hint="@string/genre"
                         android:saveEnabled="false"
                         app:simpleItems="@array/genres" />
                 </com.google.android.material.textfield.TextInputLayout>
-            </RelativeLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/user_rating_dropdown"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:boxCornerRadiusBottomEnd="30sp"
+                    app:boxCornerRadiusBottomStart="30sp"
+                    app:boxCornerRadiusTopStart="30sp"
+                    app:boxCornerRadiusTopEnd="30sp"
+                    app:boxStrokeWidth="0sp">
+
+                    <!-- if "saveEnabled" not false it causes unwanted filtering of options on rotation -->
+                    <AutoCompleteTextView
+                        android:id="@+id/user_rating_dropdown_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:hint="@string/user_rating"
+                        android:saveEnabled="false"
+                        app:simpleItems="@array/ratings" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"

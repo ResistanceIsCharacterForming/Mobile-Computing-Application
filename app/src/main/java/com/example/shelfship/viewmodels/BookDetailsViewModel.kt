@@ -23,6 +23,9 @@ class BookDetailsViewModel : ViewModel() {
     private var _ownerBookShelves = MutableStateFlow<List<Boolean>>(listOf(false, false, false, false))
     val ownerBookShelves: StateFlow<List<Boolean>> = _ownerBookShelves
 
+    private var _userRating = MutableStateFlow<Int>(0)
+    val userRating: StateFlow<Int> = _userRating
+
     /**
      * Fetches detailed book information from Google Books API and updates the UI state.
      */
@@ -41,6 +44,8 @@ class BookDetailsViewModel : ViewModel() {
                             HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
                     }
                     _bookDetailsState.value.bookDetails?.assignedGenre = _assignedGenre.value
+                    _bookDetailsState.value.bookDetails?.ownerBookShelves = _ownerBookShelves.value
+                    _bookDetailsState.value.bookDetails?.userRating = _userRating.value
 
                     Log.d("BookDetailsViewModel", "Book details fetched successfully.")
                     _bookDetailsState.value = BookDetailsState(_bookDetailsState.value.bookDetails, false, null)
@@ -60,12 +65,13 @@ class BookDetailsViewModel : ViewModel() {
     /**
      * If the book is already in the library, pre-fill genre and shelf info from Firestore.
      */
-    suspend fun fixShelvesAndGenreIfInLibrary(bookId: String) {
+    suspend fun fixDetailsIfInLibrary(bookId: String) {
         val lightweightBookDetails = FirebaseUtils.getBookFromLibrary(bookId)
         if (lightweightBookDetails != null) {
-            Log.d("BookDetailsViewModel", "Book found in library, updating genre and shelves.")
+            Log.d("BookDetailsViewModel", "Book found in library, updating genre, shelves and rating.")
             setOwnerBookShelves(lightweightBookDetails.ownerBookShelves.toBooleanArray())
             setAssignedGenre(lightweightBookDetails.assignedGenre)
+            setUserRating(lightweightBookDetails.userRating)
         } else {
             Log.d("BookDetailsViewModel", "Book not found in library.")
         }
@@ -90,6 +96,16 @@ class BookDetailsViewModel : ViewModel() {
     }
 
     /**
+     * Updates the user grade and syncs it with bookDetails if present.
+     */
+    fun setUserRating(userRating: Int) {
+        Log.d("BookDetailsViewModel", "Received user rating: $userRating")
+        _userRating.value = userRating
+        _bookDetailsState.value.bookDetails?.userRating = userRating
+        Log.d("BookDetailsViewModel", "Updated user grade: $userRating")
+    }
+
+    /**
      * Pushes the current book details to Firestore. Returns success status.
      */
     suspend fun updateLibrary(): Boolean {
@@ -100,7 +116,8 @@ class BookDetailsViewModel : ViewModel() {
                 book.volumeInfo.title,
                 book.volumeInfo.imageLinks?.thumbnail ?: "",
                 book.assignedGenre.toString(),
-                book.ownerBookShelves
+                book.ownerBookShelves,
+                book.userRating
             )
             val success = FirebaseUtils.updateLibrary(lightWeightBookDetails)
             Log.d("BookDetailsViewModel", "Library update result: $success")
