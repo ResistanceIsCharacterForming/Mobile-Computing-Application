@@ -1,76 +1,57 @@
 package com.example.shelfship.viewModels
 
-import android.app.Activity
-import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.shelfship.models.GoogleBooksAuthResult
-import com.example.shelfship.models.GoogleBooksAuthState
-import com.example.shelfship.services.GoogleBooksAuthorizationClient
-import com.example.shelfship.utils.FirebaseUtils.saveGoogleBooksTokens
-import com.google.android.gms.auth.api.identity.AuthorizationResult
-import com.google.android.gms.auth.api.identity.Identity
-import kotlinx.coroutines.*
+import com.example.shelfship.models.FirestoreBookDetails
+import com.example.shelfship.utils.FirebaseUtils
+import com.example.shelfship.utils.FirebaseUtils.getAllBooks
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
 
 class BookshelfViewModel : ViewModel() {
-    private val authClient = GoogleBooksAuthorizationClient()
-    private val _authorizationState = MutableStateFlow(GoogleBooksAuthState(success = false))
-    val authorizationState: StateFlow<GoogleBooksAuthState> = _authorizationState
+    var _allBooks = MutableStateFlow<List<FirestoreBookDetails>>(emptyList())
 
-    fun handleUserConsentResult(activity: Activity, requestCode: Int, data: Intent?) {
-        if (requestCode == authClient.REQUEST_AUTHORIZE) {
-            val authorizationResult: AuthorizationResult =
-                Identity.getAuthorizationClient(activity).getAuthorizationResultFromIntent(data)
-            val result = GoogleBooksAuthResult (
-                success = true,
-                needsUserInteraction = false,
-                errorMessage = null,
-                accessToken = authorizationResult.accessToken
-            )
-            handleAuthorizationResult(result)
-        }
-        else {
-            Log.e("BookshelfViewModel", "Unknown request code: $requestCode")
-            val result = GoogleBooksAuthResult (
-                success = false,
-                needsUserInteraction = false,
-                errorMessage = "Unknown request code",
-            )
-            handleAuthorizationResult(result)
-        }
-    }
+    var _favorites = MutableStateFlow<List<FirestoreBookDetails>>(emptyList())
+    val favorites: MutableStateFlow<List<FirestoreBookDetails>> = _favorites
 
-    fun requestGoogleBooksAuthorization(activity: Activity) {
-        authClient.requestGoogleBooksAuthorization(activity, object : GoogleBooksAuthorizationClient.AuthorizationCallback {
-            override fun onAuthorizationResult(result: GoogleBooksAuthResult) {
-                handleAuthorizationResult(result)
-            }
-        })
-    }
+    var _simplyRead = MutableStateFlow<List<FirestoreBookDetails>>(emptyList())
+    val simplyRead: MutableStateFlow<List<FirestoreBookDetails>> = _simplyRead
 
-    private fun handleAuthorizationResult(result: GoogleBooksAuthResult) {
+    var _currentlyReading = MutableStateFlow<List<FirestoreBookDetails>>(emptyList())
+    val currentlyReading: MutableStateFlow<List<FirestoreBookDetails>> = _currentlyReading
+
+    var _wishlist = MutableStateFlow<List<FirestoreBookDetails>>(emptyList())
+    val wishlist: MutableStateFlow<List<FirestoreBookDetails>> = _wishlist
+
+    fun populateAllShelves() {
         viewModelScope.launch {
-            when {
-                result.success && result.accessToken != null && result.authorizationCode != null -> {
-                    saveGoogleBooksTokens(result.accessToken, result.authorizationCode)
-                    _authorizationState.value = GoogleBooksAuthState(success = true, errorMessage = null)
-                }
-                result.needsUserInteraction -> {
-                    /*
-                    UI will be shown, wait for onActivityResult in the activity. The reason for this is
-                    because the startIntentSenderForResult function is an asynchronous function ant it
-                    will send its result to the launcher activity.
-                     */
-                    Log.d("BookshelfViewModel", "User interaction required for authorization")
-                }
-                else -> {
-                    Log.e("BookshelfViewModel", "Authorization failed: ${result.errorMessage}")
-                    _authorizationState.value = GoogleBooksAuthState(success = false, errorMessage = result.errorMessage)
-                }
-            }
+            _allBooks.value = getAllBooks()
+            _favorites.value = _allBooks.value.filter { it.ownerBookShelves[0] }
+            _simplyRead.value = _allBooks.value.filter { it.ownerBookShelves[1] }
+            _currentlyReading.value = _allBooks.value.filter { it.ownerBookShelves[2] }
+            _wishlist.value = _allBooks.value.filter { it.ownerBookShelves[3] }
         }
     }
+
+    fun listenBookshelfUpdates() {
+        FirebaseUtils.listenBookshelfUpdates(
+            onChange = { changeMap ->
+                val add = changeMap["add"] ?: emptyList()
+                val modify = changeMap["modify"] ?: emptyList()
+
+                _allBooks.value = add + modify
+                _favorites.value = _allBooks.value.filter { it.ownerBookShelves[0] }
+                _simplyRead.value = _allBooks.value.filter { it.ownerBookShelves[1] }
+                _currentlyReading.value = _allBooks.value.filter { it.ownerBookShelves[2] }
+                _wishlist.value = _allBooks.value.filter { it.ownerBookShelves[3] }
+                },
+            onError = { exception ->
+                Log.e("FirebaseUtils", "Listen failedListen failed: $exception")
+            })
+
+    }
+
+
 }

@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">Shelf Ship</string>
+    <string name="search_hint">Find new books</string>
+    <string name="fallback_author_names">Author names</string>
+    <string name="details">Details</string>
+    <string name="assigned_genre">Assigned Genre:</string>
+    <string name="genre">Genre</string>
+    <string name="add_to_lib">Update Library</string>
+    <string name="authors_ind">Authors</string>
+    <string name="description_ind">Description</string>
+    <string name="categories_ind">Categories</string>
+    <string name="published_date_ind">Published Date</string>
+    <string name="publisher_ind">Publisher</string>
+    <string name="page_count_ind">Page Count</string>
+    <string name="language_ind">Language</string>
+    <string name="book_cover_content_description">Book Cover</string>
+    <string name="library">Library</string>
+    <string name="library_favorites">Favorites</string>
+    <string name="library_simply_read">Simply Read</string>
+    <string name="library_currently_reading">Currently Reading</string>
+    <string name="library_wishlist">Wishlist</string>
+    <string name="user_rating">Rating</string>
+    <array name="genres">
+        <item>Fantasy</item>
+        <item>SciFie</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Thriller</item>
+        <item>Horror</item>
+        <item>Non-fiction</item>
+    </array>
+    <!-- if i leave it as normal array it causes a null pointer exception. weird... -->
+    <!-- https://stackoverflow.com/questions/34939506/android-java-lang-nullpointerexception-attempt-to-invoke-virtual-method-java -->
+    <string-array name="ratings">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>
