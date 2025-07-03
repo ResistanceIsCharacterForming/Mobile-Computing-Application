@@ -36,7 +36,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01139e0d-518d-4c77-b465-80ee3a6d9ed2" name="Changes" comment="" />
+    <list default="true" id="01139e0d-518d-4c77-b465-80ee3a6d9ed2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/shelfship/viewmodels/ChatViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -255,12 +258,12 @@
       <map>
         <entry key="com.example.shelfship">
           <value>
-            <CheckInfo lastCheckTimestamp="1751447184922" />
+            <CheckInfo lastCheckTimestamp="1751535944523" />
           </value>
         </entry>
         <entry key="com.example.shelfship.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1751447184922" />
+            <CheckInfo lastCheckTimestamp="1751535944523" />
           </value>
         </entry>
       </map>
