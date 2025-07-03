@@ -23,6 +23,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:background="#8C1717">
+
+                    <!-- Notifications Button -->
+                    <androidx.compose.ui.platform.ComposeView
+                        android:id="@+id/compose_scaffold"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="#8C1717" />
+                </RelativeLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

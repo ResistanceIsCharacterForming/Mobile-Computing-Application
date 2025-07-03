@@ -8,10 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.shelfship.models.Message
 import com.example.shelfship.views.chatScreen.ChatAdapter.ChatContentListener
-import com.example.shelfship.viewModels.ChatViewModel
-import androidx.fragment.app.viewModels
+import com.example.shelfship.viewmodels.ChatViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.Lifecycle

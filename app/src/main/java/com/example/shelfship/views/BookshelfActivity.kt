@@ -18,7 +18,7 @@ import com.example.shelfship.models.FirestoreBookDetails
 import com.example.shelfship.models.GBSearchBook
 import com.example.shelfship.utils.ColumnRecyclerViewAdapter
 import com.example.shelfship.utils.RowRecyclerViewAdapter
-import com.example.shelfship.viewModels.BookshelfViewModel
+import com.example.shelfship.viewmodels.BookshelfViewModel
 import com.example.shelfship.viewmodels.GBSearchViewModel
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
@@ -44,6 +44,11 @@ class BookshelfActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bookshelf)
+
+        val composeView = findViewById<androidx.compose.ui.platform.ComposeView>(R.id.compose_scaffold)
+        composeView.setContent {
+            LargeDropdownMenuScaffold(context = this, screenTitle = "")
+        }
 
         searchBar = findViewById<SearchBar>(R.id.search_bar)
         genreDropdown =

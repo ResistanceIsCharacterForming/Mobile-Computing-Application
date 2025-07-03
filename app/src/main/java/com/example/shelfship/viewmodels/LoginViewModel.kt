@@ -1,4 +1,4 @@
-package com.example.shelfship.viewModels
+package com.example.shelfship.viewmodels
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

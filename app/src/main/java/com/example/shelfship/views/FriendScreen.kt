@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shelfship.R
+import com.example.shelfship.views.chatScreen.ChatActivity
 
 class FriendScreen : AppCompatActivity() {
 
@@ -15,7 +16,7 @@ class FriendScreen : AppCompatActivity() {
     private lateinit var btnMyFriends: Button
     private lateinit var btnSuggestions: Button
     private lateinit var btnSearch: Button
-    private lateinit var btnHamburger: ImageButton
+
 
     private val myFriends = listOf("Alice", "Bob", "Charlie")
     private val suggestions = listOf("David", "Ella")
@@ -25,26 +26,26 @@ class FriendScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend)
 
-        btnHamburger = findViewById(R.id.btnHamburger)
-        btnHamburger.setOnClickListener {
-            showPopupMenu(it)
+        val composeView = findViewById<androidx.compose.ui.platform.ComposeView>(R.id.compose_scaffold)
+        composeView.setContent {
+            LargeDropdownMenuScaffold(context = this, screenTitle = "")
         }
 
         listView = findViewById(R.id.listView)
         btnMyFriends = findViewById(R.id.btnMyFriends)
         btnSuggestions = findViewById(R.id.btnSuggestions)
         btnSearch = findViewById(R.id.btnSearch)
-/*
+
         btnMyFriends.setOnClickListener {
             showList(
                 data = myFriends,
                 showMessageButton = true
             ) { name ->
-                val intent = Intent(this, ChatScreen::class.java)
+                val intent = Intent(this, ChatActivity::class.java)
                 intent.putExtra("friendName", name)
                 startActivity(intent)
             }
-        }*/
+        }
 
         btnSuggestions.setOnClickListener {
             showList(
@@ -65,43 +66,17 @@ class FriendScreen : AppCompatActivity() {
 
 
         // Show My Friends at the begining
-        /*showList(
+        showList(
             data = myFriends,
             showMessageButton = true
         ) { name ->
-            val intent = Intent(this, ChatScreen::class.java)
+            val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("friendName", name)
             startActivity(intent)
-        }*/
-    }
-
-    private fun showPopupMenu(view: View) {
-        val popup = PopupMenu(this, view)
-        popup.menuInflater.inflate(R.menu.menu_popup, popup.menu)
-        popup.menu.findItem(R.id.menu_friends)?.isVisible = false
-        popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.menu_home -> {
-                    startActivity(Intent(this, HomeScreen::class.java))
-                    true
-                }
-                R.id.menu_messages -> {
-
-                    true
-                }
-                R.id.menu_profile -> {
-                    startActivity(Intent(this, ProfilePageActivity::class.java))
-                    true
-                }
-                R.id.menu_friends -> {
-
-                    true
-                }
-                else -> false
-            }
         }
-        popup.show()
     }
+
+
 
     private fun showList(
         data: List<String>,
@@ -156,17 +131,17 @@ class FriendAdapter(
         btnAccept.visibility = View.GONE
         btnReject.visibility = View.GONE
         btnAdd.visibility = View.GONE
-/*
+
         if (showMessageButton) {
             btnMessage.visibility = View.VISIBLE
             btnMessage.setOnClickListener {
                 Toast.makeText(context, "Message clicked: $friendName", Toast.LENGTH_SHORT).show()
-                val intent = Intent(context, ChatScreen::class.java)
+                val intent = Intent(context, ChatActivity::class.java)
                 intent.putExtra("friendName", friendName)
                 context.startActivity(intent)
             }
 
-        }*/
+        }
 
         if (showSuggestedButtons) {
             btnAccept.visibility = View.VISIBLE
@@ -183,4 +158,3 @@ class FriendAdapter(
         return view
     }
 }
-

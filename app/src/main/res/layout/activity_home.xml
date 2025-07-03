@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     >
 
+    <!--  Toolbar  -->
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="#8C1717"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+        <!--  Notifications Button  -->
+        <androidx.compose.ui.platform.ComposeView android:id="@+id/compose_scaffold" android:layout_width="match_parent" android:layout_height="56dp" android:background="#8C1717"/>
+    </RelativeLayout>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/homeFragment"
         android:layout_width="match_parent"

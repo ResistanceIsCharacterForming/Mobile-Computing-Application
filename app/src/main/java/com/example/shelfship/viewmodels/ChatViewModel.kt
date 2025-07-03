@@ -1,13 +1,10 @@
-package com.example.shelfship.viewModels
+package com.example.shelfship.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.shelfship.models.SessionData
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 
 import com.example.shelfship.models.Message

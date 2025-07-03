@@ -1,24 +1,15 @@
 package com.example.shelfship.views.homeScreen
 
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shelfship.R
 import com.example.shelfship.databinding.FragmentHomeBinding
-import com.example.shelfship.utils.FirebaseUtils
-import com.example.shelfship.viewModels.ChatViewModel
-import com.example.shelfship.viewModels.HomeViewModel
+import com.example.shelfship.viewmodels.HomeViewModel
 import com.example.shelfship.views.matchWindow.MatchFragment
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 

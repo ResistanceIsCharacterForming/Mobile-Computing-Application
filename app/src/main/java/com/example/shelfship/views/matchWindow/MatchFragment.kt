@@ -2,22 +2,17 @@ package com.example.shelfship.views.matchWindow
 
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.shelfship.databinding.FragmentHomeBinding
 import com.example.shelfship.databinding.FragmentMatchWindowBinding
-import com.example.shelfship.viewModels.HomeViewModel
-import com.example.shelfship.views.homeScreen.HomeFragment
-import com.example.shelfship.views.matchWindow.MatchAdapter
+import com.example.shelfship.viewmodels.HomeViewModel
 import com.example.shelfship.views.matchWindow.MatchAdapter.MatchResultListener
 import kotlinx.coroutines.launch
 

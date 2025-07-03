@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("org.jetbrains.kotlin.plugin.compose")
+    kotlin("kapt")
 }
 
 android {
@@ -37,6 +39,20 @@ android {
         )
 
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
 
     buildTypes {
         release {
@@ -88,13 +104,12 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.google.code.gson:gson:2.9.1")
 
-    implementation ("androidx.activity:activity-compose:1.9.0")
-    implementation ("androidx.compose.ui:ui:1.6.6")
-    implementation ("androidx.compose.material:material:1.6.6")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+
 
     implementation(platform("androidx.compose:compose-bom:2025.05.00"))
     implementation("androidx.compose.material3:material3")
@@ -105,5 +120,12 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+
+    implementation("androidx.compose.ui:ui:1.6.7")
+    implementation("androidx.compose.material:material:1.6.7")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
+    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation("androidx.compose.material3:material3:1.1.0")
+
 }
 
