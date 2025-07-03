@@ -1,6 +1,5 @@
-package com.example.shelfship.views.showChatMessages
+package com.example.shelfship.views.chatScreen
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -9,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.shelfship.databinding.ActivityChatBinding
 import com.example.shelfship.models.Message
-import com.example.shelfship.views.showChatMessages.ChatAdapter.ChatContentListener
+import com.example.shelfship.views.chatScreen.ChatAdapter.ChatContentListener
 import com.example.shelfship.viewModels.ChatViewModel
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import com.example.shelfship.databinding.FragmentChatBinding
 import com.example.shelfship.utils.FirebaseUtils
 import kotlinx.coroutines.launch
@@ -31,8 +30,6 @@ import java.time.format.DateTimeFormatter
  */
 class ChatFragment : Fragment(), ChatContentListener {
 
-    val viewModel: ChatViewModel by viewModels()
-
     /**
      * Interface that activities need to implement,
      * if they want to be notified of place selection events
@@ -41,13 +38,22 @@ class ChatFragment : Fragment(), ChatContentListener {
         fun onPlaceSelected(message: Message)
 //        void onPlaceLongSelected(Place place);
     }*/
-    override fun onMessageSelected(message: Message) {
-    }
 
     private lateinit var binding: FragmentChatBinding
     //private lateinit var repository: PlacesRepository
     private lateinit var adapter: ChatAdapter
     /* private var listener: FragmentChatCallbacks? = null */
+
+    private lateinit var viewModel: ChatViewModel
+    private lateinit var chatUUI: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        chatUUI = requireArguments().getString("chatUUI") ?: error("Need chatUUI.")
+
+        viewModel = ViewModelProvider(this, ChatViewModel.Factory(chatUUI))
+            .get(ChatViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -99,18 +105,17 @@ class ChatFragment : Fragment(), ChatContentListener {
         //repository.addPlace(Place(placeName.toString()))
         //refreshPlaceList()
         lifecycleScope.launch {
+                val timestampNow = DateTimeFormatter
+                    .ofPattern("dd.MM.yyyy HH:mm")
+                    .withZone(ZoneOffset.UTC)
+                    .format(Instant.now())
 
-            val timestampNow = DateTimeFormatter
-                .ofPattern("dd.MM.yyyy HH:mm")
-                .withZone(ZoneOffset.UTC)
-                .format(Instant.now())
-
-            FirebaseUtils.saveMessageToFirebase(
-                uid = "oO1fv6QmzVSVDf3yZpGQ",
-                userMessage = content.toString(),
-                timestamp = timestampNow
-            )
-        }
+                FirebaseUtils.saveMessageToFirebase(
+                    uid = chatUUI,
+                    userMessage = content.toString(),
+                    timestamp = timestampNow
+                )
+            }
         binding.messageField.setText("")
     }
 
@@ -142,16 +147,26 @@ class ChatFragment : Fragment(), ChatContentListener {
         listener?.onPlaceSelected(place)
     }*/
 
-
+    /*
+    private val chatUUI: String? {
+        arguments?.getString("chatUUI")
+    }
+*/
     companion object {
+        //private const val chatUUI = ""
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
          * @return A new instance of fragment PlaceListFragment.
          */
-        fun newInstance(): ChatFragment {
-            return ChatFragment()
+        fun newInstance(chatUUI: String): ChatFragment {
+            return ChatFragment().apply {
+                arguments = Bundle().apply {
+                    putString("chatUUI", chatUUI)
+                }
+            }
         }
     }
 }

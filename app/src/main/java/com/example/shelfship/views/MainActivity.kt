@@ -3,19 +3,18 @@ package com.example.shelfship.views
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shelfship.R
-import com.example.shelfship.views.showChatMessages.ChatFragment
+import com.example.shelfship.views.chatScreen.ChatActivity
+import com.example.shelfship.views.chatScreen.ChatFragment
+import com.example.shelfship.views.homeScreen.HomeActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        HomeActivity.start(this)
+
         //setContentView(R.layout.activity_main)
         //setContentView(R.layout.activity_chat)
-
-        setContentView(R.layout.activity_chat)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.chatListFragment , ChatFragment.newInstance())
-            .commit()
 
         /*if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()

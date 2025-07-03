@@ -17,6 +17,9 @@
             android:name=".views.BookshelfActivity"
             android:exported="false" />
         <activity
+            android:name=".views.chatScreen.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
@@ -42,7 +45,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".views.HomeScreen"
+            android:name=".views.homeScreen.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".views.FriendScreen"

@@ -2,6 +2,7 @@ package com.example.shelfship.viewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.shelfship.models.SessionData
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,7 +13,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import com.example.shelfship.models.Message
 import com.example.shelfship.utils.FirebaseUtils
 
-class ChatViewModel : ViewModel() {
+class ChatViewModel(private val chatUUI: String) : ViewModel() {
+
+    class Factory(private val chatUUI: String) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            Log.i("ChatViewModel::Factory", "Creating view model.")
+            return ChatViewModel(chatUUI) as T
+        }
+    }
 
     private val _chatMessages = MutableStateFlow(
         SessionData(messages = emptyList(), owner = "", participants = emptyList())
@@ -28,7 +36,7 @@ class ChatViewModel : ViewModel() {
     private fun startSessionListener() {
         val firestore = FirebaseUtils.getInstance()
 
-        val docRef = firestore.collection("sessions").document("oO1fv6QmzVSVDf3yZpGQ")
+        val docRef = firestore.collection("sessions").document(chatUUI)
 
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {

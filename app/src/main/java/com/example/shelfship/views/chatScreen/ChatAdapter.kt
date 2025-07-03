@@ -1,18 +1,16 @@
-package com.example.shelfship.views.showChatMessages
+package com.example.shelfship.views.chatScreen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.shelfship.models.Message
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shelfship.databinding.ChatListItemBinding
-import com.example.shelfship.views.showChatMessages.ChatAdapter.ChatViewHolder
+import com.example.shelfship.views.chatScreen.ChatAdapter.ChatViewHolder
 
 class ChatAdapter(private val chatContentListener: ChatContentListener) :
     RecyclerView.Adapter<ChatViewHolder>() {
 
     interface ChatContentListener {
-        fun onMessageSelected(message: Message)
     }
 
     private var messages: List<Message> = emptyList()

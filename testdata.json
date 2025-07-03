@@ -1,0 +1,434 @@
+[
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "favorites",
+    "assignedGenre": "Fantasy",
+    "rating": 5
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "favorites",
+    "assignedGenre": "Mystery",
+    "rating": 4
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "favorites",
+    "assignedGenre": "Romance",
+    "rating": 5
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "favorites",
+    "assignedGenre": "Science Fiction",
+    "rating": 3
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "favorites",
+    "assignedGenre": "Thriller",
+    "rating": 6
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "haveread",
+    "assignedGenre": "Fantasy",
+    "rating": 3
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "haveread",
+    "assignedGenre": "Mystery",
+    "rating": 2
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "haveread",
+    "assignedGenre": "Romance",
+    "rating": 4
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "haveread",
+    "assignedGenre": "Science Fiction",
+    "rating": 4
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "haveread",
+    "assignedGenre": "Thriller",
+    "rating": 2
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "toread",
+    "assignedGenre": "Fantasy",
+    "rating": 0
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "toread",
+    "assignedGenre": "Mystery",
+    "rating": 0
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "toread",
+    "assignedGenre": "Romance",
+    "rating": 0
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "toread",
+    "assignedGenre": "Science Fiction",
+    "rating": 0
+  },
+  {
+    "userId": "5bcKzc8ueEQFiHXb72UjgmIqO3d2",
+    "shelfType": "toread",
+    "assignedGenre": "Thriller",
+    "rating": 0
+  },
+  {
+    "userId": "user2",
+    "shelfType": "favorites",
+    "assignedGenre": "Fantasy",
+    "rating": 5
+  },
+  {
+    "userId": "user2",
+    "shelfType": "favorites",
+    "assignedGenre": "Mystery",
+    "rating": 6
+  },
+  {
+    "userId": "user2",
+    "shelfType": "favorites",
+    "assignedGenre": "Romance",
+    "rating": 4
+  },
+  {
+    "userId": "user2",
+    "shelfType": "favorites",
+    "assignedGenre": "Science Fiction",
+    "rating": 6
+  },
+  {
+    "userId": "user2",
+    "shelfType": "haveread",
+    "assignedGenre": "Fantasy",
+    "rating": 3
+  },
+  {
+    "userId": "user2",
+    "shelfType": "haveread",
+    "assignedGenre": "Mystery",
+    "rating": 2
+  },
+  {
+    "userId": "user2",
+    "shelfType": "haveread",
+    "assignedGenre": "Romance",
+    "rating": 1
+  },
+  {
+    "userId": "user2",
+    "shelfType": "haveread",
+    "assignedGenre": "Science Fiction",
+    "rating": 3
+  },
+  {
+    "userId": "user2",
+    "shelfType": "toread",
+    "assignedGenre": "Fantasy",
+    "rating": 0
+  },
+  {
+    "userId": "user2",
+    "shelfType": "toread",
+    "assignedGenre": "Mystery",
+    "rating": 0
+  },
+  {
+    "userId": "user2",
+    "shelfType": "toread",
+    "assignedGenre": "Romance",
+    "rating": 0
+  },
+  {
+    "userId": "user2",
+    "shelfType": "toread",
+    "assignedGenre": "Science Fiction",
+    "rating": 0
+  },
+  {
+    "userId": "user3",
+    "shelfType": "favorites",
+    "assignedGenre": "Fantasy",
+    "rating": 4
+  },
+  {
+    "userId": "user3",
+    "shelfType": "favorites",
+    "assignedGenre": "Mystery",
+    "rating": 2
+  },
+  {
+    "userId": "user3",
+    "shelfType": "favorites",
+    "assignedGenre": "Romance",
+    "rating": 6
+  },
+  {
+    "userId": "user3",
+    "shelfType": "favorites",
+    "assignedGenre": "Science Fiction",
+    "rating": 5
+  },
+  {
+    "userId": "user3",
+    "shelfType": "favorites",
+    "assignedGenre": "Thriller",
+    "rating": 3
+  },
+  {
+    "userId": "user3",
+    "shelfType": "haveread",
+    "assignedGenre": "Fantasy",
+    "rating": 1
+  },
+  {
+    "userId": "user3",
+    "shelfType": "haveread",
+    "assignedGenre": "Mystery",
+    "rating": 3
+  },
+  {
+    "userId": "user3",
+    "shelfType": "haveread",
+    "assignedGenre": "Romance",
+    "rating": 2
+  },
+  {
+    "userId": "user3",
+    "shelfType": "haveread",
+    "assignedGenre": "Science Fiction",
+    "rating": 4
+  },
+  {
+    "userId": "user3",
+    "shelfType": "haveread",
+    "assignedGenre": "Thriller",
+    "rating": 1
+  },
+  {
+    "userId": "user3",
+    "shelfType": "toread",
+    "assignedGenre": "Fantasy",
+    "rating": 0
+  },
+  {
+    "userId": "user3",
+    "shelfType": "toread",
+    "assignedGenre": "Mystery",
+    "rating": 0
+  },
+  {
+    "userId": "user3",
+    "shelfType": "toread",
+    "assignedGenre": "Romance",
+    "rating": 0
+  },
+  {
+    "userId": "user3",
+    "shelfType": "toread",
+    "assignedGenre": "Science Fiction",
+    "rating": 0
+  },
+  {
+    "userId": "user3",
+    "shelfType": "toread",
+    "assignedGenre": "Thriller",
+    "rating": 0
+  },
+  {
+    "userId": "user4",
+    "shelfType": "favorites",
+    "assignedGenre": "Fantasy",
+    "rating": 5
+  },
+  {
+    "userId": "user4",
+    "shelfType": "favorites",
+    "assignedGenre": "Mystery",
+    "rating": 4
+  },
+  {
+    "userId": "user4",
+    "shelfType": "favorites",
+    "assignedGenre": "Romance",
+    "rating": 5
+  },
+  {
+    "userId": "user4",
+    "shelfType": "favorites",
+    "assignedGenre": "Science Fiction",
+    "rating": 3
+  },
+  {
+    "userId": "user4",
+    "shelfType": "favorites",
+    "assignedGenre": "Thriller",
+    "rating": 6
+  },
+  {
+    "userId": "user4",
+    "shelfType": "haveread",
+    "assignedGenre": "Fantasy",
+    "rating": 3
+  },
+  {
+    "userId": "user4",
+    "shelfType": "haveread",
+    "assignedGenre": "Mystery",
+    "rating": 2
+  },
+  {
+    "userId": "user4",
+    "shelfType": "haveread",
+    "assignedGenre": "Romance",
+    "rating": 4
+  },
+  {
+    "userId": "user4",
+    "shelfType": "haveread",
+    "assignedGenre": "Science Fiction",
+    "rating": 4
+  },
+  {
+    "userId": "user4",
+    "shelfType": "haveread",
+    "assignedGenre": "Thriller",
+    "rating": 2
+  },
+  {
+    "userId": "user4",
+    "shelfType": "toread",
+    "assignedGenre": "Fantasy",
+    "rating": 0
+  },
+  {
+    "userId": "user4",
+    "shelfType": "toread",
+    "assignedGenre": "Mystery",
+    "rating": 0
+  },
+  {
+    "userId": "user4",
+    "shelfType": "toread",
+    "assignedGenre": "Romance",
+    "rating": 0
+  },
+  {
+    "userId": "user4",
+    "shelfType": "toread",
+    "assignedGenre": "Science Fiction",
+    "rating": 0
+  },
+  {
+    "userId": "user4",
+    "shelfType": "toread",
+    "assignedGenre": "Thriller",
+    "rating": 0
+  },
+  {
+    "userId": "user5",
+    "shelfType": "favorites",
+    "assignedGenre": "Fantasy",
+    "rating": 3
+  },
+  {
+    "userId": "user5",
+    "shelfType": "favorites",
+    "assignedGenre": "Mystery",
+    "rating": 5
+  },
+  {
+    "userId": "user5",
+    "shelfType": "favorites",
+    "assignedGenre": "Romance",
+    "rating": 2
+  },
+  {
+    "userId": "user5",
+    "shelfType": "favorites",
+    "assignedGenre": "Science Fiction",
+    "rating": 4
+  },
+  {
+    "userId": "user5",
+    "shelfType": "favorites",
+    "assignedGenre": "Thriller",
+    "rating": 5
+  },
+  {
+    "userId": "user5",
+    "shelfType": "haveread",
+    "assignedGenre": "Fantasy",
+    "rating": 1
+  },
+  {
+    "userId": "user5",
+    "shelfType": "haveread",
+    "assignedGenre": "Mystery",
+    "rating": 3
+  },
+  {
+    "userId": "user5",
+    "shelfType": "haveread",
+    "assignedGenre": "Romance",
+    "rating": 1
+  },
+  {
+    "userId": "user5",
+    "shelfType": "haveread",
+    "assignedGenre": "Science Fiction",
+    "rating": 2
+  },
+  {
+    "userId": "user5",
+    "shelfType": "haveread",
+    "assignedGenre": "Thriller",
+    "rating": 3
+  },
+  {
+    "userId": "user5",
+    "shelfType": "toread",
+    "assignedGenre": "Fantasy",
+    "rating": 0
+  },
+  {
+    "userId": "user5",
+    "shelfType": "toread",
+    "assignedGenre": "Mystery",
+    "rating": 0
+  },
+  {
+    "userId": "user5",
+    "shelfType": "toread",
+    "assignedGenre": "Romance",
+    "rating": 0
+  },
+  {
+    "userId": "user5",
+    "shelfType": "toread",
+    "assignedGenre": "Science Fiction",
+    "rating": 0
+  },
+  {
+    "userId": "user5",
+    "shelfType": "toread",
+    "assignedGenre": "Thriller",
+    "rating": 0
+  }
+]

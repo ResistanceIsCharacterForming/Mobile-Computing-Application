@@ -1,6 +1,7 @@
 package com.example.shelfship.utils
 
 import android.util.Log
+import com.example.shelfship.models.Match
 import com.example.shelfship.models.SessionData
 import com.example.shelfship.models.UserData
 import com.google.firebase.auth.FirebaseAuth
@@ -13,7 +14,11 @@ import kotlinx.coroutines.flow.StateFlow
 import com.google.firebase.firestore.FieldValue
 
 import com.example.shelfship.services.ChatClient
+import com.example.shelfship.viewModels.HomeViewModel
 import com.google.firebase.firestore.ListenerRegistration
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 object FirebaseUtils {
 
@@ -55,7 +60,12 @@ object FirebaseUtils {
         return firestore.collection("sessions").document(uid)
     }*/
 
-    suspend fun saveMessageToFirebase(uid: String, userMessage: String, timestamp: String, systemOwner: Boolean = false): Boolean {
+    suspend fun saveMessageToFirebase(
+        uid: String,
+        userMessage: String,
+        timestamp: String,
+        systemOwner: Boolean = false
+    ): Boolean {
         if (ChatClient.saveMessageToFirebase(firestore, uid, userMessage, timestamp, systemOwner)) {
             return true
         } else {
@@ -81,4 +91,68 @@ object FirebaseUtils {
 
     val isLoggedIn: Boolean
         get() = currentUserId() != null
+
+    suspend fun addToQueue(): Boolean {
+
+        var userUID = ""
+        val user = currentUserDetails()?.get()?.await()
+        userUID = user?.getString("uid").toString()
+        val username = user?.getString("username").toString()
+
+        val timestamp = DateTimeFormatter
+            .ofPattern("dd.MM.yyyy HH:mm")
+            .withZone(ZoneOffset.UTC)
+            .format(Instant.now())
+
+        val thisUser = mapOf(
+            "username" to username,
+            "uid" to userUID,
+            "profilePictureUrl" to "",
+            "added" to timestamp,
+            "matching" to false,
+        )
+
+        firestore.collection("matchmaking").document(userUID).get()
+            .addOnSuccessListener { document ->
+                if (!document.exists()) {
+                    firestore.collection("matchmaking")
+                        .document(userUID)
+                        .set(thisUser)
+                }
+            }
+
+        return true
+    }
+
+    suspend fun getTestData(): List<Match> {
+        var userUID = ""
+        val user = currentUserDetails()?.get()?.await()
+        userUID = user?.getString("uid").toString()
+        val collection = firestore.collection("matchmaking")
+
+        var users = emptyList<Match>()
+
+        val snapshot = collection.whereNotEqualTo("uid", userUID)
+            .limit(3)
+            .get()
+            .await()
+
+             users = snapshot.documents.mapNotNull { thisUser ->
+                try {
+                    Match(
+                        username = thisUser["username"] as? String ?: "",
+                        uid = thisUser["uid"] as? String ?: "",
+                        profilePictureUrl = thisUser["profilePictureUrl"] as? String ?: "",
+                        added = thisUser["added"] as? String ?: ""
+                    )
+                } catch (e: Exception) {
+                    Log.w("MATCH_PARSE", "Failed to parse match document", e)
+                    null
+                }
+
+            }
+
+        return users;
+    }
+
 }

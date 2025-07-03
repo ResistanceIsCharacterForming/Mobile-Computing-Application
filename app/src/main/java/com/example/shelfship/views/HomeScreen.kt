@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shelfship.R
 import androidx.core.view.isVisible
+import com.example.shelfship.views.chatScreen.ChatActivity
 
 class HomeScreen : AppCompatActivity() {
 
@@ -23,7 +24,9 @@ class HomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_chat)
+        //setContentView(R.layout.activity_home)
+
+
 
         /*
         setContentView(R.layout.activity_home)

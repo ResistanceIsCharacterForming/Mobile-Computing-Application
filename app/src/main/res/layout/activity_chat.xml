@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
 >
 
-<androidx.fragment.app.FragmentContainerView
-    android:id="@+id/chatListFragment"
-    android:name="com.example.shelfship.views.showChatMessages.ChatFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    tools:layout="@layout/fragment_chat"
-/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/chatListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout="@layout/fragment_chat"/>
+    <!-- android:name="com.example.shelfship.views.chatScreen.ChatFragment" -->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
