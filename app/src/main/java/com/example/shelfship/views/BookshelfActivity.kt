@@ -142,7 +142,6 @@ class BookshelfActivity : AppCompatActivity() {
             if (newState == SearchView.TransitionState.HIDDEN) {
                 // SearchView is dismissed
                 searchResultsAdapter.clearItems()
-                gbSearchViewModel.resetQuery()
             }
         }
         searchView.setupWithSearchBar(searchBar)
@@ -156,16 +155,6 @@ class BookshelfActivity : AppCompatActivity() {
             // initial population of the library
             lifecycleScope.launch {
                 bookshelfViewModel.populateAllShelves()
-            }
-        }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                gbSearchViewModel.query.collect { query ->
-                    if (query.isNotEmpty()) {
-                        searchView.setText(query.toString())
-                    }
-                }
             }
         }
 
@@ -229,12 +218,6 @@ class BookshelfActivity : AppCompatActivity() {
                 bookshelfViewModel.wishlist.collect { wishlist ->
                     wishlistAdapter.updateSearchResults(wishlist)
                 }
-            }
-        }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                bookshelfViewModel.listenBookshelfUpdates()
             }
         }
     }

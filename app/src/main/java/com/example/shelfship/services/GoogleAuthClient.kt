@@ -30,7 +30,12 @@ class GoogleAuthClient {
                     data = UserData(
                         uid = firebaseUser.uid,
                         username = firebaseUser.displayName ?: "",
-                        profilePictureUrl = firebaseUser.photoUrl?.toString() ?: ""
+                        profilePictureUrl = firebaseUser.photoUrl?.toString() ?: "",
+                        queryName = firebaseUser.displayName.toString().lowercase(),
+                        aboutMe = "",
+                        age = 0,
+                        interests = "",
+                        location = "",
                     ),
                     errorMessage = null
                 )

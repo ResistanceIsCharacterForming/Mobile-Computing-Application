@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/user_search_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.UserSearchFragment">
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="@string/search_user_hint" />
+
+        <!-- SearchView - Ekranı kaplayacak şekilde -->
+        <com.google.android.material.search.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_anchor="@id/search_bar"
+            app:layout_anchorGravity="bottom"
+            android:hint="@string/search_user_hint">
+
+            <!-- User Search progress -->
+            <ProgressBar
+                android:id="@+id/searching_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <!-- Search Results -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/user_search_results"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                android:layout_gravity="center_horizontal"
+                android:clipToPadding="false" />
+        </com.google.android.material.search.SearchView>
+
+        <!-- Pending Requests-->
+        <LinearLayout
+            android:id="@+id/pending_requests_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="72dp"
+            android:paddingHorizontal="12dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pending_requests_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false" />
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>

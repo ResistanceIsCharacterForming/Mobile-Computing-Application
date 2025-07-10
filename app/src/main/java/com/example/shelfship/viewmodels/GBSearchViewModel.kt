@@ -16,9 +16,6 @@ class GBSearchViewModel: ViewModel() {
     private val _searchState = MutableStateFlow(GBSearchState(GBSearchResult(0, arrayListOf<GBSearchBook>()), false, null))
     val searchState: StateFlow<GBSearchState> = _searchState
 
-    private val _query = MutableStateFlow("")
-    val query: StateFlow<String> = _query
-
     private val _subject = MutableStateFlow("Fantasy")
     val subject: StateFlow<String> = _subject
 
@@ -46,16 +43,8 @@ class GBSearchViewModel: ViewModel() {
         }
     }
 
-    fun setQuery(query: String) {
-        _query.value = query
-    }
-
     fun setSubject(subject: String) {
         _subject.value = subject
-    }
-
-    fun resetQuery() {
-        _query.value = ""
     }
 
 

@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFE4B5"
+    android:background="@color/white"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -39,12 +39,12 @@
             android:textColorLink="@color/design_default_color_error" />
 
         <Button
-            android:id="@+id/btnSuggestions"
+            android:id="@+id/btnRequests"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:backgroundTint="#8C1717"
-            android:text="Suggested"
+            android:text="Requests"
             android:textColorLink="@color/design_default_color_error" />
 
         <Button
@@ -57,12 +57,16 @@
             android:textColorLink="@color/design_default_color_error" />
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/loading_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center" />
 
-    <ListView
-        android:id="@+id/listView"
+    <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:dividerHeight="1dp" />
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentContainer"/>
 
 </LinearLayout>
