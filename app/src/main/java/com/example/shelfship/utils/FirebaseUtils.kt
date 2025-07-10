@@ -453,7 +453,7 @@ object FirebaseUtils {
                 val sessionID = listOf(thisClientUser.uid, friendUserData.uid).sorted().joinToString("_")
 
                 firestore.runTransaction { transaction ->
-                    // Add each user to the other's allFriends
+                    // Add each user to the other's allFriends and initialize the session
                     transaction.update(clientSocialReference, "allFriends.${friendUserData.uid}", mapOf(
                         "displayName" to friendUserData.displayName,
                         "uid" to friendUserData.uid,
@@ -463,6 +463,10 @@ object FirebaseUtils {
                         "displayName" to thisClientUser.username,
                         "uid" to thisClientUser.uid,
                         "sessionID" to sessionID
+                    ))
+                    transaction.set(firestore.collection("sessions").document(sessionID), mapOf(
+                        "participants" to listOf(thisClientUser.uid, friendUserData.uid),
+                        "messages" to emptyList()
                     ))
 
                     // Remove old request data from both users
@@ -498,6 +502,30 @@ object FirebaseUtils {
         }
     }
 
+    suspend fun removeFriend(friendUID: String): Boolean {
+        return try {
+            withContext (Dispatchers.IO) {
+                val clientUid = currentUserId() ?: return@withContext false
+
+                val sessionID = listOf(clientUid, friendUID).sorted().joinToString("_")
+                val clientSocialReference = firestore.collection("social").document(clientUid)
+                val friendSocialReference = firestore.collection("social").document(friendUID)
+                val sessionReference = firestore.collection("sessions").document(sessionID)
+
+                firestore.runTransaction { transaction ->
+                    transaction.update(clientSocialReference, "allFriends.$friendUID", FieldValue.delete())
+                    transaction.update(friendSocialReference, "allFriends.$clientUid", FieldValue.delete())
+                    transaction.delete(sessionReference)
+                }.await()
+                true
+            }
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
     suspend fun removePendingRequest(pendingRequestUid: String): Boolean {
         return try {
             withContext(Dispatchers.IO) {
@@ -518,5 +546,8 @@ object FirebaseUtils {
         }
     }
 
+    fun logout() {
+        auth.signOut()
+    }
 
 }

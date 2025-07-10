@@ -11,7 +11,7 @@ import com.example.shelfship.models.FriendUserData
 import com.google.android.material.textview.MaterialTextView
 
 class FriendsRecyclerViewAdapter(private var itemListener: onItemClickListener? = null,
-                                 private var chatListener: onItemClickListener? = null):
+                                 private var chatListener: onChatClickListener? = null):
     ListAdapter<FriendUserData, FriendsRecyclerViewAdapter.ViewHolder>(FriendsDiffCallback){
     object FriendsDiffCallback:DiffUtil.ItemCallback<FriendUserData>() {
         override fun areItemsTheSame(
@@ -41,9 +41,10 @@ class FriendsRecyclerViewAdapter(private var itemListener: onItemClickListener? 
         holder: ViewHolder,
         position: Int
     ) {
-        holder.friendName.text = this.getItem(position).displayName
-        holder.messageButton.setOnClickListener { chatListener?.onItemClick(this.getItem(position).uid) }
-        holder.itemView.setOnClickListener { itemListener?.onItemClick(this.getItem(position).uid) }
+        val item = getItem(position)
+        holder.friendName.text = item.displayName
+        holder.messageButton.setOnClickListener { chatListener?.onChatClick(item.sessionID!!) }
+        holder.itemView.setOnClickListener { itemListener?.onItemClick(item.uid) }
     }
 
     fun updateSearchResults(newFriends: List<FriendUserData>) {
@@ -58,11 +59,15 @@ class FriendsRecyclerViewAdapter(private var itemListener: onItemClickListener? 
         this.itemListener = listener
     }
 
-    fun setOnChatClickListener(listener: onItemClickListener) {
+    fun setOnChatClickListener(listener: onChatClickListener) {
         this.chatListener = listener
     }
 
     interface onItemClickListener {
         fun onItemClick(uid: String)
+    }
+
+    interface onChatClickListener {
+        fun onChatClick(sessionID: String)
     }
 }

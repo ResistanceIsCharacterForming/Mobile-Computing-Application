@@ -1,9 +1,11 @@
 package com.example.shelfship.views
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shelfship.R
 import com.example.shelfship.utils.FriendsRecyclerViewAdapter
 import com.example.shelfship.viewmodels.FriendScreenViewModel
+import com.example.shelfship.views.chatScreen.ChatActivity
 import kotlinx.coroutines.launch
 import kotlin.getValue
 
@@ -28,6 +31,21 @@ class FriendsFragment : Fragment(R.layout.fragment_friends) {
         friendsRecyclerView = view.findViewById(R.id.friends_recycler_view)
 
         val friendsRecyclerViewAdapter = FriendsRecyclerViewAdapter()
+        friendsRecyclerViewAdapter.setOnChatClickListener(
+            object : FriendsRecyclerViewAdapter.onChatClickListener {
+                override fun onChatClick(sessionID: String) {
+                    if (sessionID.isNotEmpty()) {
+                        val intent = Intent(requireContext(), ChatActivity::class.java)
+                        intent.putExtra("chatUUI", sessionID)
+                        startActivity(intent)
+                    }
+                    else {
+                        Toast.makeText(requireContext(), "Session ID not valid.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        )
+
         friendsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         friendsRecyclerView.setHasFixedSize(true)
         friendsRecyclerView.setItemViewCacheSize(20)
