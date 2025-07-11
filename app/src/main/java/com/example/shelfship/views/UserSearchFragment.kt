@@ -1,5 +1,6 @@
 package com.example.shelfship.views
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -25,7 +26,6 @@ class UserSearchFragment : Fragment(R.layout.fragment_user_search) {
 
     private lateinit var searchBar: SearchBar
     private lateinit var searchView: SearchView
-    private lateinit var progressBar: ProgressBar
     private lateinit var searchingProgressBar: ProgressBar
     private lateinit var searchResultsRecyclerView: RecyclerView
     private lateinit var pendingRequestsRecyclerView: RecyclerView
@@ -48,11 +48,30 @@ class UserSearchFragment : Fragment(R.layout.fragment_user_search) {
                 }
             }
         )
+
+        userSearchRecyclerViewAdapter.setOnItemClickListener(
+            object : UserSearchRecyclerViewAdapter.onItemClickListener {
+                override fun onItemClick(uid: String, displayName: String?) {
+                    val intent = Intent(requireContext(), OtherUserProfileActivity::class.java)
+                    intent.putExtra("userId", uid)
+                    startActivity(intent)
+                }
+            }
+        )
         val pendingRequestsRecyclerViewAdapter = PendingRequestsRecyclerViewAdapter()
         pendingRequestsRecyclerViewAdapter.setOnDismissClickListener(
             object : PendingRequestsRecyclerViewAdapter.onItemClickListener {
                 override fun onItemClick(uid: String) {
                     viewModel.removePendingRequest(uid)
+                }
+            }
+        )
+        pendingRequestsRecyclerViewAdapter.setOnItemClickListener(
+            object : PendingRequestsRecyclerViewAdapter.onItemClickListener {
+                override fun onItemClick(uid: String) {
+                    val intent = Intent(requireContext(), OtherUserProfileActivity::class.java)
+                    intent.putExtra("userId", uid)
+                    startActivity(intent)
                 }
             }
         )

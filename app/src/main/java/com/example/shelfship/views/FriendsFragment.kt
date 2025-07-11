@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shelfship.R
 import com.example.shelfship.utils.FriendsRecyclerViewAdapter
 import com.example.shelfship.viewmodels.FriendScreenViewModel
+import com.example.shelfship.views.chatScreen.ChatActivity
 import kotlinx.coroutines.launch
 
 class FriendsFragment : Fragment(R.layout.fragment_friends) {
@@ -30,6 +31,20 @@ class FriendsFragment : Fragment(R.layout.fragment_friends) {
 
         val friendsRecyclerViewAdapter = FriendsRecyclerViewAdapter()
 
+        friendsRecyclerViewAdapter.setOnChatClickListener(
+            object : FriendsRecyclerViewAdapter.onChatClickListener {
+                override fun onChatClick(sessionID: String) {
+                    if (sessionID.isNotEmpty()) {
+                        val intent = Intent(requireContext(), ChatActivity::class.java)
+                        intent.putExtra("chatUUI", sessionID)
+                        startActivity(intent)
+                    }
+                    else {
+                        Toast.makeText(requireContext(), "Session ID not valid.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        )
 
         friendsRecyclerViewAdapter.setOnItemClickListener(
             object : FriendsRecyclerViewAdapter.onItemClickListener {
