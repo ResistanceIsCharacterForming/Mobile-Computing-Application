@@ -1,5 +1,7 @@
 package com.example.shelfship.views
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -10,8 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import android.content.Context
-import android.content.Intent
+import com.example.shelfship.utils.getCurrentActivityName
 import com.example.shelfship.views.homeScreen.HomeActivity
 
 @Composable
@@ -21,20 +22,26 @@ fun LargeDropdownMenuScaffold(
     content: @Composable () -> Unit = {}
 ) {
     var isMenuOpen by remember { mutableStateOf(false) }
-    val DarkRed = Color(0xFF8C1717)
+    val darkRed = Color(0xFF8C1717)
+
+    val currentActivityName = context.getCurrentActivityName()
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(screenTitle, color = Color.White) },
-                backgroundColor = DarkRed,
+                backgroundColor = darkRed,
                 contentColor = Color.White,
                 navigationIcon = {},
 
                 actions = {
                     IconButton(onClick = {
                     }) {
-                        Icon(Icons.Filled.Notifications, contentDescription = "Notifications", tint = Color.White)
+                        Icon(
+                            Icons.Filled.Notifications,
+                            contentDescription = "Notifications",
+                            tint = Color.White
+                        )
                     }
 
                     Box {
@@ -49,34 +56,42 @@ fun LargeDropdownMenuScaffold(
                             onDismissRequest = { isMenuOpen = false },
                             modifier = Modifier
                                 .width(250.dp)
-                                .background(DarkRed)
+                                .background(darkRed)
                         ) {
-                            DropdownMenuItem(onClick = {
-                                context.startActivity(Intent(context, HomeActivity::class.java))
-                                isMenuOpen = false
-                            }) {
-                                Text("Home", color = Color.White)
+                            if (currentActivityName != "HomeActivity") {
+                                DropdownMenuItem(onClick = {
+                                    context.startActivity(Intent(context, HomeActivity::class.java))
+                                    isMenuOpen = false
+                                }) {
+                                    Text("Home", color = Color.White)
+                                }
                             }
 
-                            DropdownMenuItem(onClick = {
-                                context.startActivity(Intent(context, BookshelfActivity::class.java))
-                                isMenuOpen = false
-                            }) {
-                                Text("Bookshelf", color = Color.White)
+                            if (currentActivityName != "BookshelfActivity") {
+                                DropdownMenuItem(onClick = {
+                                    context.startActivity(Intent(context, BookshelfActivity::class.java))
+                                    isMenuOpen = false
+                                }) {
+                                    Text("Bookshelf", color = Color.White)
+                                }
                             }
 
-                            DropdownMenuItem(onClick = {
-                                context.startActivity(Intent(context, FriendScreen::class.java))
-                                isMenuOpen = false
-                            }) {
-                                Text("Friends", color = Color.White)
+                            if (currentActivityName != "FriendScreen") {
+                                DropdownMenuItem(onClick = {
+                                    context.startActivity(Intent(context, FriendScreen::class.java))
+                                    isMenuOpen = false
+                                }) {
+                                    Text("Friends", color = Color.White)
+                                }
                             }
 
-                            DropdownMenuItem(onClick = {
-                                context.startActivity(Intent(context, ProfilePageActivity::class.java))
-                                isMenuOpen = false
-                            }) {
-                                Text("Profile", color = Color.White)
+                            if (currentActivityName != "ProfilePageActivity") {
+                                DropdownMenuItem(onClick = {
+                                    context.startActivity(Intent(context, ProfilePageActivity::class.java))
+                                    isMenuOpen = false
+                                }) {
+                                    Text("Profile", color = Color.White)
+                                }
                             }
                         }
                     }
