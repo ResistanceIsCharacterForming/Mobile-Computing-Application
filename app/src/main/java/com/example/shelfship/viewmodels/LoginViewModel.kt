@@ -20,7 +20,9 @@ class LoginViewModel : ViewModel() {
             val result = googleAuthClient.signInWithGoogle(context)
 
             result.data?.let { userData ->
-                FirebaseUtils.saveUserToFirestore(userData)
+                if (!FirebaseUtils.userExists(userData.uid)) {
+                    FirebaseUtils.saveUserToFirestore(userData)
+                }
             }
 
             _signInState.value = SignInState(

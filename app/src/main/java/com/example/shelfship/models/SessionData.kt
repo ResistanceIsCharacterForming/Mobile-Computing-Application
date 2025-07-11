@@ -4,6 +4,5 @@ import com.example.shelfship.models.Message
 
 data class SessionData (
     val messages: List<Message>,
-    val owner: String,
     val participants: List<String>
 )

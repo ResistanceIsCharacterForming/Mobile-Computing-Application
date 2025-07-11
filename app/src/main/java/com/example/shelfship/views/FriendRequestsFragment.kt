@@ -1,6 +1,7 @@
 package com.example.shelfship.views
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ProgressBar
@@ -18,16 +19,16 @@ import kotlinx.coroutines.launch
 
 class FriendRequestsFragment : Fragment(R.layout.fragment_friend_requests) {
 
-    private lateinit var progressBar: ProgressBar
     private lateinit var friendRequestsRecyclerView: RecyclerView
     private val viewModel: FriendScreenViewModel by activityViewModels()
+    private lateinit var friendRequestsRecyclerViewAdapter: FriendRequestsRecyclerViewAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         friendRequestsRecyclerView = view.findViewById(R.id.friend_requests_recycler_view)
+        friendRequestsRecyclerViewAdapter = FriendRequestsRecyclerViewAdapter()
 
-        val friendRequestsRecyclerViewAdapter = FriendRequestsRecyclerViewAdapter()
         friendRequestsRecyclerViewAdapter.setOnRejectClickListener(
             object : FriendRequestsRecyclerViewAdapter.onItemClickListener {
                 override fun onItemClick(uid: String, displayName: String?) {
@@ -55,6 +56,12 @@ class FriendRequestsFragment : Fragment(R.layout.fragment_friend_requests) {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Force refresh the current data
+        friendRequestsRecyclerViewAdapter.updateSearchResults(viewModel.friendRequests.value)
     }
 
 }

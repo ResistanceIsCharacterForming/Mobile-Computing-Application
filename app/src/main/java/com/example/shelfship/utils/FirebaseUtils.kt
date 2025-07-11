@@ -550,4 +550,8 @@ object FirebaseUtils {
         auth.signOut()
     }
 
+    suspend fun userExists(uid: String): Boolean {
+        return firestore.collection("users").document(uid).get().await().exists()
+    }
+
 }

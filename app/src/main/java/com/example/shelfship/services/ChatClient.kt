@@ -35,12 +35,8 @@ object ChatClient {
         }
 
         val messageData = mapOf(
-            "attachment" to "",
-            "edited" to "",
             "uid" to UUID.randomUUID().toString(),
             "content" to userMessage,
-            "reactions" to emptyList<String>(),
-            "readby" to emptyList<String>(),
             "sender" to owner,
             "timestamp" to timestamp
         )

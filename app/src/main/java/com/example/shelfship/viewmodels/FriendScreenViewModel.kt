@@ -1,6 +1,5 @@
 package com.example.shelfship.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -10,7 +9,6 @@ import com.example.shelfship.utils.FirebaseUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import com.example.shelfship.utils.FirebaseUtils.getAllSocialState
 import com.google.firebase.firestore.ListenerRegistration
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 
 class FriendScreenViewModel: ViewModel() {
