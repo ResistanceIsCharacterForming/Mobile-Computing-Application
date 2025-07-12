@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
+import kotlin.math.abs
 
 class MatchViewModel : ViewModel() {
 
@@ -87,7 +88,7 @@ class MatchViewModel : ViewModel() {
 
         for (index in 0..6) {
             val difference = (myRatings[index] - yourRatings[index])
-            differenceRatings.add(difference)
+            differenceRatings.add(abs(difference))
         }
 
         val maximum = differenceRatings.max()
