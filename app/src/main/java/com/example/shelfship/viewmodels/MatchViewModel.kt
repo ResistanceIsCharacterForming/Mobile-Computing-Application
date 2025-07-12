@@ -36,6 +36,8 @@ class MatchViewModel : ViewModel() {
             return out
         }
 
+        Log.d("ifie", UID)
+
 
         val myFantasy: List<Int> = myBookshelf.filter { it.ownerBookShelves[0] && it.assignedGenre == "Fantasy" }.map { it.userRating }
         val yourFantasy: List<Int> = yourBookshelf.filter { it.ownerBookShelves[0] && it.assignedGenre == "Fantasy" }.map { it.userRating }
@@ -190,14 +192,12 @@ class MatchViewModel : ViewModel() {
             // The following is my implementation. But I want to link this since I used it to understand how to use Deferred properly:
             // https://developer.android.com/kotlin/coroutines/coroutines-adv
 
-            var thisUID = ""
-
             // Although there is some redundancy in running the same loop twice, it feels safer.
             // I want to get all the bookshelves from the potential 11 (logged in user + 10 in queue).
 
             for (thisUser in inQueue) {
 
-                thisUID = thisUser.getString("uid").toString()
+                val thisUID = thisUser.getString("uid").toString()
 
                 userBookshelves.add(
                     async { FirebaseUtils.getAllBooks(thisUID) }
@@ -219,11 +219,13 @@ class MatchViewModel : ViewModel() {
             // Fetch each user (document) from inQueue object.
             for (thisUser in inQueue) {
 
-                thisUID = thisUser.getString("uid").toString()
+                val thisUID = thisUser.getString("uid").toString()
 
                 Log.d("PIF!", retrievedBookshelves[index].toString())
                 Log.d("PIF!", retrievedBookshelves.last().toString())
                 Log.d("PIF!", "")
+
+                Log.d("jefjio", thisUID)
 
                 matchmakingScores.add(
                     async { calculateScore(
@@ -246,7 +248,7 @@ class MatchViewModel : ViewModel() {
 
 
             for (thisScore in calculatedScores) {
-                println("UID: ${thisScore.uid}, Score: ${thisScore.score}")
+                println("UID ff: ${thisScore.uid}, Score: ${thisScore.score}")
             }
 
 
