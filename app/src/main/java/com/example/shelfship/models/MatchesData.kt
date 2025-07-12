@@ -11,5 +11,6 @@ data class Match(
 
 data class MatchScore(
     val uid: String = "",
+    val username: String = "",
     val score: Double = 0.0
 )

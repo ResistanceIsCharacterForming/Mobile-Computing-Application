@@ -27,7 +27,7 @@ class MatchViewModel : ViewModel() {
 
     // myBookshelf is the FirestoreBookDetails object for a person in the queue who isn't the logged in user.
     // yourBookshelf is the FirestoreBookDetails object for the logged in user who's also in the queue.
-    suspend fun calculateScore(UID: String, myBookshelf: List<FirestoreBookDetails>, yourBookshelf: List<FirestoreBookDetails>): MatchScore {
+    suspend fun calculateScore(UID: String, username: String, myBookshelf: List<FirestoreBookDetails>, yourBookshelf: List<FirestoreBookDetails>): MatchScore {
 
 
         infix fun List<Int>.dot(other: List<Int>): Double {
@@ -148,6 +148,7 @@ class MatchViewModel : ViewModel() {
 
         val output = MatchScore(
             uid = UID,
+            username = username,
             score = finalScore
         )
 
@@ -230,6 +231,7 @@ class MatchViewModel : ViewModel() {
                 matchmakingScores.add(
                     async { calculateScore(
                         thisUID,
+                        thisUser.getString("username").toString(),
                         retrievedBookshelves[index],
                         retrievedBookshelves.last()
                     ) }
@@ -246,9 +248,20 @@ class MatchViewModel : ViewModel() {
 
             calculatedScores = calculatedScores.sortedBy { it.score }
 
-
+            var index2 = 0
             for (thisScore in calculatedScores) {
+
+                if (index2 >= 3) break
+
                 println("UID ff: ${thisScore.uid}, Score: ${thisScore.score}")
+
+                _matchResults.value += Match(
+                    username = thisScore.username,
+                    uid = thisScore.uid,
+                    profilePictureUrl = ""
+                )
+
+                index2++
             }
 
 
