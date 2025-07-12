@@ -14,16 +14,16 @@ import com.example.shelfship.utils.FirebaseUtils
 
 class BookDetailsViewModel : ViewModel() {
 
-    private var _bookDetailsState = MutableStateFlow<BookDetailsState>(BookDetailsState(null, false, null))
+    private val _bookDetailsState = MutableStateFlow<BookDetailsState>(BookDetailsState(null, false, null))
     val bookDetailsState: StateFlow<BookDetailsState> = _bookDetailsState
 
-    private var _assignedGenre = MutableStateFlow<String>("")
+    private val _assignedGenre = MutableStateFlow<String>("")
     val assignedGenre: StateFlow<String> = _assignedGenre
 
-    private var _ownerBookShelves = MutableStateFlow<List<Boolean>>(listOf(false, false, false, false))
+    private val _ownerBookShelves = MutableStateFlow<List<Boolean>>(listOf(false, false, false, false))
     val ownerBookShelves: StateFlow<List<Boolean>> = _ownerBookShelves
 
-    private var _userRating = MutableStateFlow<Int>(0)
+    private val _userRating = MutableStateFlow<Int>(0)
     val userRating: StateFlow<Int> = _userRating
 
     /**

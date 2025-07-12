@@ -46,9 +46,6 @@
         <activity
             android:name=".views.LoginActivity"
             android:exported="false" />
-        <activity
-            android:name=".views.MainActivity"
-            android:exported="false" />
 
         <activity
             android:name=".views.matchScreen.MatchActivity"

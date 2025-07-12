@@ -1,160 +1,113 @@
 package com.example.shelfship.views
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentContainerView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.shelfship.R
-import com.example.shelfship.views.chatScreen.ChatActivity
+import com.example.shelfship.viewmodels.FriendScreenViewModel
+import kotlinx.coroutines.launch
 
 class FriendScreen : AppCompatActivity() {
 
-    private lateinit var listView: ListView
     private lateinit var btnMyFriends: Button
-    private lateinit var btnSuggestions: Button
+    private lateinit var btnRequests: Button
     private lateinit var btnSearch: Button
+    private lateinit var fragmentContainerView: FragmentContainerView
+    private lateinit var progressBar: ProgressBar
 
-
-    private val myFriends = listOf("Alice", "Bob", "Charlie")
-    private val suggestions = listOf("David", "Ella")
-    private val searchResults = listOf("John", "Jane", "Emily")
+    private val viewModel: FriendScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend)
 
-        val composeView = findViewById<androidx.compose.ui.platform.ComposeView>(R.id.compose_scaffold)
+        val composeView =
+            findViewById<androidx.compose.ui.platform.ComposeView>(R.id.compose_scaffold)
         composeView.setContent {
             LargeDropdownMenuScaffold(context = this, screenTitle = "")
         }
 
-        listView = findViewById(R.id.listView)
         btnMyFriends = findViewById(R.id.btnMyFriends)
-        btnSuggestions = findViewById(R.id.btnSuggestions)
+        btnRequests = findViewById(R.id.btnRequests)
         btnSearch = findViewById(R.id.btnSearch)
+        fragmentContainerView = findViewById(R.id.fragmentContainer)
+        progressBar = findViewById(R.id.loading_progress_bar)
 
         btnMyFriends.setOnClickListener {
-            showList(
-                data = myFriends,
-                showMessageButton = true
-            ) { name ->
-                val intent = Intent(this, ChatActivity::class.java)
-                intent.putExtra("friendName", name)
-                startActivity(intent)
-            }
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, FriendsFragment())
+                .commit()
         }
-
-        btnSuggestions.setOnClickListener {
-            showList(
-                data = suggestions,
-                showSuggestedButtons = true,
-                onAcceptClick = { /* No process */ },
-                onRejectClick = { /* No process */ }
-            )
+        btnRequests.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, FriendRequestsFragment())
+                .commit()
         }
-
         btnSearch.setOnClickListener {
-            showList(
-                data = searchResults,
-                showAddButton = true,
-                onAddClick = { /* No porcess */ }
-            )
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, UserSearchFragment())
+                .commit()
         }
 
-
-        // Show My Friends at the begining
-        showList(
-            data = myFriends,
-            showMessageButton = true
-        ) { name ->
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("friendName", name)
-            startActivity(intent)
-        }
-    }
-
-
-
-    private fun showList(
-        data: List<String>,
-        showMessageButton: Boolean = false,
-        showSuggestedButtons: Boolean = false,
-        showAddButton: Boolean = false,
-        onMessageClick: (String) -> Unit = {},
-        onAcceptClick: (String) -> Unit = {},
-        onRejectClick: (String) -> Unit = {},
-        onAddClick: (String) -> Unit = {}
-    ) {
-        val adapter = FriendAdapter(
-            this, data,
-            showMessageButton,
-            showSuggestedButtons,
-            showAddButton,
-            onMessageClick,
-            onAcceptClick,
-            onRejectClick,
-            onAddClick
-        )
-        listView.adapter = adapter
-    }
-}
-
-class FriendAdapter(
-    context: android.content.Context,
-    private val friends: List<String>,
-    private val showMessageButton: Boolean,
-    private val showSuggestedButtons: Boolean,
-    private val showAddButton: Boolean,
-    private val onMessageClick: (String) -> Unit,
-    private val onAcceptClick: (String) -> Unit,
-    private val onRejectClick: (String) -> Unit,
-    private val onAddClick: (String) -> Unit
-) : ArrayAdapter<String>(context, 0, friends) {
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_friend, parent, false)
-        val friendName = friends[position]
-
-        val tvName = view.findViewById<TextView>(R.id.friendName)
-        val btnMessage = view.findViewById<ImageButton>(R.id.btnMessage)
-        val btnAccept = view.findViewById<ImageButton>(R.id.btnAccept)
-        val btnReject = view.findViewById<ImageButton>(R.id.btnReject)
-        val btnAdd = view.findViewById<ImageButton>(R.id.btnAdd)
-
-        tvName.text = friendName
-
-        // Hide all the buttons
-        btnMessage.visibility = View.GONE
-        btnAccept.visibility = View.GONE
-        btnReject.visibility = View.GONE
-        btnAdd.visibility = View.GONE
-
-        if (showMessageButton) {
-            btnMessage.visibility = View.VISIBLE
-            btnMessage.setOnClickListener {
-                Toast.makeText(context, "Message clicked: $friendName", Toast.LENGTH_SHORT).show()
-                val intent = Intent(context, ChatActivity::class.java)
-                intent.putExtra("friendName", friendName)
-                context.startActivity(intent)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, FriendsFragment())
+                .commit()
+            lifecycleScope.launch {
+                viewModel.populateFragments()
             }
-
         }
 
-        if (showSuggestedButtons) {
-            btnAccept.visibility = View.VISIBLE
-            btnReject.visibility = View.VISIBLE
-            btnAccept.setOnClickListener { onAcceptClick(friendName) }
-            btnReject.setOnClickListener { onRejectClick(friendName) }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loading.collect { isLoading ->
+                    if (isLoading) {
+                        progressBar.visibility = ProgressBar.VISIBLE
+                        btnMyFriends.isEnabled = false
+                        btnRequests.isEnabled = false
+                        btnSearch.isEnabled = false
+                    } else {
+                        progressBar.visibility = ProgressBar.GONE
+                        btnMyFriends.isEnabled = true
+                        btnRequests.isEnabled = true
+                        btnSearch.isEnabled = true
+                    }
+                }
+            }
         }
 
-        if (showAddButton) {
-            btnAdd.visibility = View.VISIBLE
-            btnAdd.setOnClickListener { onAddClick(friendName) }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.socialState.collect { socialState ->
+                    viewModel.socialStateUpdated()
+                }
+            }
         }
 
-        return view
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.error.collect { error ->
+                    if (error != null) {
+                        Toast.makeText(this@FriendScreen, error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle (Lifecycle.State.STARTED) {
+                viewModel.uiToastMessage.collect { message ->
+                    if (message != null) {
+                        Toast.makeText(this@FriendScreen, message, Toast.LENGTH_SHORT).show()
+                        viewModel.resetUiMessage()
+                    }
+                }
+            }
+        }
     }
 }
