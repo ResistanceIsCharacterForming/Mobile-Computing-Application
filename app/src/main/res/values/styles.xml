@@ -7,4 +7,9 @@
     <item name="android:scaleType">centerCrop</item>
     <item name="android:background">#DDDDDD</item>
     </style>
+
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

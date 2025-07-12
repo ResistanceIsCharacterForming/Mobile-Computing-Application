@@ -3,6 +3,7 @@ package com.example.shelfship.views.chatScreen
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shelfship.R
 
@@ -24,6 +25,7 @@ class ChatActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context, chatUUI: String) {
+            Log.d("TESTING", "I Work")
             val intent = Intent(context, ChatActivity::class.java).apply {
                 putExtra("chatUUI", chatUUI)
             }

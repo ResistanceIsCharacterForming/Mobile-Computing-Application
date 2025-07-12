@@ -12,9 +12,14 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.example.shelfship.services.ChatClient
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import kotlin.random.Random
 
 object FirebaseUtils {
 
@@ -58,6 +63,25 @@ object FirebaseUtils {
         return firestore.collection("sessions").document(uid)
     }
 
+    suspend fun fetchFromMatchmaking(): QuerySnapshot {
+
+        val collection = firestore.collection("matchmaking")
+
+        val userUID = currentUserId().toString()
+
+        val snapshot = collection.whereNotEqualTo("uid", userUID)
+                .orderBy("added", Query.Direction.ASCENDING)
+                .limit(10)
+                .get()
+                .await()
+
+        return snapshot
+    }
+
+    suspend fun userExists(uid: String): Boolean {
+        return firestore.collection("users").document(uid).get().await().exists()
+    }
+
     suspend fun saveMessageToFirebase(
         uid: String,
         userMessage: String,
@@ -71,6 +95,36 @@ object FirebaseUtils {
                 timestamp,
                 systemOwner
             )
+    }
+
+    suspend fun addTestData(uid: String) {
+
+        val genres = listOf(
+            "Fantasy",
+            "SciFie",
+            "Mystery",
+            "Romance",
+            "Thriller",
+            "Horror",
+            "Non-fiction"
+        )
+
+        for (i in 1..10) {
+
+            val book = mapOf(
+                "assignedGenre" to genres.random(),
+                "ownerBookShelves" to listOf(true, false, false, false),
+                "thumbnail" to "",
+                "title" to "",
+                "userRating" to Random.nextInt(1, 6)
+            )
+
+            firestore.collection("users")
+                .document(uid)
+                .collection("library")
+                .add(book)
+                .await()
+        }
     }
 
     suspend fun updateLibrary(lightBookDetails: FirestoreBookDetails): Boolean {
@@ -122,8 +176,11 @@ object FirebaseUtils {
         }
     }
 
-    suspend fun getAllBooks(): List<FirestoreBookDetails> {
-        val uid = currentUserId()
+    suspend fun getAllBooks(exUid: String = ""): List<FirestoreBookDetails> {
+        val uid = if (exUid != "") exUid else currentUserId().toString()
+
+        Log.d("FirebaseUtils [getAllBooks]: ", uid)
+
         return try {
             withContext(Dispatchers.IO) {
                 if (uid != null) {
@@ -193,32 +250,38 @@ object FirebaseUtils {
 
     suspend fun addToQueue(): Boolean {
 
-        var userUID = ""
-        val user = currentUserDetails()?.get()?.await()
-        userUID = user?.getString("uid").toString()
-        val username = user?.getString("username").toString()
+        Log.d("AUTH", "Current user: ${currentUserId()}")
+
+        Log.d("FIRESTORE INFO", "add new to matchmaking")
+
+        //val user = currentUserDetails()?.get()?.await()
+
+        //val userUID = user?.getString("uid").toString()
+        //val username = user?.getString("username").toString()
+
+
+
+        val userUID = currentUserId().toString()
 
         val timestamp = DateTimeFormatter
-            .ofPattern("dd.MM.yyyy HH:mm")
+            .ofPattern("yyyy-MM-dd HH:mm:ss")
             .withZone(ZoneOffset.UTC)
             .format(Instant.now())
 
         val thisUser = mapOf(
-            "username" to username,
+            "username" to "Lamina",
             "uid" to userUID,
-            "profilePictureUrl" to "",
-            "added" to timestamp,
-            "matching" to false,
+            "profilePictureUrl" to "https://picsum.photos/600/400",
+            "added" to timestamp
         )
 
-        firestore.collection("matchmaking").document(userUID).get()
-            .addOnSuccessListener { document ->
-                if (!document.exists()) {
-                    firestore.collection("matchmaking")
-                        .document(userUID)
-                        .set(thisUser)
-                }
-            }
+
+        if (userUID != null) {
+            firestore.collection("matchmaking")
+                .document(userUID)
+                .set(thisUser)
+                .await()
+        }
 
         return true
     }

@@ -2,16 +2,28 @@ package com.example.shelfship.views
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.shelfship.R
+import androidx.lifecycle.lifecycleScope
+import com.example.shelfship.utils.FirebaseUtils
 import com.example.shelfship.views.chatScreen.ChatActivity
-import com.example.shelfship.views.chatScreen.ChatFragment
-import com.example.shelfship.views.homeScreen.HomeActivity
+import com.example.shelfship.views.matchScreen.MatchActivity
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        HomeActivity.start(this)
+        /*
+        lifecycleScope.launch {
+            FirebaseUtils.addTestData("5bcKzc8ueEQFiHXb72UjgmIqO3d2")
+            FirebaseUtils.addTestData("GWzn3UIyreMt0R0GyoTLIkaEhFk1")
+            FirebaseUtils.addTestData("fcu4Xiq87PQnM8X8XRsWgEIMITk2")
+            FirebaseUtils.addTestData("fvKkX7Y8QJMF2szezaUV6rGkx7N2")
+            FirebaseUtils.addTestData("tIXkrCS2EfVYZP3V6327KJjnUWd2")
+        }*/
+
+        MatchActivity.start(this)
+
+        //ChatActivity.start(this, chatUUI="hello")
 
         //setContentView(R.layout.activity_main)
         //setContentView(R.layout.activity_chat)

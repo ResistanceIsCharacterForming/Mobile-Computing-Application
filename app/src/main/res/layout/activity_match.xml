@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_match" />
     <!-- android:name="com.example.shelfship.views.homeScreen.HomeFragment" -->
 
 

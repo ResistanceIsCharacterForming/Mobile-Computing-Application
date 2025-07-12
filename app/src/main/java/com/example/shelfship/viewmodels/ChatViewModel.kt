@@ -14,13 +14,13 @@ class ChatViewModel(private val chatUUI: String) : ViewModel() {
 
     class Factory(private val chatUUI: String) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            Log.i("ChatViewModel::Factory", "Creating view model.")
+            Log.d("ChatViewModel::Factory", "Creating view model.")
             return ChatViewModel(chatUUI) as T
         }
     }
 
     private val _chatMessages = MutableStateFlow(
-        SessionData(messages = emptyList(), owner = "", participants = emptyList())
+        SessionData(messages = emptyList(), participants = emptyList())
     )
     val chatMessages: StateFlow<SessionData> = _chatMessages
 
@@ -35,6 +35,8 @@ class ChatViewModel(private val chatUUI: String) : ViewModel() {
 
         val docRef = firestore.collection("sessions").document(chatUUI)
 
+        Log.d("startSessionListener", docRef.toString())
+
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w("MESSAGE", "Listen failed.", e)
@@ -42,8 +44,6 @@ class ChatViewModel(private val chatUUI: String) : ViewModel() {
             }
 
             if (snapshot != null && snapshot.exists()) {
-                //val owner = snapshot.getString("owner")
-                val userReference = snapshot.getDocumentReference("owner")
                 val participants = snapshot.get("participants") as? List<String> ?: emptyList()
                 val messageMaps = snapshot.get("messages") as? List<Map<String, Any>> ?: emptyList()
 
@@ -52,26 +52,15 @@ class ChatViewModel(private val chatUUI: String) : ViewModel() {
                         Message(
                             sender = msg["sender"] as? String ?: "",
                             content = msg["content"] as? String ?: "",
-                            timestamp = msg["timestamp"] as? String ?: "",
-                            id = msg["id"] as? String ?: "",
-                            edited = msg["edited"] as? String ?: "",
-                            readby = msg["readby"] as? List<String> ?: emptyList(),
-                            reactions = emptyList()
+                            timestamp = msg["timestamp"] as? String ?: ""
                         )
                     } catch (e: Exception) {
-                        Log.w("MESSAGE_PARSE", "Failed to parse message", e)
+                        Log.d("MESSAGE_PARSE", "Failed to parse message", e)
                         null
                     }
                 }
 
-                if (userReference != null) {
-                    userReference.get().addOnSuccessListener { usernameSnapshot ->
-                        val ownerUsername = usernameSnapshot.getString("username") ?: "Unknown"
-                        _chatMessages.value = SessionData(messages, ownerUsername, participants)
-                    }.addOnFailureListener {
-                        _chatMessages.value = SessionData(messages, "Unknown", participants)
-                    }
-                }
+                _chatMessages.value = SessionData(messages, participants)
 
             } else {
                 Log.d("MESSAGE", "Current data: null")
