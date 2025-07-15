@@ -58,7 +58,7 @@ fun LargeDropdownMenuScaffold(
                                 .width(250.dp)
                                 .background(darkRed)
                         ) {
-                            if (currentActivityName != "HomeActivity") {
+                            if (currentActivityName != "MatchActivity") {
                                 DropdownMenuItem(onClick = {
                                     context.startActivity(Intent(context, MatchActivity::class.java))
                                     isMenuOpen = false
