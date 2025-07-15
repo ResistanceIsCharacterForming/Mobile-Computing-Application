@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shelfship.databinding.MatchListItemBinding
 import com.example.shelfship.models.Match
+import coil.load
 
 class MatchAdapter(private val matchResultListener: MatchResultListener) : RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
 
@@ -37,6 +38,7 @@ class MatchAdapter(private val matchResultListener: MatchResultListener) : Recyc
 
         fun bindItem(match: Match) {
             binding.matchNameView.text = match.username
+            binding.matchImageView.load(match.profilePictureUrl)
         }
     }
 }

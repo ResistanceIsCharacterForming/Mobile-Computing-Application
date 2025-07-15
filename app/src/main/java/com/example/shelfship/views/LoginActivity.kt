@@ -12,7 +12,7 @@ import com.example.shelfship.viewmodels.LoginViewModel
 import com.google.android.gms.common.SignInButton
 import kotlinx.coroutines.launch
 import androidx.lifecycle.ViewModelProvider
-import com.example.shelfship.views.homeScreen.HomeActivity
+import com.example.shelfship.views.matchScreen.MatchActivity
 
 class LoginActivity : AppCompatActivity() {
     lateinit var signInButton: SignInButton
@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.signInState.collect { state ->
                     if (state.isSignInSuccessful) {
-                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                        val intent = Intent(this@LoginActivity, MatchActivity::class.java)
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         startActivity(intent)
                         finish()

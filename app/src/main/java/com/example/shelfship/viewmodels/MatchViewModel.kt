@@ -13,10 +13,9 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlin.math.max
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
-import kotlin.math.abs
 
 class MatchViewModel : ViewModel() {
 
@@ -46,7 +45,13 @@ class MatchViewModel : ViewModel() {
 
     // myBookshelf is the FirestoreBookDetails object for a person in the queue who isn't the logged in user.
     // yourBookshelf is the FirestoreBookDetails object for the logged in user who's also in the queue.
-    suspend fun calculateScore(UID: String, username: String, myBookshelf: List<FirestoreBookDetails>, yourBookshelf: List<FirestoreBookDetails>): MatchScore {
+    suspend fun calculateScore(
+        UID: String,
+        username: String,
+        profilePictureUrl: String,
+        myBookshelf: List<FirestoreBookDetails>,
+        yourBookshelf: List<FirestoreBookDetails>
+    ): MatchScore {
 
         val genres = listOf(
             "Fantasy",
@@ -101,6 +106,7 @@ class MatchViewModel : ViewModel() {
         val output = MatchScore(
             uid = UID,
             username = username,
+            profilePictureUrl = profilePictureUrl,
             score = finalScore
         )
 
@@ -166,6 +172,7 @@ class MatchViewModel : ViewModel() {
                     async { calculateScore(
                         thisUID,
                         thisUser.getString("username").toString(),
+                        thisUser.getString("profilePictureUrl").toString(),
                         myBookshelf,
                         yourBookshelf
                     ) }
@@ -184,7 +191,6 @@ class MatchViewModel : ViewModel() {
 
             Log.d("RESULTS!!", calculatedScores.toString())
 
-
             var index2 = 0
             for (thisScore in calculatedScores) {
 
@@ -195,7 +201,7 @@ class MatchViewModel : ViewModel() {
                 _matchResults.value += Match(
                     username = thisScore.username,
                     uid = thisScore.uid,
-                    profilePictureUrl = ""
+                    profilePictureUrl = thisScore.profilePictureUrl
                 )
 
                 index2++

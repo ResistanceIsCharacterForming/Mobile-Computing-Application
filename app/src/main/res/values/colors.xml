@@ -5,4 +5,6 @@
     <color name="cream">#f8dca4</color>
     <color name="grey">#d9d9d9</color>
     <color name="off_red">#852221</color>
+    <color name="theme_red">#8C1717</color>
+    <color name="theme_red_accent">#6e1212</color>
 </resources>

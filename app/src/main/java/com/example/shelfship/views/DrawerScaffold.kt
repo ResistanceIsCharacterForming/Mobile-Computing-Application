@@ -7,6 +7,7 @@ import com.example.shelfship.views.DrawerContent
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -34,14 +35,14 @@ fun DrawerScaffold(
                     IconButton(onClick = {
                         scope.launch { scaffoldState.drawerState.open() }
                     }) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        Icon(Icons.Filled.Menu, contentDescription = "Menu", modifier = Modifier.size(24.dp))
                     }
                 },
                 actions = {
                     IconButton(onClick = {
                         Toast.makeText(context, "Notifications clicked", Toast.LENGTH_SHORT).show()
                     }) {
-                        Icon(Icons.Filled.Notifications, contentDescription = "Notifications")
+                        Icon(Icons.Filled.Notifications, contentDescription = "Notifications", modifier = Modifier.size(24.dp))
                     }
                 }
             )

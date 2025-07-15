@@ -15,6 +15,8 @@ import kotlinx.coroutines.withContext
 import com.example.shelfship.services.ChatClient
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.CancellationException
 import java.time.Instant
 import java.time.ZoneOffset
@@ -607,10 +609,6 @@ object FirebaseUtils {
 
     fun logout() {
         auth.signOut()
-    }
-
-    suspend fun userExists(uid: String): Boolean {
-        return firestore.collection("users").document(uid).get().await().exists()
     }
 
 }

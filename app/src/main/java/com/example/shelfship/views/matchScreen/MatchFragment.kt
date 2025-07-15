@@ -5,12 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.shelfship.R
 import com.example.shelfship.databinding.FragmentMatchBinding
 import com.example.shelfship.viewmodels.MatchViewModel
 import com.example.shelfship.views.matchScreen.MatchAdapter.MatchResultListener
