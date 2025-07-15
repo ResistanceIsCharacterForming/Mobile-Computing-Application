@@ -35,7 +35,6 @@ object ChatClient {
         }
 
         val messageData = mapOf(
-            "uid" to UUID.randomUUID().toString(),
             "content" to userMessage,
             "sender" to owner,
             "timestamp" to timestamp

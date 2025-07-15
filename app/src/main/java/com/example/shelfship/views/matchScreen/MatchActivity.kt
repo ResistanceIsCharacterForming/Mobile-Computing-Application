@@ -1,6 +1,4 @@
-package com.example.shelfship.views.homeScreen
-
-import com.example.shelfship.views.chatScreen.ChatFragment
+package com.example.shelfship.views.matchScreen
 
 import android.content.Context
 import android.content.Intent
@@ -9,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.shelfship.R
 import com.example.shelfship.views.LargeDropdownMenuScaffold
 
-class HomeActivity : AppCompatActivity() {
+class MatchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_match)
 
         val composeView = findViewById<androidx.compose.ui.platform.ComposeView>(R.id.compose_scaffold)
         composeView.setContent {
@@ -21,7 +19,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
-            val fragment = HomeFragment.newInstance()
+            val fragment = MatchFragment.newInstance()
 
             supportFragmentManager.beginTransaction()
                 .replace(R.id.homeFragment, fragment)
@@ -31,7 +29,7 @@ class HomeActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context) {
-            val intent = Intent(context, HomeActivity::class.java)
+            val intent = Intent(context, MatchActivity::class.java)
             context.startActivity(intent)
         }
     }

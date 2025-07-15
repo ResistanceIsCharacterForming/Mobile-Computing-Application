@@ -52,8 +52,7 @@ class ChatViewModel(private val chatUUI: String) : ViewModel() {
                         Message(
                             sender = msg["sender"] as? String ?: "",
                             content = msg["content"] as? String ?: "",
-                            timestamp = msg["timestamp"] as? String ?: "",
-                            id = msg["uid"] as? String ?: ""
+                            timestamp = msg["timestamp"] as? String ?: ""
                         )
                     } catch (e: Exception) {
                         Log.d("MESSAGE_PARSE", "Failed to parse message", e)

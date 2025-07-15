@@ -51,6 +51,8 @@ class ChatFragment : Fragment(), ChatContentListener {
 
         viewModel = ViewModelProvider(this, ChatViewModel.Factory(chatUUI))
             .get(ChatViewModel::class.java)
+
+        Log.d("ChatFragment", "Created ViewModel with param: chatUUI: $chatUUI")
     }
 
     override fun onCreateView(
@@ -58,6 +60,10 @@ class ChatFragment : Fragment(), ChatContentListener {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+
+
+
+
         binding = FragmentChatBinding.inflate(inflater, container, false)
 
         //repository = PlacesRepositoryInMemoryImpl.getInstance(true)
@@ -72,6 +78,8 @@ class ChatFragment : Fragment(), ChatContentListener {
             }
             false
         }
+
+        Log.d("ChatFragment", "Collecting chatMessages from ViewModel soon (tm)")
 
         val listView = binding.listView
         listView.layoutManager = LinearLayoutManager(context)

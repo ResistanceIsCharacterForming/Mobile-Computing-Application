@@ -1,7 +1,5 @@
 package com.example.shelfship.views
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -12,8 +10,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import android.content.Context
+import android.content.Intent
+import com.example.shelfship.views.matchScreen.MatchActivity
 import com.example.shelfship.utils.getCurrentActivityName
-import com.example.shelfship.views.homeScreen.HomeActivity
 
 @Composable
 fun LargeDropdownMenuScaffold(
@@ -60,7 +60,7 @@ fun LargeDropdownMenuScaffold(
                         ) {
                             if (currentActivityName != "HomeActivity") {
                                 DropdownMenuItem(onClick = {
-                                    context.startActivity(Intent(context, HomeActivity::class.java))
+                                    context.startActivity(Intent(context, MatchActivity::class.java))
                                     isMenuOpen = false
                                 }) {
                                     Text("Home", color = Color.White)

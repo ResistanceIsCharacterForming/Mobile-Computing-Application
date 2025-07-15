@@ -1,12 +1,11 @@
-package com.example.shelfship.views.matchWindow
+package com.example.shelfship.views.matchScreen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.example.shelfship.models.Message
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shelfship.databinding.MatchListItemBinding
 import com.example.shelfship.models.Match
-import com.example.shelfship.views.matchWindow.MatchAdapter.MatchViewHolder
+import coil.load
 
 class MatchAdapter(private val matchResultListener: MatchResultListener) : RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
 
@@ -39,6 +38,7 @@ class MatchAdapter(private val matchResultListener: MatchResultListener) : Recyc
 
         fun bindItem(match: Match) {
             binding.matchNameView.text = match.username
+            binding.matchImageView.load(match.profilePictureUrl)
         }
     }
 }

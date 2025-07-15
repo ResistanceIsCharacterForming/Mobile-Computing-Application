@@ -7,4 +7,17 @@
     <item name="android:scaleType">centerCrop</item>
     <item name="android:background">#DDDDDD</item>
     </style>
+
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="MaterialRoundedButton" parent="Widget.Material3.Button.ElevatedButton">
+        <item name="shapeAppearance">@style/MaterialShapeCircular</item>
+    </style>
+    <style name="MaterialShapeCircular" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

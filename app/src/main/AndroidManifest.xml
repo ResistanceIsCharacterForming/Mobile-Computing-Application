@@ -48,7 +48,7 @@
             android:name=".views.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".views.homeScreen.HomeActivity"
+            android:name=".views.matchScreen.MatchActivity"
             android:exported="false" />
         <activity
             android:name=".views.FriendScreen"
