@@ -16,7 +16,6 @@
             android:padding="8dp"
             android:background="#8C1717">
 
-            <!-- Notifications Button -->
             <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/compose_scaffold"
                 android:layout_width="match_parent"
@@ -33,17 +32,14 @@
             android:layout_marginBottom="12dp"
             android:layout_marginTop="8dp" />
 
-        <!-- Tek Profil Resmi -->
         <ImageView
             android:id="@+id/imageSlot1"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginBottom="16dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Profile Picture"
-             />
+            android:contentDescription="Profile Picture" />
 
-        <!-- About Me -->
         <TextView
             android:text="About Me"
             android:textSize="18sp"
@@ -62,24 +58,6 @@
             android:gravity="top"
             android:layout_marginBottom="16dp"
             android:enabled="false" />
-
-        <!-- Editable profile fields -->
-
-        <TextView
-            android:text="Favourite Book"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/favoriteBookInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Your favorite book"
-            android:background="#FFF"
-            android:padding="8dp"
-            android:enabled="false"
-            android:layout_marginBottom="12dp" />
 
         <TextView
             android:text="Location"
@@ -130,7 +108,6 @@
             android:enabled="false"
             android:layout_marginBottom="16dp" />
 
-        <!-- Edit / Save Button -->
         <Button
             android:id="@+id/btnEditProfile"
             android:text="Edit Profile"
@@ -139,6 +116,16 @@
             android:backgroundTint="#8C1717"
             android:textColor="#FFFFFF"
             android:layout_marginTop="24dp" />
+
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:text="Log Out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#8C1717"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 </ScrollView>

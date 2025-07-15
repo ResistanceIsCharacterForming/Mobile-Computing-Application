@@ -1,15 +1,13 @@
 package com.example.shelfship.views
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.shelfship.R
+import com.example.shelfship.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import android.view.LayoutInflater
-import android.view.ViewGroup
 
 class ProfilePageActivity : AppCompatActivity() {
 
@@ -19,6 +17,7 @@ class ProfilePageActivity : AppCompatActivity() {
     private lateinit var ageInput: EditText
     private lateinit var interestsInput: EditText
     private lateinit var btnEditProfile: Button
+    private lateinit var btnLogout: Button
     private var isEditing = false
 
     private val firestore = FirebaseFirestore.getInstance()
@@ -34,15 +33,14 @@ class ProfilePageActivity : AppCompatActivity() {
         composeView.setContent {
             LargeDropdownMenuScaffold(context = this, screenTitle = "")
         }
+
         profileImageView = findViewById(R.id.imageSlot1)
         aboutMeInput = findViewById(R.id.aboutMeInput)
         locationInput = findViewById(R.id.locationInput)
         ageInput = findViewById(R.id.ageInput)
         interestsInput = findViewById(R.id.interestsInput)
         btnEditProfile = findViewById(R.id.btnEditProfile)
-
-
-
+        btnLogout = findViewById(R.id.btnLogout)
 
         setEditMode(false)
 
@@ -54,6 +52,11 @@ class ProfilePageActivity : AppCompatActivity() {
             } else {
                 setEditMode(true)
             }
+        }
+
+        btnLogout.setOnClickListener {
+            FirebaseUtils.logout()
+            finishAffinity()
         }
 
         loadUserProfileFromFirestore()
@@ -92,12 +95,6 @@ class ProfilePageActivity : AppCompatActivity() {
                     locationInput.setText(location)
                     ageInput.setText(age)
                     interestsInput.setText(interests)
-                } else {
-                    profileImageView.setImageResource(R.drawable.ic_profile_placeholder)
-                    aboutMeInput.setText("")
-                    locationInput.setText("")
-                    ageInput.setText("")
-                    interestsInput.setText("")
                 }
             }
             .addOnFailureListener {

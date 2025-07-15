@@ -554,4 +554,31 @@ object FirebaseUtils {
         return firestore.collection("users").document(uid).get().await().exists()
     }
 
+    suspend fun getFavoritesForUser(uid: String): List<FirestoreBookDetails> {
+        return try {
+            withContext(Dispatchers.IO) {
+                if (uid != null) {
+                    val libraryReference = firestore.collection("users").document(uid)
+                        .collection("library")
+                    val querySnapshot = libraryReference.get().await()
+                    Log.d("FirebaseUtils", "Book details being turned to object!")
+
+
+                    querySnapshot.documents.mapNotNull { document ->
+                        document.toObject(FirestoreBookDetails::class.java)
+                    }.filter { book ->
+                        book.ownerBookShelves.getOrNull(0) == true
+                    }
+                } else {
+                    Log.d("FirebaseUtils", "No user logged in!")
+                    emptyList()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("FirebaseUtils", "Exception: ${e.localizedMessage}")
+            emptyList()
+        }
+    }
+
 }

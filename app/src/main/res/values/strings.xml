@@ -20,6 +20,7 @@
     <string name="library_currently_reading">Currently Reading</string>
     <string name="library_wishlist">Wishlist</string>
     <string name="user_rating">Rating</string>
+    <string name="book_cover">Book Cover Image</string>
     <array name="genres">
         <item>Fantasy</item>
         <item>SciFie</item>

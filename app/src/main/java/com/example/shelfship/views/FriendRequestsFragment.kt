@@ -1,5 +1,6 @@
 package com.example.shelfship.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -40,6 +41,15 @@ class FriendRequestsFragment : Fragment(R.layout.fragment_friend_requests) {
             object : FriendRequestsRecyclerViewAdapter.onItemClickListener {
                 override fun onItemClick(uid: String, displayName: String?) {
                     viewModel.acceptFriendRequest(uid, displayName!!)
+                }
+            }
+        )
+        friendRequestsRecyclerViewAdapter.setOnItemClickListener(
+            object : FriendRequestsRecyclerViewAdapter.onItemClickListener {
+                override fun onItemClick(uid: String, displayName: String?) {
+                    val intent = Intent(requireContext(), OtherUserProfileActivity::class.java)
+                    intent.putExtra("userId", uid)
+                    startActivity(intent)
                 }
             }
         )

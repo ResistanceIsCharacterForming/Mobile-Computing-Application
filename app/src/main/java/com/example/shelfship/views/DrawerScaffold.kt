@@ -3,7 +3,6 @@ package com.example.shelfship.views
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.unit.dp
-import com.example.shelfship.views.DrawerContent
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.padding

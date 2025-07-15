@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShelfShip"
         tools:targetApi="31">
-
+        <activity
+            android:name=".views.OtherUserProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".views.BookDetailsActivity"
             android:exported="false" />
@@ -42,11 +44,9 @@
                 <data android:scheme="${appAuthRedirectScheme}" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".views.LoginActivity"
             android:exported="false" />
-
         <activity
             android:name=".views.homeScreen.HomeActivity"
             android:exported="false" />
@@ -62,7 +62,6 @@
         <activity
             android:name=".views.QuickSearchResultActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

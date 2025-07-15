@@ -45,6 +45,15 @@ class FriendsFragment : Fragment(R.layout.fragment_friends) {
                 }
             }
         )
+        friendsRecyclerViewAdapter.setOnItemClickListener(
+            object : FriendsRecyclerViewAdapter.onItemClickListener {
+                override fun onItemClick(uid: String) {
+                    val intent = Intent(requireContext(), OtherUserProfileActivity::class.java)
+                    intent.putExtra("userId", uid)
+                    startActivity(intent)
+                }
+            }
+        )
 
         friendsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         friendsRecyclerView.setHasFixedSize(true)
