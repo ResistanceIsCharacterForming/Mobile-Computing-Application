@@ -43,7 +43,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_user_hint">Find new friends</string>
+    <!-- fragment_chat -->
+    <string name="messageFieldWrapperHint">Message...</string>
+    <string name="submitButtonText">Send</string>
     <!-- fragment_match -->
     <string name="btnChatNow">Find Match</string>
     <string name="btnFilter">Customize Matchmaking</string>
+    <string name="infoMatchesText">Click on a match to send a friend request.</string>
 </resources>

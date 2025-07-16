@@ -12,7 +12,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import com.example.shelfship.services.ChatClient
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
@@ -23,11 +22,51 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import kotlin.random.Random
 
+// NOTE: This pair (||) has been added to quickly move between sections when using the search.
+
+// This is an object housing all the functions that need to interact directly with Firestore.
 object FirebaseUtils {
 
+    // firestore should be private ideally.
     val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
     val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     val isLoggedIn: Boolean get() = auth.currentUser != null
+
+
+    // REMOVE THIS LATER
+    suspend fun addTestData(uid: String) {
+
+        val genres = listOf(
+            "Fantasy",
+            "SciFie",
+            "Mystery",
+            "Romance",
+            "Thriller",
+            "Horror",
+            "Non-fiction"
+        )
+
+        for (i in 1..20) {
+
+            val book = mapOf(
+                "assignedGenre" to genres.random(),
+                "ownerBookShelves" to listOf(true, false, false, false),
+                "thumbnail" to "",
+                "title" to "",
+                "userRating" to Random.nextInt(1, 6)
+            )
+
+            firestore.collection("users")
+                .document(uid)
+                .collection("library")
+                .add(book)
+                .await()
+        }
+    }
+
+
+
+    // || USERS AND MISC
 
     suspend fun saveUserToFirestore(userData: UserData): Boolean {
         return try {
@@ -82,69 +121,13 @@ object FirebaseUtils {
         return firestore.collection("sessions").document(uid)
     }
 
-    suspend fun fetchFromMatchmaking(): QuerySnapshot {
 
-        val collection = firestore.collection("matchmaking")
-
-        val userUID = currentUserId().toString()
-
-        val snapshot = collection.whereNotEqualTo("uid", userUID)
-                .orderBy("added", Query.Direction.ASCENDING)
-                .limit(10)
-                .get()
-                .await()
-
-        return snapshot
-    }
 
     suspend fun userExists(uid: String): Boolean {
         return firestore.collection("users").document(uid).get().await().exists()
     }
 
-    suspend fun saveMessageToFirebase(
-        uid: String,
-        userMessage: String,
-        timestamp: String,
-        systemOwner: Boolean = false
-    ): Boolean {
-        return ChatClient.saveMessageToFirebase(
-                firestore,
-                uid,
-                userMessage,
-                timestamp,
-                systemOwner
-            )
-    }
-
-    suspend fun addTestData(uid: String) {
-
-        val genres = listOf(
-            "Fantasy",
-            "SciFie",
-            "Mystery",
-            "Romance",
-            "Thriller",
-            "Horror",
-            "Non-fiction"
-        )
-
-        for (i in 1..10) {
-
-            val book = mapOf(
-                "assignedGenre" to genres.random(),
-                "ownerBookShelves" to listOf(true, false, false, false),
-                "thumbnail" to "",
-                "title" to "",
-                "userRating" to Random.nextInt(1, 6)
-            )
-
-            firestore.collection("users")
-                .document(uid)
-                .collection("library")
-                .add(book)
-                .await()
-        }
-    }
+    // || BOOKSHELVES
 
     suspend fun updateLibrary(lightBookDetails: FirestoreBookDetails): Boolean {
         val uid = currentUserId()
@@ -255,74 +238,23 @@ object FirebaseUtils {
         }
     }
 
+    // || FRIENDS
 
-    suspend fun addToQueue(): Boolean {
+    // Function to add a empty document in social for a user.
+    suspend fun existsSocial(uid: String) {
 
-        Log.d("AUTH", "Current user: ${currentUserId()}")
+        val document = firestore.collection("social").document(uid)
+        val snapshot = document.get().await()
 
-        Log.d("FIRESTORE INFO", "add new to matchmaking")
+        if (!snapshot.exists()) {
+            val initialSocialData = mapOf(
+                "allFriends" to emptyMap<String, Map<String, String>>(),
+                "friendRequests" to emptyMap<String, Map<String, String>>(),
+                "ownRequests" to emptyMap<String, Map<String, String>>()
+            )
 
-        //val user = currentUserDetails()?.get()?.await()
-
-        //val userUID = user?.getString("uid").toString()
-        //val username = user?.getString("username").toString()
-
-
-
-        val userUID = currentUserId().toString()
-
-        val timestamp = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd HH:mm:ss")
-            .withZone(ZoneOffset.UTC)
-            .format(Instant.now())
-
-        val thisUser = mapOf(
-            "username" to "Lamina",
-            "uid" to userUID,
-            "profilePictureUrl" to "https://picsum.photos/600/400",
-            "added" to timestamp
-        )
-
-
-        if (userUID != null) {
-            firestore.collection("matchmaking")
-                .document(userUID)
-                .set(thisUser)
-                .await()
+            document.set(initialSocialData).await()
         }
-
-        return true
-    }
-
-    suspend fun getTestData(): List<Match> {
-        var userUID = ""
-        val user = currentUserDetails()?.get()?.await()
-        userUID = user?.getString("uid").toString()
-        val collection = firestore.collection("matchmaking")
-
-        var users = emptyList<Match>()
-
-        val snapshot = collection.whereNotEqualTo("uid", userUID)
-            .limit(3)
-            .get()
-            .await()
-
-        users = snapshot.documents.mapNotNull { thisUser ->
-            try {
-                Match(
-                    username = thisUser["username"] as? String ?: "",
-                    uid = thisUser["uid"] as? String ?: "",
-                    profilePictureUrl = thisUser["profilePictureUrl"] as? String ?: "",
-                    added = thisUser["added"] as? String ?: ""
-                )
-            } catch (e: Exception) {
-                Log.w("MATCH_PARSE", "Failed to parse match document", e)
-                null
-            }
-
-        }
-
-        return users
     }
 
     suspend fun getAllSocialState(): Map<String, List<FriendUserData>>? {
@@ -637,5 +569,138 @@ object FirebaseUtils {
             emptyList()
         }
     }
+
+    // || MATCHMAKING
+
+    // This is where we get an object of the 10 user with the oldest added fields from matchmaking.
+    suspend fun fetchFromMatchmaking(): QuerySnapshot? {
+        // I wrap this entire function into a try-catch. I would need two otherwise, one for firestore.collection() and one for collection.whereNotEqualTo()
+        try {
+            // Get all documents in matchmaking collection.
+            val collection = firestore.collection("matchmaking")
+
+            val userUID = currentUserId().toString()
+
+            // We sort by the added field, and get ten from our collection.
+            val snapshot = collection.whereNotEqualTo("uid", userUID)
+                .orderBy("added", Query.Direction.ASCENDING)
+                .limit(10)
+                .get()
+                .await()
+
+            // Send the QuerySnapshot back to the ViewModel.
+            return snapshot
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("fetchFromMatchmaking", "Exception: ${e.localizedMessage}")
+            return null
+        }
+    }
+
+    // This function is called when the user clicks the button to start matchmaking. We add them to the matchmaking collection in Firestore.
+    suspend fun addToQueue(): Boolean {
+        // I wrap this entire function into a try-catch. I would need two otherwise, one for the currentUserDetails() call, and one for the firestore.collection() call.
+        try {
+            // Call currentUserDetails() and await a response. Then convert the response into an object.
+            val user = currentUserDetails()?.get()?.await()?.toObject(UserData::class.java)
+
+            // Fetch the values we need from the user.
+            val userUID = (user?.uid).toString()
+            val userName = (user?.username).toString()
+            val userprofilePicture = (user?.profilePictureUrl).toString()
+
+            // Important. 'yyyy-MM-dd HH:mm:ss', this format lets us sort the documents in matchmaking later.
+            val timestamp = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withZone(ZoneOffset.UTC)
+                .format(Instant.now())
+
+            // Set up a map with the values we fetched.
+            val thisUser = mapOf(
+                "username" to userName,
+                "uid" to userUID,
+                "profilePictureUrl" to userprofilePicture,
+                "added" to timestamp
+            )
+
+            // Either make a new document in matchmaking or update the existing document.
+            firestore.collection("matchmaking")
+                .document(userUID)
+                .set(thisUser)
+                .await()
+
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("addToQueue", "Exception: ${e.localizedMessage}")
+
+            return false
+        }
+    }
+
+    // Send a friend request and remove the user from the matchmaking.
+    suspend fun sendRequest(target: Match) {
+
+        // Build the FriendUserData and send it to sendFriendRequest.
+        val ourUid = currentUserId()
+        val data = FriendUserData(
+            displayName = target.username,
+            uid = target.uid,
+            sessionID = (ourUid + target.uid).toString()
+        )
+        Log.d("sendRequest -- data", data.toString())
+        sendFriendRequest(data)
+
+        // Remove the logged in user from matchmaking.
+        try {
+            if (ourUid != null) {
+                firestore.collection("matchmaking").document(ourUid).delete()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("sendRequest", "Exception: ${e.localizedMessage}")
+        }
+    }
+
+    // || CHATTING
+
+    // In the sessions collection add a new entry to the messages array of a given document.
+    suspend fun saveMessageToFirebase(
+        uid: String,
+        userMessage: String,
+        timestamp: String,
+        systemOwner: Boolean = false
+    ): Boolean {
+        // Is this message sent by a user (person) or the system? Programmatically.
+        var owner = ""
+        if (systemOwner.equals(true)) {
+            owner = "System"
+        } else {
+            val user = currentUserDetails()?.get()?.await()
+            owner = user?.getString("username").toString()
+        }
+
+        // Set up a map of the data.
+        val messageData = mapOf(
+            "content" to userMessage,
+            "sender" to owner,
+            "timestamp" to timestamp
+        )
+
+        try {
+            // Add the new data to the array.
+            firestore.collection("sessions").document(uid)
+                .update("messages", FieldValue.arrayUnion(messageData))
+                .await()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("saveMessageToFirebase", "Exception: ${e.localizedMessage}")
+
+            return false
+        }
+
+        return true
+    }
+
 
 }

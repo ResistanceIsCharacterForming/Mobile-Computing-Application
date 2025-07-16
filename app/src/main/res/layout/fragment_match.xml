@@ -51,7 +51,7 @@
             app:backgroundTint="@color/theme_red"
             app:strokeColor="@color/theme_red_accent"
             app:strokeWidth="4dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
@@ -63,18 +63,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:orientation="vertical"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <TextView
+            android:id="@+id/infoMatches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/infoMatchesText"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+        />
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/matchListViewCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            app:cardBackgroundColor="@android:color/white">
+            app:cardBackgroundColor="@color/white">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/matchListView"

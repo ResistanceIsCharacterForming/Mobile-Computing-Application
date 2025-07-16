@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
 >
 
+    <!-- This will host the fragment for the chat activity. -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/chatListFragment"
         android:layout_width="match_parent"
@@ -15,7 +16,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout="@layout/fragment_chat"/>
-    <!-- android:name="com.example.shelfship.views.chatScreen.ChatFragment" -->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

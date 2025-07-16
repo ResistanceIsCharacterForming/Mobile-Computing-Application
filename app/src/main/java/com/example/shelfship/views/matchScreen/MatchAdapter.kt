@@ -1,23 +1,29 @@
 package com.example.shelfship.views.matchScreen
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shelfship.databinding.MatchListItemBinding
 import com.example.shelfship.models.Match
+// Coil is used to dynamically load the images of matches.
 import coil.load
 
-class MatchAdapter(private val matchResultListener: MatchResultListener) : RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
+// Adapter for the result of matchmaking. We need scope to launch a coroutine inside the parent fragment's activity.
+class MatchAdapter(
+    private val matchResultListener: MatchResultListener) :
+    RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
 
+    // The data we want to display.
     private var matches: List<Match> = emptyList()
 
     interface MatchResultListener {
+        fun sendRequest(match: Match)
     }
 
-    // Update the matches list and refresh the RecyclerView
     fun updateMatches(newMatches: List<Match>) {
         matches = newMatches
-        notifyDataSetChanged()  // You can also consider using notifyItemRangeChanged if the list size doesn't change drastically
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
@@ -35,10 +41,16 @@ class MatchAdapter(private val matchResultListener: MatchResultListener) : Recyc
 
     inner class MatchViewHolder(private val binding: MatchListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bindItem(match: Match) {
+            // The two elements our match has. Name (text) of the person and their image (profilePictureUrl)
             binding.matchNameView.text = match.username
             binding.matchImageView.load(match.profilePictureUrl)
+
+            binding.matchImageView.setOnClickListener {
+                Log.d("bindItem -- match", match.toString())
+
+                matchResultListener.sendRequest(match)
+            }
         }
     }
 }

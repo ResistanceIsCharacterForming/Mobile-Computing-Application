@@ -22,7 +22,7 @@ class MatchActivity : AppCompatActivity() {
             val fragment = MatchFragment.newInstance()
 
             supportFragmentManager.beginTransaction()
-                .replace(R.id.homeFragment, fragment)
+                .replace(R.id.matchFragment, fragment)
                 .commit()
         }
     }

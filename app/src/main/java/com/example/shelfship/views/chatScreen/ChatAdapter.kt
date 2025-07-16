@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shelfship.databinding.ChatListItemBinding
 import com.example.shelfship.views.chatScreen.ChatAdapter.ChatViewHolder
 
-class ChatAdapter(private val chatContentListener: ChatContentListener) :
+// Adapter for the data we want to present from a session (chat).
+class ChatAdapter(
+    private val chatContentListener: ChatContentListener) :
     RecyclerView.Adapter<ChatViewHolder>() {
 
-    interface ChatContentListener {
-    }
+    interface ChatContentListener {}
 
+    // The data we want to display.
     private var messages: List<Message> = emptyList()
 
     fun setMessages(newMessages: List<Message>) {
@@ -39,14 +41,10 @@ class ChatAdapter(private val chatContentListener: ChatContentListener) :
 
     inner class ChatViewHolder(private val binding: ChatListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindItem(message: Message) {
+            // The three elements we want to bridge in the chat's fragment. Name (text) of a message owner, the message itself, and the message's timestamp.
             binding.senderTextView.text = message.sender
             binding.timestampTextView.text = message.timestamp
             binding.messageTextView.text = message.content
-//            itemView.setOnClickListener {
-////                Snackbar.make(itemView, place.name, Snackbar.LENGTH_SHORT).show()
-//                placeSelectionListener.onPlaceSelected(place)
-//            }
-            //itemView.setOnClickListener { placeSelectionListener.onPlaceSelected(place) }
         }
     }
 

@@ -21,27 +21,12 @@ import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PlaceListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+// class for our fragment used for the chat.
 class ChatFragment : Fragment(), ChatContentListener {
 
-    /**
-     * Interface that activities need to implement,
-     * if they want to be notified of place selection events
-     */
-    /*interface FragmentChatCallbacks {
-        fun onPlaceSelected(message: Message)
-//        void onPlaceLongSelected(Place place);
-    }*/
-
+    // Initialize our direct binding to the layout, our viewmodel, and adapter, respectively. chatUUI is a ID for the given chat that is 'active'.
     private lateinit var binding: FragmentChatBinding
-    //private lateinit var repository: PlacesRepository
     private lateinit var adapter: ChatAdapter
-    /* private var listener: FragmentChatCallbacks? = null */
-
     private lateinit var viewModel: ChatViewModel
     private lateinit var chatUUI: String
 
@@ -125,48 +110,13 @@ class ChatFragment : Fragment(), ChatContentListener {
         binding.messageField.setText("")
     }
 
-    private fun refreshPlaceList() {
-        //adapter.setPlaces(repository.places)
-    }
-
-    /*override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = try {
-            context as FragmentChatCallbacks
-        } catch (cce: ClassCastException) {
-            throw ClassCastException(
-                context.toString()
-                        + " must implement PlaceListFragmentCallbacks"
-            )
-        }
-    }*/
-
     override fun onDetach() {
         super.onDetach()
         //listener = null
     }
 
-    /*
-     * Implementation of PlaceListAdapter::PlaceSelectionListener interface
-     */
-    /*override fun onPlaceSelected(place: Place) {
-        listener?.onPlaceSelected(place)
-    }*/
-
-    /*
-    private val chatUUI: String? {
-        arguments?.getString("chatUUI")
-    }
-*/
     companion object {
         //private const val chatUUI = ""
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment PlaceListFragment.
-         */
         fun newInstance(chatUUI: String): ChatFragment {
             return ChatFragment().apply {
                 arguments = Bundle().apply {

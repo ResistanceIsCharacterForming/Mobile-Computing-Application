@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.shelfship.utils.getCurrentActivityName
+import com.example.shelfship.views.matchScreen.MatchActivity
 
 @Composable
 fun DrawerContent(context: Context, closeDrawer: () -> Unit) {
@@ -19,7 +20,7 @@ fun DrawerContent(context: Context, closeDrawer: () -> Unit) {
 
         DrawerItem("Home") {
             if (context.getCurrentActivityName() != "HomeScreen") {
-                context.startActivity(Intent(context, HomeScreen::class.java))
+                context.startActivity(Intent(context, MatchActivity::class.java))
             }
             closeDrawer()
         }

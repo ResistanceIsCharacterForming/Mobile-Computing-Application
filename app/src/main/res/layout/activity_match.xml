@@ -18,8 +18,9 @@
         <androidx.compose.ui.platform.ComposeView android:id="@+id/compose_scaffold" android:layout_width="match_parent" android:layout_height="56dp" android:background="#8C1717"/>
     </RelativeLayout>
 
+    <!-- This will host the fragment for the match activity. -->
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/homeFragment"
+        android:id="@+id/matchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout="@layout/fragment_match" />
-    <!-- android:name="com.example.shelfship.views.homeScreen.HomeFragment" -->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
