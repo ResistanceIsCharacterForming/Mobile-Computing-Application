@@ -41,21 +41,6 @@
             app:strokeWidth="4dp"
             android:textColor="#FFFFFF"
             android:layout_margin="8dp" />
-
-        <Button
-            style="@style/MaterialRoundedButton"
-            android:id="@+id/btnFilter"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:text="@string/btnFilter"
-            app:backgroundTint="@color/theme_red"
-            app:strokeColor="@color/theme_red_accent"
-            app:strokeWidth="4dp"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:layout_margin="8dp" />
     </LinearLayout>
 
     <LinearLayout

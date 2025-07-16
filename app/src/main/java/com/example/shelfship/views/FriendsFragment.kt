@@ -50,6 +50,7 @@ class FriendsFragment : Fragment(R.layout.fragment_friends) {
                 override fun onItemClick(uid: String) {
                     val intent = Intent(requireContext(), OtherUserProfileActivity::class.java)
                     intent.putExtra("userId", uid)
+                    intent.putExtra("source", "myFriends")
                     startActivity(intent)
                 }
             }

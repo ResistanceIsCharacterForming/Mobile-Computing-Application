@@ -35,14 +35,6 @@ fun LargeDropdownMenuScaffold(
                 navigationIcon = {},
 
                 actions = {
-                    IconButton(onClick = {
-                    }) {
-                        Icon(
-                            Icons.Filled.Notifications,
-                            contentDescription = "Notifications",
-                            tint = Color.White
-                        )
-                    }
 
                     Box {
                         IconButton(onClick = {

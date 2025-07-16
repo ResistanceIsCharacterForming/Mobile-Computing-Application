@@ -27,6 +27,7 @@ class OtherUserProfileActivity : AppCompatActivity() {
 
     private lateinit var viewModel: OtherUserViewModel
     private var userId: String? = null
+    private var source: String? = null  // Kaynak bilgisi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,15 @@ class OtherUserProfileActivity : AppCompatActivity() {
         favoritesRecyclerView.adapter = favoritesAdapter
 
         userId = intent.getStringExtra("userId")
+        source = intent.getStringExtra("source")
+
+
+        if (source == "myFriends") {
+            removeFriendButton.visibility = Button.VISIBLE
+        } else {
+            removeFriendButton.visibility = Button.GONE
+        }
+
         if (userId != null) {
             loadUserProfile(userId!!)
             observeFavorites(userId!!)
@@ -102,8 +112,6 @@ class OtherUserProfileActivity : AppCompatActivity() {
                     val aboutMe = document.getString("aboutMe")
                     aboutMeTextView.text = if (!aboutMe.isNullOrBlank()) aboutMe else "No description provided."
 
-
-
                     if (!profilePictureUrl.isNullOrEmpty()) {
                         Glide.with(this)
                             .load(profilePictureUrl)
@@ -113,8 +121,6 @@ class OtherUserProfileActivity : AppCompatActivity() {
                     } else {
                         profileImageView.setImageResource(R.drawable.ic_profile_placeholder)
                     }
-
-
                 } else {
                     Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
                 }
@@ -123,6 +129,4 @@ class OtherUserProfileActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed to load profile", Toast.LENGTH_SHORT).show()
             }
     }
-
-
 }
