@@ -11,6 +11,27 @@ import com.example.shelfship.utils.FirebaseUtils.getAllSocialState
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.flow.StateFlow
 
+// ======= List Adapter =======
+// https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
+// https://medium.com/androiddevelopers/adapting-to-listadapter-341da4218f5b
+
+// ======= FIREBASE + REAL-TIME UPDATES =======
+// Listen to live Firestore updates
+// https://firebase.google.com/docs/firestore/query-data/listen
+// Text search with Firestore: substring queries, OR, case-insensitivity
+// https://stackoverflow.com/questions/46568142/google-firestore-query-on-substring-of-a-property-value-text-search
+// https://firebase.google.com/docs/firestore/query-data/queries#or_queries
+// https://stackoverflow.com/questions/52137652/firebase-search-query-doesnt-work-when-user-entered-value-in-lower-case-then-it
+// https://stackoverflow.com/questions/50812056/making-a-firebase-query-search-not-case-sensitive
+
+// ======= FRIENDS & SOCIAL STRUCTURES IN FIRESTORE =======
+// How to model friends & friend requests
+// https://stackoverflow.com/questions/73706094/firestore-social-media-friend-requests-data-model
+// Transactions for safe friend request handling
+// https://firebase.google.com/docs/firestore/manage-data/transactions
+// Deleting fields in Firestore
+// https://firebase.google.com/docs/firestore/manage-data/delete-data#fields
+
 class FriendScreenViewModel: ViewModel() {
     private val _socialState = MutableStateFlow<Map<String, List<FriendUserData>>?>(emptyMap())
     val socialState: StateFlow<Map<String, List<FriendUserData>>?> = _socialState

@@ -13,6 +13,10 @@ import com.example.shelfship.R
 import com.example.shelfship.models.FirestoreBookDetails
 import com.google.android.material.textview.MaterialTextView
 
+// ======= List Adapter =======
+// https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
+// https://medium.com/androiddevelopers/adapting-to-listadapter-341da4218f5b
+
 class ColumnRecyclerViewAdapter(private var listener: onItemClickListener? = null)
     : ListAdapter<FirestoreBookDetails, ColumnRecyclerViewAdapter.ViewHolder>(BooksDiffCallback) {
 

@@ -11,6 +11,16 @@ import com.example.shelfship.R
 import com.example.shelfship.models.GBSearchBook
 import com.google.android.material.textview.MaterialTextView
 
+// ======= LISTS, IMAGES =======
+// RecyclerView usage
+// https://developer.android.com/develop/ui/views/layout/recyclerview
+
+// Context access in adapter (for Glide, etc.)
+// https://stackoverflow.com/questions/32136973/how-to-get-a-context-in-a-recycler-view-adapter
+
+// Image loading/caching lib options
+// https://www.geeksforgeeks.org/android/image-loading-caching-library-android-set-2/
+
 class RowRecyclerViewAdapter(private var books: ArrayList<GBSearchBook>, private var listener: onItemClickListener? = null):
     RecyclerView.Adapter<RowRecyclerViewAdapter.ViewHolder>(){
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

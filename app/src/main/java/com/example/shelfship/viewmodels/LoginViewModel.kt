@@ -10,6 +10,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+// ======= LOGIN =======
+// Firebase + Google Sign-In integration
+// https://firebase.google.com/docs/auth/android/google-signin?utm_source=studio#kotlin
+// Credential Manager with Sign-In with Google (modern approach)
+// https://developer.android.com/identity/sign-in/credential-manager-siwg
+// Helpful YouTube tutorial
+// https://www.youtube.com/watch?v=P-3GmvmIdRo
+
 class LoginViewModel : ViewModel() {
     private val googleAuthClient = GoogleAuthClient()
     private val _signInState = MutableStateFlow(SignInState())

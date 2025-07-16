@@ -25,6 +25,24 @@ import kotlin.random.Random
 // NOTE: This pair (||) has been added to quickly move between sections when using the search.
 
 // This is an object housing all the functions that need to interact directly with Firestore.
+
+// ======= Real time updates =======
+// Real-time updates with Firestore
+// https://firebase.google.com/docs/firestore/query-data/listen
+
+// Text search with Firestore: substring queries, OR, case-insensitivity
+// https://stackoverflow.com/questions/46568142/google-firestore-query-on-substring-of-a-property-value-text-search
+// https://firebase.google.com/docs/firestore/query-data/queries#or_queries
+// https://stackoverflow.com/questions/52137652/firebase-search-query-doesnt-work-when-user-entered-value-in-lower-case-then-it
+// https://stackoverflow.com/questions/50812056/making-a-firebase-query-search-not-case-sensitive
+
+// Modeling friends & friend requests with Firestore
+// https://stackoverflow.com/questions/73706094/firestore-social-media-friend-requests-data-model
+// Using transactions for safe updates
+// https://firebase.google.com/docs/firestore/manage-data/transactions
+// Deleting fields from documents
+// https://firebase.google.com/docs/firestore/manage-data/delete-data#fields
+
 object FirebaseUtils {
 
     // firestore should be private ideally.
@@ -63,7 +81,6 @@ object FirebaseUtils {
                 .await()
         }
     }
-
 
 
     // || USERS AND MISC
@@ -121,8 +138,6 @@ object FirebaseUtils {
         return firestore.collection("sessions").document(uid)
     }
 
-
-
     suspend fun userExists(uid: String): Boolean {
         return firestore.collection("users").document(uid).get().await().exists()
     }
@@ -164,7 +179,6 @@ object FirebaseUtils {
                         .collection("library").document(bookId)
                     val documentSnapshot = bookReference.get().await()
                     if (documentSnapshot.exists()) {
-                        Log.d("BookDetailsViewModel", "Book details being turned to object!")
                         documentSnapshot.toObject(FirestoreBookDetails::class.java)
                     } else {
                         // the document doesn't exist
@@ -181,21 +195,13 @@ object FirebaseUtils {
     suspend fun getAllBooks(exUid: String = ""): List<FirestoreBookDetails> {
         val uid = if (exUid != "") exUid else currentUserId().toString()
 
-        Log.d("FirebaseUtils [getAllBooks]: ", uid)
-
         return try {
             withContext(Dispatchers.IO) {
-                if (uid != null) {
-                    val libraryReference = firestore.collection("users").document(uid)
-                        .collection("library")
-                    val querySnapshot = libraryReference.get().await()
-                    Log.d("BookDetailsViewModel", "Book details being turned to object!")
-                    querySnapshot.documents.mapNotNull { document ->
-                        document.toObject(FirestoreBookDetails::class.java)
-                    }
-                } else {
-                    Log.d("BookDetailsViewModel", "No user logged in!")
-                    emptyList()
+                val libraryReference = firestore.collection("users").document(uid)
+                    .collection("library")
+                val querySnapshot = libraryReference.get().await()
+                querySnapshot.documents.mapNotNull { document ->
+                    document.toObject(FirestoreBookDetails::class.java)
                 }
             }
         } catch (e: Exception) {
@@ -272,8 +278,6 @@ object FirebaseUtils {
                 val allFriendsMap = snapshot.get("allFriends") as? Map<String, Map<String, String>> ?: emptyMap()
                 val friendRequestsMap = snapshot.get("friendRequests") as? Map<String, Map<String, String>> ?: emptyMap()
                 val ownRequestsMap = snapshot.get("ownRequests") as? Map<String, Map<String, String>> ?: emptyMap()
-
-                Log.d("FriendScreenViewModel", "Own requests: $ownRequestsMap")
 
                 val allFriendsList = allFriendsMap.map {
                     FriendUserData(it.value["displayName"].toString(), it.value["uid"].toString(),
@@ -546,21 +550,14 @@ object FirebaseUtils {
     suspend fun getFavoritesForUser(uid: String): List<FirestoreBookDetails> {
         return try {
             withContext(Dispatchers.IO) {
-                if (uid != null) {
-                    val libraryReference = firestore.collection("users").document(uid)
-                        .collection("library")
-                    val querySnapshot = libraryReference.get().await()
-                    Log.d("FirebaseUtils", "Book details being turned to object!")
+                val libraryReference = firestore.collection("users").document(uid)
+                    .collection("library")
+                val querySnapshot = libraryReference.get().await()
 
-
-                    querySnapshot.documents.mapNotNull { document ->
-                        document.toObject(FirestoreBookDetails::class.java)
-                    }.filter { book ->
-                        book.ownerBookShelves.getOrNull(0) == true
-                    }
-                } else {
-                    Log.d("FirebaseUtils", "No user logged in!")
-                    emptyList()
+                querySnapshot.documents.mapNotNull { document ->
+                    document.toObject(FirestoreBookDetails::class.java)
+                }.filter { book ->
+                    book.ownerBookShelves.getOrNull(0) == true
                 }
             }
         } catch (e: Exception) {

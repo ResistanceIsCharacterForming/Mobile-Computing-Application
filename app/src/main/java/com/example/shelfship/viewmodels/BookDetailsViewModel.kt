@@ -12,6 +12,16 @@ import androidx.core.text.HtmlCompat
 import com.example.shelfship.models.FirestoreBookDetails
 import com.example.shelfship.utils.FirebaseUtils
 
+// ======= LISTS, IMAGES =======
+// RecyclerView usage
+// https://developer.android.com/develop/ui/views/layout/recyclerview
+
+// Context access in adapter (for Glide, etc.)
+// https://stackoverflow.com/questions/32136973/how-to-get-a-context-in-a-recycler-view-adapter
+
+// Image loading/caching lib options
+// https://www.geeksforgeeks.org/android/image-loading-caching-library-android-set-2/
+
 class BookDetailsViewModel : ViewModel() {
 
     private val _bookDetailsState = MutableStateFlow<BookDetailsState>(BookDetailsState(null, false, null))

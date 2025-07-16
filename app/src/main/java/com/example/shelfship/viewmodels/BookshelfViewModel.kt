@@ -11,6 +11,23 @@ import kotlinx.coroutines.launch
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.flow.StateFlow
 
+// ======= LISTS, IMAGES =======
+// RecyclerView usage
+// https://developer.android.com/develop/ui/views/layout/recyclerview
+
+// Context access in adapter (for Glide, etc.)
+// https://stackoverflow.com/questions/32136973/how-to-get-a-context-in-a-recycler-view-adapter
+
+// Image loading/caching lib options
+// https://www.geeksforgeeks.org/android/image-loading-caching-library-android-set-2/
+
+// ======= List Adapter =======
+// https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
+// https://medium.com/androiddevelopers/adapting-to-listadapter-341da4218f5b
+
+// ======= FIREBASE + REAL-TIME UPDATES =======
+// Listen to live Firestore updates
+// https://firebase.google.com/docs/firestore/query-data/listen
 
 class BookshelfViewModel : ViewModel() {
     private val _allBooks = MutableStateFlow<List<FirestoreBookDetails>>(emptyList())

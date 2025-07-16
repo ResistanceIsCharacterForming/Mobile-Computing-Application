@@ -10,6 +10,10 @@ import com.example.shelfship.R
 import com.example.shelfship.models.FriendUserData
 import com.google.android.material.textview.MaterialTextView
 
+// ======= List Adapter =======
+// https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
+// https://medium.com/androiddevelopers/adapting-to-listadapter-341da4218f5b
+
 class FriendsRecyclerViewAdapter(private var itemListener: onItemClickListener? = null,
                                  private var chatListener: onChatClickListener? = null):
     ListAdapter<FriendUserData, FriendsRecyclerViewAdapter.ViewHolder>(FriendsDiffCallback){
